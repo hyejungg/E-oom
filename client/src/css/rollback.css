@@ -1,0 +1,27 @@
+.body {
+    text-align: center;
+}
+
+.grade {
+    margin : 0.7em;
+    text-align: center;  
+}
+.class {
+    margin : 0.7em;
+    text-align: center;  
+}
+
+.rollback-searchgrade {
+    margin-top : 3em; 
+    margin-left: 20em;
+}
+
+.btnSearch {
+    margin-left : -20em;
+}
+
+#inputLabel {
+    padding-top : 10px;
+    width: 50px;
+    height: auto;
+}
