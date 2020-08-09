@@ -1,5 +1,14 @@
 const User = require("../models/user.model.js");
-
+//Check email if it's exist
+exports.findNumByEmail = (req, res) =>{
+  User.getNumByEmail(req.params.user_email,(err,data) => {
+    if (err) {
+        res.status(500).send({
+          message: "Error retrieving User with email " + req.params.user_email
+        });
+    }else res.send(data);
+  });
+}
 //Create and Save a new User
 exports.create = (req, res) => {
     // Validate request
@@ -41,13 +50,12 @@ exports.create = (req, res) => {
   };
   
   // Get the Description of the title
-  exports.findPW = (req, res) => {
-    User.getPW(req.params.user_email, (err, data) => {
+  exports.findByEmail = (req, res) => {
+    User.getOneByEmail(req.params.user_email, (err, data) => {
       if (err) {
           res.status(500).send({
             message: "Error retrieving User with email " + req.params.user_email
           });
-      }
-       else res.send(data);
+      }else res.send(data);
     });
   };
