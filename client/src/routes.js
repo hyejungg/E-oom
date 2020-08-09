@@ -1,6 +1,10 @@
 import React from "react";
 import Mypage from "./views/base/mypage/MyPage";
 
+//test용 
+import CreateRoom from "./test/CreateRoom";
+import Room from "./test/Room";
+
 const Toaster = React.lazy(() =>
   import("./views/notifications/toaster/Toaster")
 );
@@ -63,6 +67,10 @@ const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
 
 const routes = [
+  //test용
+  { path: "/createroom", name: "createRoom", exact: true, component: CreateRoom },
+  { path: "/room/:roomID", name: "Room", component: Room },
+  //
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/theme", name: "Theme", component: Colors, exact: true },
