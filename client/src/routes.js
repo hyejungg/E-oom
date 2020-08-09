@@ -25,9 +25,14 @@ const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
 const CreateClass = React.lazy(() =>
   import("./views/base/create_class/CreateClass")
 );
-const ListClass = React.lazy(() => import("./views/base/list_class/ListClass"));
+const CreateListClass = React.lazy(() =>
+  import("./views/base/create_list_class/CreateListClass")
+);
 const CreateListLecture = React.lazy(() =>
   import("./views/base/create_list_lecture/ListLecture")
+);
+const ParticipateListClass = React.lazy(() =>
+  import("./views/base/participate_list_class/ParticipateListClass")
 );
 const ParticipateListLecture = React.lazy(() =>
   import("./views/base/participate_list_lecture/ListLecture")
@@ -40,7 +45,9 @@ const Rollbook = React.lazy(() => import("./views/base/Rollbook/Rollbook"));
 const Questions = React.lazy(() => import("./views/forms/Questions"));
 
 // //아이디/비밀번호 찾기 추가
-const SearchIDPW = React.lazy(() => import("./views/pages/search_idPw/SearchIDPW"));
+const SearchIDPW = React.lazy(() =>
+  import("./views/pages/search_idPw/SearchIDPW")
+);
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
@@ -71,9 +78,26 @@ const routes = [
   // { path: '/base/meet_participate', name: 'MeetParticipate', component: MeetParticipate }, //***
   { path: "/base/meet_link", name: "MeetLink", component: MeetLink }, //***
   { path: "/base/create_class", name: "CreateClass", component: CreateClass }, //***
-  { path: "/base/list_class", name: "ListClass", component: ListClass }, //***
-  { path: "/base/create_list_lecture", name: "CreateListLecture", component: CreateListLecture }, //***
-  { path: "/base/participate_list_lecture", name: "ParticipateListLecture", component: ParticipateListLecture }, //***
+  {
+    path: "/base/create_list_class",
+    name: "CreateListClass",
+    component: CreateListClass,
+  }, //***
+  {
+    path: "/base/create_list_lecture",
+    name: "CreateListLecture",
+    component: CreateListLecture,
+  }, //***
+  {
+    path: "/base/participate_list_lecture",
+    name: "ParticipateListLecture",
+    component: ParticipateListLecture,
+  }, //***
+  {
+    path: "/base/participate_list_class",
+    name: "ParticipateListClass",
+    component: ParticipateListClass,
+  }, //***
   { path: "/forms/Questions", name: "Questions", component: Questions }, //***
   {
     path: "/notifications",

@@ -32,9 +32,7 @@ const ListLecture = () => {
               </CNav>
               <CTabContent>
                 <CTabPane>
-                  <CButton className="mt-3" active tabIndex={-1} color="info">
-                    {" "}새 강의 예약{" "}
-                  </CButton>
+                  {"예약설정된 강의들 나열 //배열과 매핑해서 연결"}
                 </CTabPane>
                 <CTabPane>{`2.`}</CTabPane>
               </CTabContent>

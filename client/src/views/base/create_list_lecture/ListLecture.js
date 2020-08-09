@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import {
   CCol,
   CNav,
@@ -14,10 +14,11 @@ import {
   CCardHeader,
   CButton,
   CListGroupItem,
-  CListGroup
+  CListGroup,
 } from "@coreui/react";
 
 const ListLecture = () => {
+  const [activeTab, setActiveTab] = useState(1);
   return (
     <CRow>
       <CCol>
@@ -38,55 +39,108 @@ const ListLecture = () => {
               </CNav>
               <CTabContent>
                 <CTabPane>
-                  <CButton className="mt-3" active tabIndex={-1} color="info">
-                    {" "}새 강의 예약{" "}
-                  </CButton>
+                  <CRow>
+                    <CCol xs="4">
+                      <CButton
+                        className="mt-3"
+                        active={activeTab === 0}
+                        tabIndex={-1}
+                        color="light"
+                        onClick={() => setActiveTab(0)}
+                      >
+                        {" "}
+                        새 강의 예약{" "}
+                      </CButton>
+                    </CCol>
+                    <CCol xs="8">
+                      <CTabPane active={activeTab === 0}>
+                        <CCardHeader>
+                          <h2>새 강의 시작</h2>
+                          <p></p>
+                          <p>{"강의명이 들어올 자리"}</p>
+                        </CCardHeader>
+                        <CCardHeader>
+                          <div className="lectureMenu">설명</div>
+                          <div className="lectureInfo">{"강의 설명~~~~"}</div>
+                        </CCardHeader>
+                        <CCardHeader>
+                          <div className="lectureMenu">날짜</div>
+                          <div className="lectureInfo">
+                            {"버튼 식으로 수정!!"}
+                          </div>
+                        </CCardHeader>
+                        <CCardHeader>
+                          <div className="lectureMenu">시간</div>
+                          <div className="lectureInfo">
+                            {"버튼 식으로 수정!!"}
+                          </div>
+                        </CCardHeader>
+                        <CCardHeader>
+                          <div className="lectureMenu">회의ID</div>
+                          <div className="lectureInfo">
+                            {"이것은 랜덤지정?"}
+                          </div>
+                        </CCardHeader>
+                        <CCardHeader>
+                          <div className="lectureMenu">암호</div>
+                          <div className="lectureInfo">
+                            {"이것은 랜덤지정?"}
+                          </div>
+                        </CCardHeader>
+                        <CButton
+                          // 버튼 클릭 시 회의 예약 설정되도록
+                          className="mt-3"
+                          active={activeTab === 0}
+                          tabIndex={-1}
+                          color="info"
+                        >
+                          {" "}
+                          저장{" "}
+                        </CButton>
+                      </CTabPane>
+                    </CCol>
+                  </CRow>
                 </CTabPane>
                 <CTabPane>{`2.`}</CTabPane>
                 <CTabPane>
                   <CListGroup accent className="mt-3">
-                    <CRow>
-                      <CCol xs="12" md="4">
-                        <CListGroupItem accent="dark">개인 회의명</CListGroupItem>
-                      </CCol>
-                      <CCol xs="12" md="8">
-                      {'3'}
-                      </CCol>
-                    </CRow>
-                    <CRow>
-                      <CCol xs="12" md="4">
-                        <CListGroupItem accent="secondary">개인 회의 ID</CListGroupItem>
-                      </CCol>
-                      <CCol xs="12" md="8">
-                      {'3'}
-                      </CCol>
-                    </CRow>
-                    <CRow>
-                      <CCol xs="12" md="4">
-                        <CListGroupItem accent="dark">개인 회의 PW</CListGroupItem>
-                      </CCol>
-                      <CCol xs="12" md="8">
-                      {'3'}
-                      </CCol>
-                    </CRow>
-                    <CRow>
-                      <CCol xs="12" md="4">
-                        <CListGroupItem accent="secondary">개인 회의 초대링크</CListGroupItem>
-                      </CCol>
-                      <CCol xs="12" md="8">
-                        {'3'}
-                      </CCol>
-                    </CRow>
+                    <CCardHeader>
+                      <div className="lectureMenu">개인회의이름</div>
+                      <div className="lectureInfo">{"강의 설명~~~~"}</div>
+                    </CCardHeader>
+                    <CCardHeader>
+                      <div className="lectureMenu">개인회의 ID</div>
+                      <div className="lectureInfo">{"버튼 식으로 수정!!"}</div>
+                    </CCardHeader>
+                    <CCardHeader>
+                      <div className="lectureMenu">개인회의 PW</div>
+                      <div className="lectureInfo">{"버튼 식으로 수정!!"}</div>
+                    </CCardHeader>
+                    <CCardHeader>
+                      <div className="lectureMenu">회의초대링크</div>
+                      <div className="lectureInfo">{"이것은 랜덤지정?"}</div>
+                    </CCardHeader>
                   </CListGroup>
                   <CRow>
                     <CCol align="right">
-                      <CButton className="mt-3" active tabIndex={-1} color="light">
-                      {" "}개인 회의 정보 수정{" "}
-                      </CButton>
-                      {" "}
+                      <CButton
+                        className="mt-3"
+                        active
+                        tabIndex={-1}
+                        color="light"
+                      >
+                        {" "}
+                        개인 회의 정보 수정{" "}
+                      </CButton>{" "}
                       <Link to="/base/meet_create/MeetCreate">
-                        <CButton className="mt-3" active tabIndex={-1} color="info">
-                        {" "}새 개인 회의 시작{" "}
+                        <CButton
+                          className="mt-3"
+                          active
+                          tabIndex={-1}
+                          color="info"
+                        >
+                          {" "}
+                          새 개인 회의 시작{" "}
                         </CButton>
                       </Link>
                     </CCol>

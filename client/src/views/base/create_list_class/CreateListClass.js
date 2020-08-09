@@ -24,7 +24,7 @@ const AttendingCourse = usersData.map((usersData) => (
   </CListGroupItem>
 ));
 
-class ListClass extends Component {
+class CreateListClass extends Component {
   constructor(props) {
     super(props);
   }
@@ -74,4 +74,4 @@ class ListClass extends Component {
   }
 }
 
-export default ListClass;
+export default CreateListClass;

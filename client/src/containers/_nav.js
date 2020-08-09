@@ -16,7 +16,7 @@ export default [
   {
     _tag: "CSidebarNavItem",
     name: "회원가입",
-    to: "/register", 
+    to: "/register",
     icon: "cil-drop",
   },
   {
@@ -49,7 +49,7 @@ export default [
       {
         _tag: "CSidebarNavItem",
         name: "Class 목록",
-        to: "/base/list_class",
+        to: "/base/create_list_class",
       },
       {
         _tag: "CSidebarNavItem",
@@ -66,7 +66,7 @@ export default [
   {
     _tag: "CSidebarNavItem",
     name: "수업 참여하기",
-    to: "/base/participate_list_lecture",
+    to: "/base/participate_list_class",
     icon: "cil-puzzle",
   },
   {
