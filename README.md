@@ -20,6 +20,6 @@ module.exports = {
 - db.config.js 파일에 위의 코드 추가
 
 ------
-
+- server 디렉토리에서 
 - `npm install`
 - `node server.js` 
