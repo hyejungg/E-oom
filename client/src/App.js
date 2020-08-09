@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
-import CreateRoom from "./routes/CreateRoom"
-import Room from "./routes/Room"
+
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -34,8 +33,7 @@ class App extends Component {
             <Route exact path="/500" name="Page 500" render={props => <Page500 {...props} />} />
             <Route path="/" name="Home" render={props => <TheLayout {...props} />} />
             {/* <Route exact path="/pages/search_idPw" name="Search ID/PW page" render={props => <SearchIDPW {...props}/>} /> */}
-            <Route path="/room" name="create room" exact component={CreateRoom} />
-            <Route path="/room/new/:roomID" name="new room" component={Room} />
+
           </Switch>
         </React.Suspense>
       </HashRouter>
