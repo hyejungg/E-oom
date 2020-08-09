@@ -1,6 +1,6 @@
 # E-oom
 
-## 서버 실행 방법
+### 서버 실행 방법
 - server/sql/EoomDB.sql 파일 내용 복사해서 DB생성
 
 ------
