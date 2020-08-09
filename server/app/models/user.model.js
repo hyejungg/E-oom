@@ -68,6 +68,19 @@ User.getOneByEmail = (user_email, result) => {
   });
 };
 
+User.update = (user, result) => {
+  sql.query("", 
+    [newUser.user_fname,newUser.user_lname,newUser.user_email,newUser.user_pw,newUser.user_birthdate,newUser.user_phone], (err, res) => {
+        if(err){
+            console.log("error: ",err);
+            result(err,null);
+            return;
+        }
+        console.log("created user : ",{ id: res.insertId, ...newUser});
+        result(null,{ user_num: res.insertId, ...newUser});
+  });
+};
+
 
 
 module.exports = User;
