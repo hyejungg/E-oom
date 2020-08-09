@@ -1,46 +1,34 @@
-//require('dotenv').config();
 const express = require("express");
-const http = require("http");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const app = express();
-const server = http.createServer(app);
-const socket = require("socket.io")
-const io = socket(server);
-const db = require('./DB.js');
-const rooms = {};
+const db = require("./app/models");
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });
 
-io.on('connection', socket => {
-    socket.on("join room", roomID => {
-        if (rooms[roomID]) {
-            rooms[roomID].push(socket.id);
-        } else {
-            rooms[roomID] = [socket.id];
-        }
-        const otherUser = rooms[roomID].find(id => id !== socket.id);
+var corsOptions = {
+  origin: "http://localhost:8081"
+};
 
-        if (otherUser) {
-            socket.emit("other user", otherUser);
-            socket.to(otherUser).emit("user joined", socket.id);
+app.use(cors(corsOptions));
 
-        }
-    });
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
 
-    socket.on("offer", payload => {
-        io.to(payload.target).emit("offer", payload);
-    });
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    socket.on("answer", payload => {
-        io.to(payload.target).emit("answer", payload);
-    });
-
-    socket.on("ice-candidate", incoming => {
-        io.to(incoming.target).emit("ice-candidate", incoming.candidate);
-    });
-
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to bezkoder application." });
 });
 
-const authRoutes = require('./routes/auth.route');
-app.use('/auth', authRoutes);
-db();
-server.listen(8000, () => console.log('server is running on port 8000'));
-
-
+require("./app/routes/user.routes.js")(app);
+require("./app/routes/tutorial.routes")(app);
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
