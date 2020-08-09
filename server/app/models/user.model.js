@@ -45,14 +45,25 @@ User.getOne = (user_num, result) => {
   });
 };
 
-User.getPW = (user_email, result) => {
-    sql.query("SELECT user_pw FROM user WHERE user_email = ?", user_email, (err, res) => {
+User.getNumByEmail = (user_email,result) => {
+  sql.query("SELECT user_num FROM user WHERE user_email = ?",user_email,(err,res) => {
+    if(err){
+      console.log("errorL ",err);
+      result(err,null);
+      return;
+    }
+    console.log("user email ", res);
+    result(null,res);
+  })
+}
+User.getOneByEmail = (user_email, result) => {
+    sql.query("SELECT * FROM user WHERE user_email = ?", user_email, (err, res) => {
     if(err){
         console.log("error: ",err);
         result(err,null);
         return;
     }
-    console.log("user pw: ", res);
+    console.log("user: ", res);
     result(null, res);
   });
 };
