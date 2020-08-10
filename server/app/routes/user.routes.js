@@ -12,7 +12,11 @@ module.exports = app => {
     router.get("/",users.findAll);
 
     //Retrieve a single user with user_email
-    router.get("/:user_email",users.findByEmail);
+    router.get("/email/:user_email",users.findByEmail);
+
+    router.get("/num/:user_num",users.findByNum);
+
+    router.put("/edit/:user_num",users.updateAll);
 
     app.use('/api/users', router);
 }

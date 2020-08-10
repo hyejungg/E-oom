@@ -59,3 +59,41 @@ exports.create = (req, res) => {
       }else res.send(data);
     });
   };
+
+  exports.findByNum = (req, res) => {
+    User.getOne(req.params.user_num, (err, data) => {
+      if (err) {
+          res.status(500).send({
+            message: "Error retrieving User with num " + req.params.user_num
+          });
+      }else res.send(data);
+    });
+  };
+
+  exports.updateAll = (req,res) => {
+       // Validate request
+       if (!req.body.user_num) {
+        res.status(400).send({
+          message: "Content can not be empty!"
+        });
+        return;
+      }
+      // Create a User
+      const user = {
+          user_num : req.body.user_num,
+          user_fname : req.body.user_fname,
+          user_lname : req.body.user_lname,
+          user_email : req.body.user_email,
+          user_pw : req.body.user_pw,
+          user_birthdate : req.body.user_birthdate,
+          user_phone : req.body.user_phone,
+      };
+      User.update(user, (err, data) => {
+            if (err)
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while creating the User."
+              });
+            else res.send(data);
+          });
+  }
