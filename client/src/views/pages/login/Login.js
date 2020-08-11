@@ -16,53 +16,53 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
+import UserDataService from '../../../services/user.service'
+
+var isLogin = false;
+
 class Login extends Component {
   // 추가
   constructor(props) {
     super(props)
     this.state = {
-      id : '',
+      email : '',
       pw : '',
-      isLogin: null
+      isSubmit: false
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit = (e) => {
     //페이지 리로딩 방지
     e.preventDefault();
-    console.log(this.state); //입력한 id와 pw 콘솔창에서 확인
-    
-    // //fetch 멤버 초기화
-    // const login_info = {
-    //   method: "POST",
-    //   body: JSON.stringify(this.state),
-    //   headers: {
-    //     "Content-Type": "application/json" //서버 구축된 후 헤더 재지정 필요
-    //   }
-    // };
-    // //백엔드 서버에 비동기 요청(fetch)
-    // fetch("서버주소", login_info) //서버 구축된 후 서버주소 재지정 필요
-    //   .then(res => { //성공한다면 
-    //     return res.json();
-    //   })
-    //   .then(json => { 
-    //     //json형식 {id: , pw: , success: true}
-    //     if (json.success === true) {
-    //       alert("로그인되었습니다");
-    //       // 서버로 부터 받은 JSON형태의 데이터를 로컬스토리지에 우선 저장한다.
-    //       window.localStorage.setItem('userInfo', JSON.stringify(json))
-    //       //스테이트에 유저정보를 저장한다.
-    //       this.setState({
-    //         id: json.id,
-    //         pw: json.pw,
-    //         isLogin: json.success
-    //       });
-    //       this.props.history.push("/main") //history를 이용하여 /main으로 props 보낸다?
-    //     } else {
-    //       alert("아이디 혹은 비밀번호를 확인하세요");
-    //     }
-    //   });
+
+    var data = {
+      user_email: this.state.email,
+      user_pw: this.state.pw
+    };
+    console.log(data);
+  
+    UserDataService.getEmail(data.user_email)
+    .then(response => {
+      //response 값이 num이라면 isLogin = true 
+      //num이 아니라면 -1 반환 isLogin = false 
+      this.setState({
+        email: response.data.user_email,
+        pw: response.data.user_pw,
+
+        isSubmit: true
+      });
+      console.log(response.data);
+      //isCreate 가 true면 메인 화면으로
+      isLogin = true;
+    })
+    .catch(e => {
+      isLogin = false;
+      console.log(e);
+    });
   }
-  //입력창 관리 (ID, PW)
+
+  //setting Input Values (ID, PW)
   handleChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value
@@ -87,8 +87,8 @@ class Login extends Component {
                           <CIcon name="cil-user" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="text" placeholder="아이디" autoComplete="username"
-                              value={this.state.id} onChange={this.handleChange} name="id"/>
+                      <CInput type="text" placeholder="아이디" autoComplete="UserEmail"
+                              value={this.state.email} onChange={this.handleChange} name="email"/>
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupPrepend>
@@ -96,12 +96,14 @@ class Login extends Component {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <CInput type="password" placeholder="비밀번호" autoComplete="current-password"
+                      <CInput type="password" placeholder="비밀번호" autoComplete="Current-password"
                               value={this.state.pw} onChange={this.handleChange} name="pw" />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="5">
-                        <CButton color="primary" className="px-4" type="submit">로그인</CButton>
+                        <CButton color="primary" className="px-4" type="submit" onClick={this.handleSubmit}>로그인</CButton>
+                        {console.log(isLogin)} 
+                        {isLogin ? <Link to = "/dashboard/Dashboard"></Link> : console.log("로그인 실패")}
                       </CCol>
                       <CCol xs="7" className="text-right">
                         <Link to="pages/search_idPw/SearchIDPW">

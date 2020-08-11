@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -16,101 +17,207 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-const Register = () => {
-  return (
-    <div className="c-app c-default-layout flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md="9" lg="7" xl="6">
-            <CCard className="mx-4">
-              <CCardBody className="p-4">
-                <CForm>
-                  <h2>환영합니다. E-oom입니다.</h2>
-                  <p className="text-muted">계정을 생성합니다.</p>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-user" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput
-                      type="text"
-                      placeholder="Username"
-                      autoComplete="username"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>@</CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput
-                      type="text"
-                      placeholder="Email"
-                      autoComplete="email"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-lock-locked" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-4">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-lock-locked" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput
-                      type="password"
-                      placeholder="Repeat password"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <CInputGroup row>
-                    <CCol md="3">
-                      <CLabel htmlFor="date-input">Date Input</CLabel>
-                    </CCol>
-                    <CCol xs="12" md="9">
+import UserDataService from '../../../services/user.service'
+
+var isCreate = false;
+
+class Register extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      fname : '',
+      lname : '',
+      email : '',
+      pw : '',
+      re_pw : '',
+      birth : '',
+      phone : '',
+      isSubmit : false
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name] : e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    var data = {
+      user_fame : this.state.fname,
+      user_lame : this.state.lname,
+      user_email : this.state.email,
+      user_pw : this.state.pw,
+      user_birthdate : this.state.birth,
+      user_phone : this.state.phone
+    };    
+
+    UserDataService.create(data)
+    .then(response => {
+      //무슨 값을 받아오려나 ? 
+      this.state.isSubmit = true;
+
+      console.log(response.data);
+
+      //isCreate 가 true면 메인 화면으로
+      isCreate = true;
+    })
+    .catch( e => {
+      isCreate = false;
+      console.log(e);
+    });
+  }
+
+  render(){
+    return (
+      <div className="c-app c-default-layout flex-row align-items-center">
+        <CContainer>
+          <CRow className="justify-content-center">
+            <CCol md="9" lg="7" xl="6">
+              <CCard className="mx-4">
+                <CCardBody className="p-4">
+                  <CForm>
+                    <h2>환영합니다. E-oom입니다.</h2>
+                    <p className="text-muted">계정을 생성합니다.</p>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-user" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
                       <CInput
-                        type="date"
-                        id="date-input"
-                        name="date-input"
-                        placeholder="date"
+                        type="text"
+                        placeholder="User First-name"
+                        autoComplete="userfname"
+                        name="userfname"
+                        values={this.state.fname}
+                        onChange={this.handleChange}
                       />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-user" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="text"
+                        placeholder="User Last-name"
+                        autoComplete="userlname"
+                        name="userlname"
+                        values={this.state.lname}
+                        onChange={this.handleChange}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>@</CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="text"
+                        placeholder="Email"
+                        autoComplete="email"
+                        name="email"
+                        values={this.state.email}
+                        onChange={this.handleChange}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-lock-locked" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="password"
+                        placeholder="Password"
+                        autoComplete="new-password"
+                        name="pw"
+                        values={this.state.pw}
+                        onChange={this.handleChange}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-4">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-lock-locked" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="password"
+                        placeholder="Repeat password"
+                        autoComplete="new-password"
+                        name="re_pw"
+                        values={this.state.re_pw}
+                        onChange={this.handleChange}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-4">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-phone" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="text"
+                        placeholder="Phone Number"
+                        autoComplete="phone"
+                        name="phone"
+                        values={this.state.phone}
+                        onChange={this.handleChange}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-4">
+                      <CCol md="3">
+                        <CLabel htmlFor="date-input">Date Input</CLabel>
+                      </CCol>
+                      <CCol xs="12" md="9">
+                        <CInput
+                          type="date"
+                          id="date-input"
+                          name="date-input"
+                          placeholder="date"
+                          name="birth"
+                        values={this.state.birth}
+                        onChange={this.handleChange}
+                        />
+                      </CCol>
+                    </CInputGroup>
+                    <CButton 
+                      color="info" 
+                      block
+                      onClick={this.handleSubmit}>
+                      회원 가입
+                    </CButton>
+                    {isCreate ? <Link to = "/dashboard/Dashboard"></Link> : console.log("회원가입 실패")}
+                  </CForm>
+                </CCardBody>
+                <CCardFooter className="p-4">
+                  <CRow>
+                    <CCol xs="12" sm="6">
+                      <CButton className="mb-1" block color="danger">
+                        <span>google로 가입하기</span>
+                      </CButton>
                     </CCol>
-                  </CInputGroup>
-                  <CButton color="info" block>
-                    회원 가입
-                  </CButton>
-                </CForm>
-              </CCardBody>
-              <CCardFooter className="p-4">
-                <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="mb-1" block color="danger">
-                      <span>google로 가입하기</span>
-                    </CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="mb-1" block color="success">
-                      <span>naver로 가입하기</span>
-                    </CButton>
-                  </CCol>
-                </CRow>
-              </CCardFooter>
-            </CCard>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
-  );
-};
+                    <CCol xs="12" sm="6">
+                      <CButton className="mb-1" block color="success">
+                        <span>naver로 가입하기</span>
+                      </CButton>
+                    </CCol>
+                  </CRow>
+                </CCardFooter>
+              </CCard>
+            </CCol>
+          </CRow>
+        </CContainer>
+      </div>
+    );
+  }
+}
 
 export default Register;

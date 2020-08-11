@@ -74,7 +74,7 @@ const Mypage = () => {
                       action
                       active={activeTab === 1}
                     >
-                      수업
+                      회원 정보 수정
                     </CListGroupItem>
                     <CListGroupItem
                       onClick={() => setActiveTab(2)}
@@ -131,7 +131,18 @@ const Mypage = () => {
                       </CListGroupItem> */}
                     </CTabPane>
                     <CTabPane active={activeTab === 1}>
-                      <p>수업목록?class목록?</p>
+                      <CCardHeader>
+                        <CCardBody>
+                          <h2>{'이름'}</h2>
+                        </CCardBody>
+                      </CCardHeader>
+                      <CCardHeader>로그인 이메일</CCardHeader>
+                      <CCardHeader></CCardHeader>
+                      <CCardHeader>언어</CCardHeader>
+                      <CCardHeader>Date and Time</CCardHeader>
+                      <CCardHeader>Calendar and Contact</CCardHeader>
+                      <CCardHeader>호스트 키</CCardHeader>
+                      <CCardHeader>로그인된 장치</CCardHeader>
                     </CTabPane>
                     <CTabPane active={activeTab === 2}>
                       <CNavbar light color="light">
