@@ -57,7 +57,7 @@ User.getNumByEmail = (user_email,result) => {
   })
 }
 User.getOneByEmail = (user_email, result) => {
-    sql.query("SELECT * FROM user WHERE user_email = ?", user_email, (err, res) => {
+    sql.query("SELECT user_num, user_fname,user_pw FROM user WHERE user_email = ?", user_email, (err, res) => {
     if(err){
         console.log("error: ",err);
         result(err,null);
