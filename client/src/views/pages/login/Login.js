@@ -27,10 +27,10 @@ class Login extends Component {
     this.state = {
       email : '',
       pw : '',
-      isSubmit: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.moveHome = this.moveHome.bind(this);
   }
   handleSubmit = (e) => {
     //페이지 리로딩 방지
@@ -40,24 +40,29 @@ class Login extends Component {
       user_email: this.state.email,
       user_pw: this.state.pw
     };
-    console.log(data);
-  
-    UserDataService.getEmail(data.user_email)
-    .then(response => {
-      //response 값이 num이라면 isLogin = true 
-      //num이 아니라면 -1 반환 isLogin = false 
-      this.setState({
-        email: response.data.user_email,
-        pw: response.data.user_pw,
 
-        isSubmit: true
-      });
-      console.log(response.data);
-      //isCreate 가 true면 메인 화면으로
-      isLogin = true;
+    var responseData = [];
+
+    UserDataService.getLogin(data)
+    .then(response => {
+      responseData = response.data;
+      console.log("responseData : " +  responseData );
+      if( responseData === "user_email wrong"){
+        isLogin = false;
+        console.log("로그인 실패");
+        alert("email이 틀렸습니다. 다시 입력하세요.");
+      }else if( responseData === "user_pw wrong"){
+        isLogin = false;
+        console.log("로그인 실패");
+        alert("비밀번호가 틀렸습니다. 다시 입력하세요.");
+      }else {
+        isLogin = true;
+        console.log("로그인 성공");
+        // <Link to = "/dashboard/Dashboard"></Link> 
+      }
+      isLogin = false;
     })
     .catch(e => {
-      isLogin = false;
       console.log(e);
     });
   }
@@ -102,8 +107,6 @@ class Login extends Component {
                     <CRow>
                       <CCol xs="5">
                         <CButton color="primary" className="px-4" type="submit" onClick={this.handleSubmit}>로그인</CButton>
-                        {console.log(isLogin)} 
-                        {isLogin ? <Link to = "/dashboard/Dashboard"></Link> : console.log("로그인 실패")}
                       </CCol>
                       <CCol xs="7" className="text-right">
                         <Link to="pages/search_idPw/SearchIDPW">

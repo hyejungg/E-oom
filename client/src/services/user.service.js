@@ -2,9 +2,6 @@
 import http from "../http-common";
 
 class UserDataService{
-    create(data){
-        return http.post("/users/signup",data);
-    }
     getAll(){
         return http.get("/users");
     }
@@ -14,8 +11,18 @@ class UserDataService{
     getEmail(user_email){
         return http.get("/users/email/"+user_email);
     }
+    getLogin(data){
+        return http.post("/users/signin",data);
+    }
+    getSignUp(data){
+        return http.post("/users/signup",data);
+    }
+    //signup
+    getCheckId(user_email){
+        return http.get("/users/checkid/"+user_email);
+    }
     //search Email
-    getFindEmail(user_fname, user_lname, user_birthdate, user_phone){
+    getFindEmail(data){
       //user의 email을 return 받도록
 
     }

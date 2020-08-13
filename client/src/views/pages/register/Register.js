@@ -18,6 +18,7 @@ import {
 import CIcon from "@coreui/icons-react";
 
 import UserDataService from '../../../services/user.service'
+import { number } from "prop-types";
 
 var isCreate = false;
 
@@ -32,11 +33,11 @@ class Register extends Component{
       pw : '',
       re_pw : '',
       birth : '',
-      phone : '',
-      isSubmit : false
+      phone : ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   handleChange = (e) => {
@@ -45,27 +46,55 @@ class Register extends Component{
     })
   }
 
+  handleCheck = (e) => {
+    e.preventDefault();
+
+    var user_email = this.state.email;
+    var responseData = [];
+
+    UserDataService.getCheckId(user_email)
+    .then(response => {
+      responseData = response.data;
+      console.log("responseData : " + responseData)
+      if(responseData == ''){
+        alert("OK");
+      }else{
+        alert("이미 있는 email 입니다. 다른 email을 입력하세요.");
+      }
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
     var data = {
-      user_fame : this.state.fname,
-      user_lame : this.state.lname,
+      user_fname : this.state.fname,
+      user_lname : this.state.lname,
       user_email : this.state.email,
-      user_pw : this.state.pw,
+      user_pw : this.state.re_pw,
       user_birthdate : this.state.birth,
       user_phone : this.state.phone
     };    
 
-    UserDataService.create(data)
-    .then(response => {
-      //무슨 값을 받아오려나 ? 
-      this.state.isSubmit = true;
+    var responseData = [];
 
-      console.log(response.data);
+    UserDataService.getSignUp(data)
+    .then(response => {
+      responseData = response.data[0];
+      console.log("responseData : " + responseData);
 
       //isCreate 가 true면 메인 화면으로
       isCreate = true;
+      if(isCreate){
+        console.log("회원가입 성공");
+        // <Link to = "/dashboard/Dashboard"></Link>
+      }else{
+        console.log("회원가입 실패");
+      }
+      
     })
     .catch( e => {
       isCreate = false;
@@ -94,7 +123,7 @@ class Register extends Component{
                         type="text"
                         placeholder="User First-name"
                         autoComplete="userfname"
-                        name="userfname"
+                        name="fname"
                         values={this.state.fname}
                         onChange={this.handleChange}
                       />
@@ -109,7 +138,7 @@ class Register extends Component{
                         type="text"
                         placeholder="User Last-name"
                         autoComplete="userlname"
-                        name="userlname"
+                        name="lname"
                         values={this.state.lname}
                         onChange={this.handleChange}
                       />
@@ -126,6 +155,10 @@ class Register extends Component{
                         values={this.state.email}
                         onChange={this.handleChange}
                       />
+                      <CInputGroupPrepend>
+                      {/* <CInputGroupText action onClick={this.handleCheck}>중복</CInputGroupText> */}
+                        <CButton color="light" onClick={this.handleCheck}>중복</CButton>
+                      </CInputGroupPrepend>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
@@ -180,11 +213,10 @@ class Register extends Component{
                         <CInput
                           type="date"
                           id="date-input"
-                          name="date-input"
                           placeholder="date"
                           name="birth"
-                        values={this.state.birth}
-                        onChange={this.handleChange}
+                          values={this.state.birth}
+                          onChange={this.handleChange}
                         />
                       </CCol>
                     </CInputGroup>
@@ -194,7 +226,6 @@ class Register extends Component{
                       onClick={this.handleSubmit}>
                       회원 가입
                     </CButton>
-                    {isCreate ? <Link to = "/dashboard/Dashboard"></Link> : console.log("회원가입 실패")}
                   </CForm>
                 </CCardBody>
                 <CCardFooter className="p-4">

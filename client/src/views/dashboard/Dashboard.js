@@ -18,7 +18,7 @@ const Dashboard = () => {
       <WidgetsDropdown /> 
       <CCard>
         <CCardBody>
-          <CCImg src={DImag} fluid className="mb-2" alt = {'대쉬보드 화면'}/>  
+          <CCImg src={DImag} className="mb-2" alt = {'대쉬보드 화면'}/>  
         </CCardBody>
       </CCard>
       <CRow>
