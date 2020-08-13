@@ -33,20 +33,38 @@ class Register extends Component{
       pw : '',
       re_pw : '',
       birth : '',
-      phone : ''
+      phone : '',
+
+      isCheckIdBtn : false,
+      isCheckPw : false,
+      checkPwMsg : '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
+    this.handleCheckEmail = this.handleCheckEmail.bind(this);
+  }
+
+  checkPW(value){
+    if(this.state.pw !== value) {
+      this.setState({
+        checkPwMsg : "비밀번호가 일치하지 않습니다. 다시 입력하세요.",
+      });
+      return false;
+    }
+    this.state.checkPwMsg = '';
+    return true;
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name] : e.target.value
-    })
+    });
+
+    // //pw == re_pw check  *******이상한데 돌아감 ; 
+    if(e.target.name == "re_pw") this.checkPW(e.target.value);
   }
 
-  handleCheck = (e) => {
+  handleCheckEmail = (e) => {
     e.preventDefault();
 
     var user_email = this.state.email;
@@ -58,6 +76,9 @@ class Register extends Component{
       console.log("responseData : " + responseData)
       if(responseData == ''){
         alert("OK");
+        this.setState({
+          isCheckIdBtn : true
+        });
       }else{
         alert("이미 있는 email 입니다. 다른 email을 입력하세요.");
       }
@@ -70,38 +91,41 @@ class Register extends Component{
   handleSubmit = (e) => {
     e.preventDefault();
 
-    var data = {
-      user_fname : this.state.fname,
-      user_lname : this.state.lname,
-      user_email : this.state.email,
-      user_pw : this.state.re_pw,
-      user_birthdate : this.state.birth,
-      user_phone : this.state.phone
-    };    
-
-    var responseData = [];
-
-    UserDataService.getSignUp(data)
-    .then(response => {
-      responseData = response.data[0];
-      console.log("responseData : " + responseData);
-
-      //isCreate 가 true면 메인 화면으로
-      isCreate = true;
-      if(isCreate){
-        console.log("회원가입 성공");
-        // <Link to = "/dashboard/Dashboard"></Link>
-      }else{
-        console.log("회원가입 실패");
-      }
+    if(this.state.isCheckIdBtn){
       
-    })
-    .catch( e => {
-      isCreate = false;
-      console.log(e);
-    });
+      var data = {
+        user_fname : this.state.fname,
+        user_lname : this.state.lname,
+        user_email : this.state.email,
+        user_pw : this.state.re_pw,
+        user_birthdate : this.state.birth,
+        user_phone : this.state.phone
+      };    
+  
+      var responseData = [];
+  
+      UserDataService.getSignUp(data)
+      .then(response => {
+        responseData = response.data[0];
+        console.log("responseData : " + responseData);
+  
+        //isCreate 가 true면 메인 화면으로
+        isCreate = true;
+        if(isCreate){
+          console.log("회원가입 성공");
+          // <Link to = "/dashboard/Dashboard"></Link>
+        }else{
+          console.log("회원가입 실패");
+        }
+      })
+      .catch( e => {
+        isCreate = false;
+        console.log(e);
+      });
+    }
+    else alert("email 중복 확인 하세요.");
+    
   }
-
   render(){
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
@@ -156,8 +180,7 @@ class Register extends Component{
                         onChange={this.handleChange}
                       />
                       <CInputGroupPrepend>
-                      {/* <CInputGroupText action onClick={this.handleCheck}>중복</CInputGroupText> */}
-                        <CButton color="light" onClick={this.handleCheck}>중복</CButton>
+                        <CButton color="light" onClick={this.handleCheckEmail}>중복</CButton>
                       </CInputGroupPrepend>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
@@ -175,7 +198,7 @@ class Register extends Component{
                         onChange={this.handleChange}
                       />
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
+                    <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-lock-locked" />
@@ -190,7 +213,10 @@ class Register extends Component{
                         onChange={this.handleChange}
                       />
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
+                    <CInputGroup className="mb-3">
+                      <div style={{color: "red"}}>{this.state.checkPwMsg}</div>
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
                           <CIcon name="cil-phone" />
@@ -205,7 +231,7 @@ class Register extends Component{
                         onChange={this.handleChange}
                       />
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
+                    <CInputGroup className="mb-3">
                       <CCol md="3">
                         <CLabel htmlFor="date-input">Date Input</CLabel>
                       </CCol>
