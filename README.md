@@ -25,4 +25,5 @@ module.exports = {
 - `npm install`
 - `npm install @material-ui/core`
 - `npm install --save axios`
+- `npm start`
 
