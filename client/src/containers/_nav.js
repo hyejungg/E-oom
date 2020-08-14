@@ -43,12 +43,7 @@ export default [
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Class 개설",
-        to: "/base/create_Class",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Class 목록",
+        name: "수업 생성",
         to: "/base/create_list_class",
       },
       {
