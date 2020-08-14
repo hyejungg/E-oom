@@ -13,7 +13,7 @@
 /build
 
 /app/config
-/app/models.index.js
+/app/models/db.js
 # misc
 .DS_Store
 .env.local

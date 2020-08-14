@@ -1,13 +1,15 @@
 module.exports = app => {
-    const users = require("../controllers/user.controller.js");
+    const user = require("../controllers/user.controller.js");
 
     var router = require("express").Router();
     //signin
-    router.post("/signin",users.signIn);
+    router.post("/signin",user.signIn);
     //signup
-    router.post("/signup",users.signUp);
+    router.post("/signup",user.signUp);
     //check ID valid (중복확인)
-    router.get("/checkid/:user_email",users.isValidID);
+    router.get("/checkid/:user_email",user.isValidID);
+    //find ID
+    router.post("/findid",user.findID);
 
     // //Check the email if it's alreadt exist
     // router.get("/getNum/:user_email",users.findNumByEmail);
