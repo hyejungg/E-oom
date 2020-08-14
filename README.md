@@ -19,3 +19,10 @@ module.exports = {
 - server 디렉토리에서 
 - `npm install`
 - `node server.js` 
+
+### 클라이언트 실행 방법
+- client 디렉토리에서
+- `npm install`
+- `npm install @material-ui/core`
+- `npm install --save axios`
+
