@@ -61,7 +61,7 @@ class UserDataService{
     }
     //search Email
     //이메일 찾기
-    //입력값 {user_fname,user_lname,user_phone}
+    //입력값 {user_fname,user_lname,user_phone,user_birthdate}
     //존재하면 user_email정보 있는 json반환
     //없으면 아무것도 반환 X
     getFindEmail(data){
