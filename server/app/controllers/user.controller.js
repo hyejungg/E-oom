@@ -85,13 +85,14 @@ exports.isValidID = async(req, res) =>{
 }
 
 exports.findID = async(req,res) =>{
-  const {user_fname,user_lname,user_phone} = req.body;
+  const {user_fname,user_lname,user_phone,user_birthdate} = req.body;
   await User.findOne({
     attributes:['user_email'],
     where:{
       user_fname :user_fname,
       user_lname : user_lname,
-      user_phone : user_phone
+      user_phone : user_phone,
+      user_birthdate : user_birthdate
     }
   }).then(data =>{
     res.send(data);
