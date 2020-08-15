@@ -24,7 +24,7 @@ exports.signUp = async(req, res) => {
   };
   // Save Tutorial in the database
   await User.create(user)
-    .then(data => {
+    .then(data=>{
       res.send(data);
     })
     .catch(err => {
@@ -70,6 +70,7 @@ exports.signIn = async (req, res) => {
 exports.isValidID = async(req, res) =>{
   const { user_email} = req.params;
   await User.findOne({
+      attributes : ['user_num'],
       where: {
         user_email:user_email
       }
@@ -86,6 +87,7 @@ exports.isValidID = async(req, res) =>{
 exports.findID = async(req,res) =>{
   const {user_fname,user_lname,user_phone} = req.body;
   await User.findOne({
+    attributes:['user_email'],
     where:{
       user_fname :user_fname,
       user_lname : user_lname,
@@ -100,6 +102,115 @@ exports.findID = async(req,res) =>{
     });
   });
 }
+exports.getAll = async(req,res) =>{
+  await User.findAll()
+  .then(data =>{
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving tutorials."
+    });
+  });
+}
+exports.checkPW = async(req,res)=>{
+  const {user_num, user_pw} = req.body;
+  try {
+    const user = await User.findOne({
+      attributes:["user_pw"],
+      where:{user_num:user_num}
+    });
+
+    const isMatch = await bcrypt.compare(user_pw, user.user_pw);
+
+    if (isMatch) {
+      res.send({success : true});
+    }else{
+      res.send({success : false});
+    }
+
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the Tutorial."
+    });
+  }
+}
+exports.getOne = async(req,res) =>{
+  const {user_num} = req.params;
+  await User.findByPk(user_num,{
+    attributes : ["user_email","user_fname","user_lname","user_birthdate","user_phone"]
+  })
+  .then(data =>{
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving tutorials."
+    });
+  });
+}
+exports.updateUser = async (req, res, next) => {
+  const { user_num , user_fname, user_lname, user_birthdate, user_phone } = req.body;
+  try {    
+        await User.update(
+          {
+              user_fname: user_fname,
+              user_lname: user_lname,
+              user_birthdate : user_birthdate,
+              user_phone : user_phone
+          },
+          {
+            where :{
+              user_num : user_num
+            }
+          }
+        ).then(data=>{
+          res.send(data);
+        });
+      
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the Tutorial."
+    });
+  }
+};
+exports.updatePW = async(req,res)=>{
+  const {user_num, cur_user_pw,new_user_pw} = req.body;
+  try {
+    const user = await User.findByPk(user_num,{
+      attributes:["user_pw"]
+    });
+
+    const isMatch = await bcrypt.compare(cur_user_pw, user.user_pw);
+
+    if (isMatch) {
+      const hashedPassword = await bcrypt.hash(new_user_pw, 12);
+      await User.update(
+        {
+            user_pw : hashedPassword
+        },
+        {
+          where :{
+            user_num : user_num
+          }
+        }
+      ).then(data=>{
+        res.send(data);
+      });
+    }else{
+      res.send("user_pw wrong");
+    }
+
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the Tutorial."
+    });
+  }
+}
+
 // const User = require("../models/user.model.js");
 
 // //sign in

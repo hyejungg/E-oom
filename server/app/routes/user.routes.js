@@ -10,7 +10,16 @@ module.exports = app => {
     router.get("/checkid/:user_email",user.isValidID);
     //find ID
     router.post("/findid",user.findID);
-
+    //get Users
+    router.get("/",user.getAll);
+    //check PW
+    router.post("/checkpw",user.checkPW);
+    //get User Info
+    router.get("/userinfo/:user_num",user.getOne);
+    //update User
+    router.put("/update",user.updateUser);
+    //update PW
+    router.put("/updatepw",user.updatePW);
     // //Check the email if it's alreadt exist
     // router.get("/getNum/:user_email",users.findNumByEmail);
     // //Create a new User
