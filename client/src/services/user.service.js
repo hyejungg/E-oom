@@ -17,7 +17,7 @@ class UserDataService{
     getCheckId(user_email){
          return http.get("/users/checkid/"+user_email);
     }
-       //로그인
+    //로그인
     //입력값 { user_email, user_pw }
     //정상 동작시 user정보 있는 json반환
     //이메일 존재하지 않으면 "user_email wrong"
@@ -25,6 +25,7 @@ class UserDataService{
     getLogin(data){
         return http.post("/users/signin",data);
     }
+
     //전체 유저
     //입력값 없음
     //전체 유저정보를 각각 json형식으로 갖고있는 배열 반환
@@ -69,10 +70,27 @@ class UserDataService{
       return http.post("/users/findid",data);
     }
     //search PW
-    getFindPw(user_email, user_phone){
-       //user의 pw를 return 받도록 ? 랜덤 값 return -> 그걸로 우선 로그인 하고 수정?
-
+    //비밀번호 찾기 1
+    //입력값 {user_email, user_phone}
+    //유저 존재하면 랜덤 비밀번호 생성 후 반환
+    //유저 존재하지 않으면 "not exist user"
+    getFindPw(data){
+        return http.post("/users/findpw",data);
     }
+    //비밀번호 찾기 2
+    //입력값 {user_email, user_phone}
+    //유저 존재하면 {user_num}
+    //존재하지 않으면 반환값 X
+    checkInfo(data){
+        return http.post("/users/check",data);
+    }
+    //입력값 { user_num , user_pw}
+    //정상 처리 [user_num]
+    //user_num잘못된 경우 [0]
+    setNewPW(data){
+        return http.put("/users/newpw",data);
+    }
+
 }
 
 export default new UserDataService();
