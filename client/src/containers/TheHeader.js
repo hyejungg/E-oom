@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CHeader,
@@ -7,23 +7,20 @@ import {
   CHeaderNav,
   CHeaderNavItem,
   CHeaderNavLink,
-  CSubheader,
-  CBreadcrumbRouter,
-  CLink
+  CButton,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-// routes config
-import routes from '../routes'
-
-import { 
-  TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
-  TheHeaderDropdownTasks
-}  from './index'
-
 const TheHeader = () => {
+  var isLogin = true;
+
+  const changeLogin = (value) =>{
+    console.log("버튼눌림");
+    isLogin = false;
+    value = "로그아웃"
+    return value
+  }
+
   const dispatch = useDispatch()
   const sidebarShow = useSelector(state => state.sidebarShow)
 
@@ -55,44 +52,30 @@ const TheHeader = () => {
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
-          <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
+          <CHeaderNavLink to="/dashboard">Home</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem  className="px-3">
-          <CHeaderNavLink to="/users">Users</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem className="px-3">
-          <CHeaderNavLink>Settings</CHeaderNavLink>
+          <CHeaderNavLink to="/mypage">MyPage</CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 
-      <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownTasks/>
-        <TheHeaderDropdownMssg/>
-        <TheHeaderDropdown/>
+      <CHeaderNav className="px-3" align="right">
+        {/* //로그인 시 -> 000님, 로그아웃
+        //로그아웃 시 -> 로그인 */}
+        <CHeaderNavItem className="px-3" >
+          <CButton variant="ghost" name="login" value="로그인" onClick={changeLogin}>뀨</CButton>
+          {/* {isAuthenticated
+            ? <NavItem onClick={handleLogout}>Logout</NavItem>
+            : <>
+                <LinkContainer to="/signup">
+                  <NavItem>Signup</NavItem>
+                </LinkContainer>
+                <LinkContainer to="/login">
+                  <NavItem>Login</NavItem>
+                </LinkContainer>
+              </>} */}
+          </CHeaderNavItem>
       </CHeaderNav>
-
-      {/* <CSubheader className="px-3 justify-content-between">
-        <CBreadcrumbRouter 
-          className="border-0 c-subheader-nav m-0 px-0 px-md-3" 
-          routes={routes} 
-        />
-          <div className="d-md-down-none mfe-2 c-subheader-nav">
-            <CLink className="c-subheader-nav-link"href="#">
-              <CIcon name="cil-speech" alt="Settings" />
-            </CLink>
-            <CLink 
-              className="c-subheader-nav-link" 
-              aria-current="page" 
-              to="/dashboard"
-            >
-              <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Dashboard
-            </CLink>
-            <CLink className="c-subheader-nav-link" href="#">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
-            </CLink>
-          </div>
-      </CSubheader> */}
     </CHeader>
   )
 }

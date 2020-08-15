@@ -12,7 +12,7 @@ class UserDataService{
     }
     //회원가입 이전 이메일 중복 체크
     //입력값 user_email
-    //존재하는 이메일이면 use_num정보 있는 json반환
+    //존재하는 이메일이면 user_num정보 있는 json반환
     //없으면 아무것도 반환 X
     getCheckId(user_email){
          return http.get("/users/checkid/"+user_email);

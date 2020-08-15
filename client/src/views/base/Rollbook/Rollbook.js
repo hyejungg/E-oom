@@ -39,7 +39,9 @@ class Rollbook extends Component {
     });
   };
 
-  isStudents = (s) => {
+  isStudents = (e) => {
+    e.preventDefault();
+
     if ((this.state.grade && this.state.class)){
       console.log(this.state.grade + "학년 " + this.state.class + "반은 존재합니다.")
       //해당 학년/반 학생 목록 뜨도록 -> db랑 연결 필요
@@ -124,7 +126,7 @@ class Rollbook extends Component {
                       color="light"
                       className="btnSearch"
                       active
-                      onClick={this.isStudents(this.state)}>{" "}조회{" "}</CButton>
+                      onClick={this.isStudents}>{" "}조회{" "}</CButton>
                   </CCol>
                 </CForm>
               </CCardHeader>
