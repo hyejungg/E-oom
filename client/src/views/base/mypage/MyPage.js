@@ -74,14 +74,14 @@ const Mypage = () => {
                       action
                       active={activeTab === 1}
                     >
-                      수업
+                      회원 정보 수정
                     </CListGroupItem>
                     <CListGroupItem
                       onClick={() => setActiveTab(2)}
                       action
                       active={activeTab === 2}
                     >
-                      설정
+                      회의 설정
                     </CListGroupItem>
                     <CListGroupItem
                       onClick={() => setActiveTab(3)}
@@ -103,15 +103,15 @@ const Mypage = () => {
                           <h4>이름</h4>
                         </CCardBody>
                       </CCardHeader>
-                      <CCardHeader>개인 회의 ID</CCardHeader>
-                      <CCardHeader>로그인 이메일</CCardHeader>
-                      <CCardHeader>사용자 유형</CCardHeader>
-                      <CCardHeader>용량</CCardHeader>
-                      <CCardHeader>언어</CCardHeader>
-                      <CCardHeader>Date and Time</CCardHeader>
-                      <CCardHeader>Calendar and Contact</CCardHeader>
-                      <CCardHeader>호스트 키</CCardHeader>
-                      <CCardHeader>로그인된 장치</CCardHeader>
+                      <CCardHeader>개인 회의 ID : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>로그인 이메일 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>사용자 유형 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>용량 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>언어 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>Date and Time : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>Calendar and Contact : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>호스트 키 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>로그인된 장치 : <span>룰루랄라</span></CCardHeader>
 
                       {/* </CCol>
                       {/* <CListGroupItem accent="primary">
@@ -131,7 +131,30 @@ const Mypage = () => {
                       </CListGroupItem> */}
                     </CTabPane>
                     <CTabPane active={activeTab === 1}>
-                      <p>수업목록?class목록?</p>
+                      <CCardHeader>
+                        <CCardBody>
+                          <h2>{'이름'}</h2>
+                        </CCardBody>
+                      </CCardHeader>
+                      <CCardHeader>성 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>이름 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>로그인 이메일 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>비밀번호 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>핸드폰 번호 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>생년월일 : <span>룰루랄라</span></CCardHeader>
+                      <CRow>
+                        <CCol align="right">
+                          <CButton
+                            className="mt-3"
+                            active
+                            tabIndex={-1}
+                            color="light"
+                          >
+                            {" "}
+                            개인 정보 수정{" "}
+                          </CButton>
+                        </CCol>
+                      </CRow>
                     </CTabPane>
                     <CTabPane active={activeTab === 2}>
                       <CNavbar light color="light">

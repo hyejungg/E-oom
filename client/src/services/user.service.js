@@ -1,40 +1,34 @@
+// http request using axios
 import http from "../http-common";
 
+//함수 이름은 변경 가능 return값은 변경X
 class UserDataService{
-    //함수 이름은 변경 가능 return값은 변경X
-
+     //signup
     //회원가입
     //입력값 {user_fname, user_lname, user_email, user_pw, user_birthdate, user_phone}
     //정상동작시 가입된 user정보있는 json반환
-    signup(data){
+    getSignUp(data){
         return http.post("/users/signup",data);
-    }
-    //로그인
-    //입력값 { user_email, user_pw }
-    //정상 동작시 user정보 있는 json반환
-    //이메일 존재하지 않으면 "user_email wrong"
-    //비밀번호 틀리면 "user_pw wrong"
-    signin(data){
-        return http.post("/users/signin",data);
     }
     //회원가입 이전 이메일 중복 체크
     //입력값 user_email
     //존재하는 이메일이면 use_num정보 있는 json반환
     //없으면 아무것도 반환 X
-    checkID(user_email){
-        return http.get("/users/checkid/"+user_email);
+    getCheckId(user_email){
+         return http.get("/users/checkid/"+user_email);
     }
-    //이메일 찾기
-    //입력값 {user_fname,user_lname,user_phone}
-    //존재하면 user_email정보 있는 json반환
-    //없으면 아무것도 반환 X
-    findID(data){
-        return http.post("/users/findid",data);
+       //로그인
+    //입력값 { user_email, user_pw }
+    //정상 동작시 user정보 있는 json반환
+    //이메일 존재하지 않으면 "user_email wrong"
+    //비밀번호 틀리면 "user_pw wrong"
+    getLogin(data){
+        return http.post("/users/signin",data);
     }
     //전체 유저
     //입력값 없음
     //전체 유저정보를 각각 json형식으로 갖고있는 배열 반환
-    getUsers(){
+    getAll(){
         return http.get("/users");
     }
     //비밀번호 확인(개인 정보 변경 전에 확인?)
@@ -64,6 +58,20 @@ class UserDataService{
     //잘못된 경우 "user_pw wrong"
     updatePW(data){
         return http.put("/users/updatepw",data);
+    }
+    //search Email
+    //이메일 찾기
+    //입력값 {user_fname,user_lname,user_phone}
+    //존재하면 user_email정보 있는 json반환
+    //없으면 아무것도 반환 X
+    getFindEmail(data){
+      //user의 email을 return 받도록
+      return http.post("/users/findid",data);
+    }
+    //search PW
+    getFindPw(user_email, user_phone){
+       //user의 pw를 return 받도록 ? 랜덤 값 return -> 그걸로 우선 로그인 하고 수정?
+
     }
 }
 

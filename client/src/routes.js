@@ -1,7 +1,7 @@
 import React from "react";
 import Mypage from "./views/base/mypage/MyPage";
 
-//test용 
+//test용
 import CreateRoom from "./test/CreateRoom";
 import Room from "./test/Room";
 
@@ -26,9 +26,7 @@ const MeetParticipate = React.lazy(() =>
 //마이페이지
 const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
 //클래스 개설
-const CreateClass = React.lazy(() =>
-  import("./views/base/create_class/CreateClass")
-);
+
 const CreateListClass = React.lazy(() =>
   import("./views/base/create_list_class/CreateListClass")
 );
@@ -68,7 +66,12 @@ const User = React.lazy(() => import("./views/users/User"));
 
 const routes = [
   //test용
-  { path: "/createroom", name: "createRoom", exact: true, component: CreateRoom },
+  {
+    path: "/createroom",
+    name: "createRoom",
+    exact: true,
+    component: CreateRoom,
+  },
   { path: "/room/:roomID", name: "Room", component: Room },
   //
   { path: "/", exact: true, name: "Home" },
@@ -85,7 +88,7 @@ const routes = [
   { path: "/base/meet_create", name: "MeetCreate", component: MeetCreate }, //***
   // { path: '/base/meet_participate', name: 'MeetParticipate', component: MeetParticipate }, //***
   { path: "/base/meet_link", name: "MeetLink", component: MeetLink }, //***
-  { path: "/base/create_class", name: "CreateClass", component: CreateClass }, //***
+
   {
     path: "/base/create_list_class",
     name: "CreateListClass",

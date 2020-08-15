@@ -55,7 +55,8 @@ const ListLecture = () => {
                     <CCol xs="8">
                       <CTabPane active={activeTab === 0}>
                         <CCardHeader>
-                          <h2>새 강의 시작</h2>
+                          <p></p>
+                          <h3>새 강의 시작</h3>
                           <p></p>
                           <p>{"강의명이 들어올 자리"}</p>
                         </CCardHeader>
@@ -87,16 +88,19 @@ const ListLecture = () => {
                             {"이것은 랜덤지정?"}
                           </div>
                         </CCardHeader>
-                        <CButton
-                          // 버튼 클릭 시 회의 예약 설정되도록
-                          className="mt-3"
-                          active={activeTab === 0}
-                          tabIndex={-1}
-                          color="info"
-                        >
-                          {" "}
-                          저장{" "}
-                        </CButton>
+                        <CRow>
+                          <CCol align="right">
+                            <CButton
+                              className="mt-3"
+                              active={activeTab === 0}
+                              tabIndex={-1}
+                              color="info"
+                            >
+                              {" "}
+                              예약{" "}
+                            </CButton>
+                          </CCol>
+                        </CRow>
                       </CTabPane>
                     </CCol>
                   </CRow>
