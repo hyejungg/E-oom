@@ -13,23 +13,56 @@ import {
   CLabel,
 } from '@coreui/react'
 
+import UserDataService from '../../../services/user.service'
+import SettingNewPW from '../search_idPw/SettingNewPW'
+
 class SearchIDPW extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      user_fname : '',
-      user_lname : '',
-      user_birth : '',
-      user_phone : '',
-      user_id : '',
-      user_pw : '',
-      isLogin: null
+      fname : '',
+      lname : '',
+      birth : '',
+      phone : '',
+
+      email : '',
+      
+      isFindID : false,
+      isFindPW : true,
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.submitID = this.submitID.bind(this);
+    this.submitPW = this.submitPW.bind(this);
   }
-  handleSubmit = (e) => {
+  submitID = (e) => {
     //페이지 리로딩 방지
     e.preventDefault();
-    console.log(this.state); 
+
+    var data = {
+      user_fname : this.state.fname,
+      user_lname : this.state.lname,
+      user_birthdate : this.state.birth,
+      user_phone : this.state.phone
+    };
+    var responseData = [];
+
+    UserDataService.getFindEmail(data)
+    .then(response =>{
+      responseData = response.data;
+      console.log("responseData : " +  responseData );
+      for(var value in responseData)
+        console.log("key : " + value + " / value" +responseData[value]);
+
+        // alert("회원님의 Email 주소는 " + "~" + " 입니다.");
+    })
+    .catch( e => {
+        console.log(e);
+    });
+
+  }
+  submitPW = (e) => {
+    //페이지 리로딩 방지
+    e.preventDefault(); 
   }
   //입력창 관리 (ID, PW)
   handleChange = (e) => {
@@ -47,30 +80,31 @@ class SearchIDPW extends Component {
             <CCardGroup>
               <CCard className="p-4 bg-secondary">
                 <CCardBody> 
-                  <CForm onSubmit={this.handleSubmit}>
-                    <h3>아이디를 잃어버렸나요?</h3>
+                  <CForm>
+                    <h3>아이디 잃어버렸나요?</h3>
                     <p className="text-muted">다음을 입력하세요.</p>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" id="user_fname" name="user_fname" placeholder="Enter First Name" autoComplete="user_fname"
-                                value={this.state.user_fname} onChange={this.handleChange} />
+                      <CInput type="text" id="fname" name="fname" placeholder="Enter First Name" autoComplete="user_fname"
+                                value={this.state.fname} onChange={this.handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" id="user_lname" name="user_lname" placeholder="Enter Last Name" autoComplete="user_lname"
-                                value={this.state.user_fname} onChange={this.handleChange} />
+                      <CInput type="text" id="lname" name="lname" placeholder="Enter Last Name" autoComplete="user_lname"
+                                value={this.state.lname} onChange={this.handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" placeholder="Enter birthday (ex:00년1월1일 -> 000101)" id="user_birth"
-                                name="user_birth" autoComplete="user_birth"
-                                value={this.state.user_birth} onChange={this.handleChange} />
+                      <CInput type="date" placeholder="Enter birthday" id="birth"
+                                name="birth" autoComplete="user_birth"
+                                value={this.state.birth} onChange={this.handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="user_phone" 
-                                name="user_phone" autoComplete="user_phone"
-                                value={this.state.user_phone} onChange={this.handleChange} />
+                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="phone" 
+                                name="phone" autoComplete="user_phone"
+                                value={this.state.phone} onChange={this.handleChange} />
                     </CInputGroup>
                     <CRow>
                       <CCol align="center">
-                        <CButton variant="outline" color="dark" className="px-4" type="submit">아이디 찾기</CButton>
+                        <CButton variant="outline" color="dark" className="px-4" 
+                        type="submit" onClick={this.submitID}>아이디 찾기</CButton>
                       </CCol>
                     </CRow>
                   </CForm>
@@ -78,24 +112,32 @@ class SearchIDPW extends Component {
               </CCard>
               <CCard className="text-white bg-dark p-4" style={{ width: '100%' }}>
                 <CCardBody>
-                  <CForm onSubmit={this.handleSubmit}>
-                    <h3>비밀번호를 잃어버렸나요?</h3>
+                  <CForm>
+                    <h3>비밀번호 잃어버렸나요?</h3>
                     <p>다음을 입력하세요.</p>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" placeholder="Enter your ID" id="user_id" 
-                                name="user_id" autoComplete="user_id"
-                                value={this.state.user_id} onChange={this.handleChange} />
+                      <CInput type="text" placeholder="Enter your ID" id="email" 
+                                name="email" autoComplete="user_email"
+                                value={this.state.email} onChange={this.handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="user_phone" 
-                                name="user_phone" autoComplete="user_phone"
-                                value={this.state.user_phone} onChange={this.handleChange} />
+                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="phone" 
+                                name="phone" autoComplete="user_phone"
+                                value={this.state.phone} onChange={this.handleChange} />
                     </CInputGroup>
                     <CRow>
                       <CCol align="center">
-                        <CButton variant="outline" color="secondary" className="px-4" type="submit">비밀번호 찾기</CButton>
+                        <CButton variant="outline" color="secondary" className="px-4" 
+                        type="submit" onClick={this.submitPW}>비밀번호 찾기</CButton>
                       </CCol>
                     </CRow>
+                    {this.state.isFindPW 
+                      ? <CRow className="justify-content-center" >
+                          <CCol className="p-4">
+                            <SettingNewPW />
+                          </CCol>
+                        </CRow>
+                      : <CRow>{" "}</CRow>}
                   </CForm>
                 </CCardBody>
               </CCard>

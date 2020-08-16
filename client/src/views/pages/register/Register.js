@@ -113,7 +113,7 @@ class Register extends Component{
         isCreate = true;
         if(isCreate){
           console.log("회원가입 성공");
-          // <Link to = "/dashboard/Dashboard"></Link>
+          this.props.history.push("/"); //이전화면으로
         }else{
           console.log("회원가입 실패");
         }

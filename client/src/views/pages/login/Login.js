@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -18,6 +18,8 @@ import CIcon from '@coreui/icons-react'
 
 import UserDataService from '../../../services/user.service'
 
+import Home from "../../dashboard/Dashboard"
+
 var isLogin = false;
 
 class Login extends Component {
@@ -27,11 +29,13 @@ class Login extends Component {
     this.state = {
       email : '',
       pw : '',
+
+      // responseData : [],
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.moveHome = this.moveHome.bind(this);
   }
+
   handleSubmit = (e) => {
     //페이지 리로딩 방지
     e.preventDefault();
@@ -46,8 +50,8 @@ class Login extends Component {
     UserDataService.getLogin(data)
     .then(response => {
       responseData = response.data;
-      console.log("responseData : " +  responseData );
-      if( responseData === "user_email wrong"){
+      console.log("responseData : " + responseData );
+      if(responseData === "user_email wrong"){
         isLogin = false;
         console.log("로그인 실패");
         alert("email이 틀렸습니다. 다시 입력하세요.");
@@ -58,13 +62,15 @@ class Login extends Component {
       }else {
         isLogin = true;
         console.log("로그인 성공");
-        // <Link to = "/dashboard/Dashboard"></Link> 
+        this.props.history.push("/");
       }
       isLogin = false;
     })
     .catch(e => {
       console.log(e);
     });
+
+
   }
 
   //setting Input Values (ID, PW)
