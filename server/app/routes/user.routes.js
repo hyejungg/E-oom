@@ -13,7 +13,7 @@ module.exports = app => {
     router.get("/",user.getAll);
 
     //check PW
-    router.post("/checkpw",user.checkPW);
+    router.post("/checcd kpw",user.checkPW);
     //get User Info
     router.get("/userinfo/:user_num",user.getOne);
     //update User
