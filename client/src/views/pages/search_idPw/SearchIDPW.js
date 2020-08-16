@@ -15,6 +15,8 @@ import {
 import UserDataService from '../../../services/user.service'
 import SettingNewPW from '../search_idPw/SettingNewPW'
 
+let user_num = '';
+
 class SearchIDPW extends Component {
   constructor(props) {
     super(props)
@@ -27,12 +29,15 @@ class SearchIDPW extends Component {
       email : '',
       pw_phone : '',
       
+      // user_num : '',
+
       isFindID : false,
-      isFindPW : true,
+      isFindPW : false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitID = this.submitID.bind(this);
     this.submitPW = this.submitPW.bind(this);
+    this.showSettingPW = this.showSettingPW.bind(this);
   }
   submitID = (e) => {
     e.preventDefault();
@@ -41,7 +46,7 @@ class SearchIDPW extends Component {
       user_fname : this.state.fname,
       user_lname : this.state.lname,
       user_birthdate : this.state.birth,
-      user_phone : this.state.phone
+      user_phone : this.state.id_phone
     };
     var responseData = [];
 
@@ -51,6 +56,7 @@ class SearchIDPW extends Component {
       console.log("responseData : " +  responseData );
       for(var value in responseData){
         console.log("key : " + value + " / value" +responseData[value]);
+        this.state.isFindID = true;
         alert("회원님의 Email 주소는 " + responseData[value]+ " 입니다.");
       }
     })
@@ -63,27 +69,48 @@ class SearchIDPW extends Component {
     e.preventDefault();
 
     var data = {
-      user_fname : this.state.fname,
-      user_lname : this.state.lname,
-      user_birthdate : this.state.birth,
-      user_phone : this.state.phone
+      user_email : this.state.email,
+      user_phone : this.state.pw_phone
     };
     var responseData = [];
+    var user_num_str = '';
 
-    UserDataService.getFindEmail(data)
+    //유저 정보가 있다면 새 비밀번호로 변경하도록
+    UserDataService.checkInfo(data)
     .then(response =>{
       responseData = response.data;
       console.log("responseData : " +  responseData );
       for(var value in responseData){
-        console.log("key : " + value + " / value" +responseData[value]);
-        alert("회원님의 Email 주소는 " + responseData[value]+ " 입니다.");
+        console.log("user_num : " +responseData[value]);
       }
+      user_num_str = toString(responseData[value]);
+      alert("새로운 비밀번호를 입력하세요.");
+      this.setState({
+        user_num : user_num_str,
+        isFindPW : true
+      });
     })
-    .catch( e => {
+    .catch(e => {
         console.log(e);
     });
-
   }
+
+  showSettingPW = () => {
+    if(this.state.isFindPW){
+      return(
+        <CRow className="justify-content-center" >
+          <CCol className="p-4">
+            <SettingNewPW user_num={user_num}  />
+          </CCol>
+        </CRow>
+      );
+    }else{
+      return(
+        <CRow>{" "}</CRow>
+      );
+    }
+  }
+
   //입력창 관리 (ID, PW)
   handleChange = (e) => {
     this.setState({
@@ -151,13 +178,7 @@ class SearchIDPW extends Component {
                         type="submit" onClick={this.submitPW}>비밀번호 찾기</CButton>
                       </CCol>
                     </CRow>
-                    {this.state.isFindPW 
-                      ? <CRow className="justify-content-center" >
-                          <CCol className="p-4">
-                            <SettingNewPW />
-                          </CCol>
-                        </CRow>
-                      : <CRow>{" "}</CRow>}
+                    {this.state.isFindPW ? this.showSettingPW() : ''}
                   </CForm>
                 </CCardBody>
               </CCard>

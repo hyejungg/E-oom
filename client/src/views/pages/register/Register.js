@@ -60,7 +60,7 @@ class Register extends Component{
       [e.target.name] : e.target.value
     });
 
-    // //pw == re_pw check  *******이상한데 돌아감 ; 
+    //pw == re_pw check  
     if(e.target.name == "re_pw") this.checkPW(e.target.value);
   }
 
