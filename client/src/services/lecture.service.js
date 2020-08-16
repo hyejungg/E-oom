@@ -7,6 +7,10 @@ class LectureDataService{
     createLecture(data){
         return http.post("/lecture/create",data);
     }
+
+    showLecture(data){
+        return http.post("/lecture/list", data);
+    }
 }
 
 export default new LectureDataService();

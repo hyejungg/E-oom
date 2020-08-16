@@ -11,7 +11,7 @@ exports.createLecture = async(req, res) => {
     });
     return;
   }
-    // Create a Tutorial
+    // Create a Lecture
   const lecture = {
     lecture_title : req.body.lecture_title,
     host_num : req.body.host_num,
@@ -36,4 +36,51 @@ exports.createLecture = async(req, res) => {
           err.message || "Some error occurred while creating the Lecture."
       });
   });
+};
+
+exports.getAllLecture = async (req, res) =>{
+  const host_num = req.body.user_num;
+  try{
+    const lectures = await Lecture.findAll({
+      where: {
+        host_num: host_num
+      }
+    })
+    if(lectures.length === 0){
+      res.send("Lecture_list_null");
+    }else{
+      res.send(lectures);
+      console.log("Successfully got the list of lectures");
+    }
+    /*.then((data) => {
+      res.send(data[0].dataValues);
+      for(var i=0; i<3; i++){
+        console.log(data[0].dataValues);
+      }      
+      console.log("Retrieve Successfully");
+    });*/
+  }catch(err){
+    res.stats(500).send({
+      message:
+        err.message || "Some error occurred while getiing all the lectures with user id"
+    })
+  }
+};
+
+exports.searchLecture = async(req, res) => {
+  const lecture_title = req.body.lecture_title;
+  const host_num = req.body.user_num;
+  try{
+    await Lecture.findOne({
+      where:{
+        host_num: host_num,
+        lecture_title: lecture_title
+      }
+    })
+    .then((data)=>{
+      res.send(data);
+    });
+  }catch(err){
+
+  }
 };
