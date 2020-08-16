@@ -1,3 +1,4 @@
+//Create the lecture (/api/lecture/create)
 module.exports = app => {
     const lecture = require("../controllers/lecture.controller.js");
 

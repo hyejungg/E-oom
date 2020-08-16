@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const db = require("../models");
 const Lecture = db.lecture;
 const Op = db.Sequelize.Op;
-// Create and Save a new Tutorial
+// Create and Save a new Lecture
 exports.createLecture = async(req, res) => {
    // Validate request 
   if (!req.body) {

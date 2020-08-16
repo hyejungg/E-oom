@@ -1,4 +1,4 @@
-
+//Create the Lecture
 module.exports = (sequelize, Sequelize) => {
   const Lecture = sequelize.define("lecture", {
     lecture_num: {
