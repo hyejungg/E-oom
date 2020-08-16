@@ -46,11 +46,11 @@ export default [
         name: "수업 생성",
         to: "/base/create_list_class",
       },
-      {
-        _tag: "CSidebarNavItem",
-        name: "강의 생성",
-        to: "/base/carousels",
-      },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "강의 생성",
+      //   to: "/base/carousels",
+      // },
       {
         _tag: "CSidebarNavItem",
         name: "출석부",

@@ -8,32 +8,28 @@ module.exports = app => {
     router.post("/signup",user.signUp);
     //check ID valid (중복확인)
     router.get("/checkid/:user_email",user.isValidID);
-    //find ID
-    router.post("/findid",user.findID);
+
     //get Users
     router.get("/",user.getAll);
+
     //check PW
-    router.post("/checkpw",user.checkPW);
+    router.post("/checcd kpw",user.checkPW);
     //get User Info
     router.get("/userinfo/:user_num",user.getOne);
     //update User
     router.put("/update",user.updateUser);
     //update PW
     router.put("/updatepw",user.updatePW);
-    // //Check the email if it's alreadt exist
-    // router.get("/getNum/:user_email",users.findNumByEmail);
-    // //Create a new User
-    // router.post("/create",users.create);
 
-    // //Retrieve all Users
-    // router.get("/",users.findAll);
-
-    // //Retrieve a single user with user_email
-    // router.get("/email/:user_email",users.findByEmail);
-
-    // router.get("/num/:user_num",users.findByNum);
-
-    // router.put("/edit/:user_num",users.updateAll);
+    //find ID
+    router.post("/findid",user.findID);
+    //find PW (랜덤 비번 생성)
+    router.post("/findpw",user.findPW);
+    //check ID,Phone
+    router.post("/check",user.checkInfo);
+    //set new PW
+    router.put("/newpw",user.newPW);
+    
 
     app.use('/api/users', router);
 }
