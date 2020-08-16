@@ -10,7 +10,6 @@ import {
   CInput,
   CInputGroup,
   CRow,
-  CLabel,
 } from '@coreui/react'
 
 import UserDataService from '../../../services/user.service'
@@ -23,9 +22,10 @@ class SearchIDPW extends Component {
       fname : '',
       lname : '',
       birth : '',
-      phone : '',
+      id_phone : '',
 
       email : '',
+      pw_phone : '',
       
       isFindID : false,
       isFindPW : true,
@@ -35,7 +35,6 @@ class SearchIDPW extends Component {
     this.submitPW = this.submitPW.bind(this);
   }
   submitID = (e) => {
-    //페이지 리로딩 방지
     e.preventDefault();
 
     var data = {
@@ -50,10 +49,10 @@ class SearchIDPW extends Component {
     .then(response =>{
       responseData = response.data;
       console.log("responseData : " +  responseData );
-      for(var value in responseData)
+      for(var value in responseData){
         console.log("key : " + value + " / value" +responseData[value]);
-
-        // alert("회원님의 Email 주소는 " + "~" + " 입니다.");
+        alert("회원님의 Email 주소는 " + responseData[value]+ " 입니다.");
+      }
     })
     .catch( e => {
         console.log(e);
@@ -61,8 +60,29 @@ class SearchIDPW extends Component {
 
   }
   submitPW = (e) => {
-    //페이지 리로딩 방지
-    e.preventDefault(); 
+    e.preventDefault();
+
+    var data = {
+      user_fname : this.state.fname,
+      user_lname : this.state.lname,
+      user_birthdate : this.state.birth,
+      user_phone : this.state.phone
+    };
+    var responseData = [];
+
+    UserDataService.getFindEmail(data)
+    .then(response =>{
+      responseData = response.data;
+      console.log("responseData : " +  responseData );
+      for(var value in responseData){
+        console.log("key : " + value + " / value" +responseData[value]);
+        alert("회원님의 Email 주소는 " + responseData[value]+ " 입니다.");
+      }
+    })
+    .catch( e => {
+        console.log(e);
+    });
+
   }
   //입력창 관리 (ID, PW)
   handleChange = (e) => {
@@ -97,9 +117,9 @@ class SearchIDPW extends Component {
                                 value={this.state.birth} onChange={this.handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="phone" 
-                                name="phone" autoComplete="user_phone"
-                                value={this.state.phone} onChange={this.handleChange} />
+                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="id_phone" 
+                                name="id_phone" autoComplete="user_phone"
+                                value={this.state.id_phone} onChange={this.handleChange} />
                     </CInputGroup>
                     <CRow>
                       <CCol align="center">
@@ -121,9 +141,9 @@ class SearchIDPW extends Component {
                                 value={this.state.email} onChange={this.handleChange} />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="phone" 
-                                name="phone" autoComplete="user_phone"
-                                value={this.state.phone} onChange={this.handleChange} />
+                      <CInput type="text" placeholder="Enter phone number (ex:010-0000-0000)" id="pw_phone" 
+                                name="pw_phone" autoComplete="user_phone"
+                                value={this.state.pw_phone} onChange={this.handleChange} />
                     </CInputGroup>
                     <CRow>
                       <CCol align="center">
