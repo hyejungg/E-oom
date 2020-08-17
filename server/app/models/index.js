@@ -29,5 +29,6 @@ db.room = require("./room.model.js")(sequelize, Sequelize);
 db.participation = require("./participation.model.js")(sequelize,Sequelize);
 db.user.belongsToMany(db.room,{through : db.participation,foreignKey : "room_num"});
 db.room.belongsToMany(db.user,{through : db.participation,foreignKey:"user_num"});
-
+db.user.hasMany(db.room,{as : "host_num",foreignKey : "user_num"});
+db.room.belongsTo(db.user,{as : "host_num",foreignKey : "user_num"});
 module.exports = db;
