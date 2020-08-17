@@ -3,9 +3,9 @@ import http from "../http-common";
 
 //함수 이름은 변경 가능 return값은 변경X
 class UserDataService{
-     //signup
+    //signup
     //회원가입
-    //입력값 {user_fname, user_lname, user_email, user_pw, user_birthdate, user_phone}
+    //입력값 {user_fname, user_lname, user_nickname,user_email, user_pw, user_birthdate, user_phone}
     //정상동작시 가입된 user정보있는 json반환
     getSignUp(data){
         return http.post("/users/signup",data);
@@ -41,13 +41,13 @@ class UserDataService{
     }
     //유저 정보 불러오기
     //입력값 user_num
-    //유저 정보 반환{"user_email","user_fname","user_lname","user_birthdate","user_phone"}
+    //유저 정보 반환{"user_email","user_fname","user_lname","user_nickname","user_birthdate","user_phone"}
     //user_num존재하지 않으면 아무것도 반환 x
     getUserInfo(user_num){
         return http.get("/users/userinfo"+user_num);
     }
     //유저 정보 업데이트(user_email은 변경 불가)
-    //입력값 { user_num , user_fname, user_lname, user_birthdate, user_phone }
+    //입력값 { user_num , user_fname, user_lname,user_nickname, user_birthdate, user_phone }
     //정상 처리 [user_num]
     //user_num잘못된 경우 [0]
     updateUser(data){
