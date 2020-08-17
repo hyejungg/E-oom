@@ -10,45 +10,39 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
-      room_id: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      room_pw: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       room_link: {
         type: Sequelize.STRING,
         allowNull: false
       },
       room_activate: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
-      },
-      option_private: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       },
       option_mute_authority: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : true
       },
       option_chat_authority: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : true
       },
       option_save_authority: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       },
       option_notification: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : true
       },
       option_lock: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       }
     });
   

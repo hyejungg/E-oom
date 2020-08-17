@@ -6,11 +6,13 @@ module.exports = (sequelize, Sequelize) => {
       },
       participation_sharing: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       },
       participation_annotation: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       },
       participation_chat: {
         type: Sequelize.BOOLEAN,
@@ -18,11 +20,13 @@ module.exports = (sequelize, Sequelize) => {
       },
       participation_audio: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       },
       participation_video: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue : false
       }
     });
   
