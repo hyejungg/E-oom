@@ -263,10 +263,11 @@ exports.checkInfo = async(req,res)=>{
 }
 exports.newPW = async (req, res, next) => {
   const { user_num , user_pw} = req.body;
+  const hashedPassword = await bcrypt.hash(user_pw, 12);
   try {    
         await User.update(
           {
-              user_pw : user_pw
+              user_pw : hashedPassword
           },
           {
             where :{
