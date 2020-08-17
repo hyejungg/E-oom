@@ -15,30 +15,29 @@ import {
 import UserDataService from '../../../services/user.service'
 import SettingNewPW from '../search_idPw/SettingNewPW'
 
-let user_num = '';
-
 class SearchIDPW extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      fname : '',
-      lname : '',
-      birth : '',
-      id_phone : '',
+    constructor(props) {
+      super(props)
+      this.state = {
+        fname : '',
+        lname : '',
+        birth : '',
+        id_phone : '',
 
-      email : '',
-      pw_phone : '',
-      
-      // user_num : '',
+        email : '',
+        pw_phone : '',
+        
+        user_num : '',
 
-      isFindID : false,
-      isFindPW : false,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.submitID = this.submitID.bind(this);
-    this.submitPW = this.submitPW.bind(this);
-    this.showSettingPW = this.showSettingPW.bind(this);
+        isFindID : false,
+        isFindPW : false,
+      };
+      this.handleChange = this.handleChange.bind(this);
+      this.submitID = this.submitID.bind(this);
+      this.submitPW = this.submitPW.bind(this);
+      this.showSettingPW = this.showSettingPW.bind(this);
   }
+  
   submitID = (e) => {
     e.preventDefault();
 
@@ -79,16 +78,20 @@ class SearchIDPW extends Component {
     UserDataService.checkInfo(data)
     .then(response =>{
       responseData = response.data;
-      console.log("responseData : " +  responseData );
-      for(var value in responseData){
-        console.log("user_num : " +responseData[value]);
+      if(responseData.size !== 0){ //값을 정상적으로 입력하지 않은 경우 추가
+        console.log("responseData : " +  responseData );
+        for(var value in responseData){
+          console.log("user_num : " +responseData[value]);
+        }
+        user_num_str = responseData[value];
+        alert("새로운 비밀번호를 입력하세요.");
+        this.setState({
+          user_num : user_num_str,
+          isFindPW : true
+        });
+      }else{
+        alert("다시 입력하세요.");
       }
-      user_num_str = toString(responseData[value]);
-      alert("새로운 비밀번호를 입력하세요.");
-      this.setState({
-        user_num : user_num_str,
-        isFindPW : true
-      });
     })
     .catch(e => {
         console.log(e);
@@ -100,7 +103,7 @@ class SearchIDPW extends Component {
       return(
         <CRow className="justify-content-center" >
           <CCol className="p-4">
-            <SettingNewPW user_num={user_num}  />
+            <SettingNewPW user_num={this.state.user_num}  />
           </CCol>
         </CRow>
       );

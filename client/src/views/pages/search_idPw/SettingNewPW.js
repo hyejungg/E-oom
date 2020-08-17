@@ -6,6 +6,7 @@ import {
   CInput,
   CInputGroup,
   CRow,
+  CCard,
 } from "@coreui/react";
 
 import SearchIDPW from '../search_idPw/SearchIDPW'
@@ -15,8 +16,6 @@ class SettingNewPW extends Component{
     constructor(props){
         super(props);
         this.state= {
-            // num : SearchIDPW.prototype.state.user_num,
-
             num : this.props.user_num,
 
             new_pw : '',
@@ -65,7 +64,7 @@ class SettingNewPW extends Component{
             for(var value in responseData){
               console.log("user_num : " + responseData[value]);
             }
-            if(typeof responseData[value] === '0'){
+            if(responseData === 0){
                 console.log("비밀번호 update 실패")
             }else{
                 alert("정상적으로 비밀번호가 수정되었습니다. 다시 로그인을 시도하세요!!");
@@ -79,27 +78,29 @@ class SettingNewPW extends Component{
 
     render(){
         return(
-            <CForm>
-                <CInputGroup className="mb-4">
-                    <CInput type="password" placeholder="New Password" id="new_pw" 
-                            name="new_pw" autoComplete="new_pw"
-                            value={this.state.new_pw} onChange={this.handleChange} />
+            <div>
+                <CForm>
+                    <CInputGroup className="mb-4">
+                        <CInput type="password" placeholder="New Password" id="new_pw" 
+                                name="new_pw" autoComplete="new_pw"
+                                value={this.state.new_pw} onChange={this.handleChange} />
+                        </CInputGroup>
+                    <CInputGroup className="mb-4">
+                        <CInput type="password" placeholder="Repeat New Password" id="new_re_pw" 
+                                name="new_re_pw" autoComplete="new_re_pw"
+                                value={this.state.new_re_pw} onChange={this.handleChange} />
                     </CInputGroup>
-                <CInputGroup className="mb-4">
-                    <CInput type="password" placeholder="Repeat New Password" id="new_re_pw" 
-                            name="new_re_pw" autoComplete="new_re_pw"
-                            value={this.state.new_re_pw} onChange={this.handleChange} />
-                </CInputGroup>
-                <CInputGroup className="mb-3">
-                      <div style={{color: "red"}}>{this.state.checkPwMsg}</div>
-                </CInputGroup>
-                <CRow>
-                    <CCol align="center">
-                        <CButton variant="outline" color="secondary" className="px-4" 
-                                type="submit" onClick={this.updatePW}>새 비밀번호 설정</CButton>
-                    </CCol>
-                </CRow>
-            </CForm>
+                    <CInputGroup className="mb-3">
+                        <div style={{color: "red"}}>{this.state.checkPwMsg}</div>
+                    </CInputGroup>
+                    <CRow>
+                        <CCol align="center">
+                            <CButton variant="outline" color="secondary" className="px-4" 
+                                    type="submit" onClick={this.updatePW}>새 비밀번호 설정</CButton>
+                        </CCol>
+                    </CRow>
+                </CForm>
+            </div>
         );
     }
 
