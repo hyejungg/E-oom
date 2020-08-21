@@ -29,6 +29,7 @@ class Register extends Component{
     this.state = {
       fname : '',
       lname : '',
+      nickname : '',
       email : '',
       pw : '',
       re_pw : '',
@@ -92,8 +93,8 @@ class Register extends Component{
     e.preventDefault();
 
     if(this.state.isCheckIdBtn){
-      
       var data = {
+        user_nickname : this.state.nickname,
         user_fname : this.state.fname,
         user_lname : this.state.lname,
         user_email : this.state.email,
@@ -164,6 +165,21 @@ class Register extends Component{
                         autoComplete="userlname"
                         name="lname"
                         values={this.state.lname}
+                        onChange={this.handleChange}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-user" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput
+                        type="text"
+                        placeholder="User Nick-name"
+                        autoComplete="nickname"
+                        name="nickname"
+                        values={this.state.nickname}
                         onChange={this.handleChange}
                       />
                     </CInputGroup>
