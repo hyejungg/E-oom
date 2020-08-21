@@ -80,16 +80,10 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/user.routes.js")(app);
-<<<<<<< Updated upstream
 require("./app/routes/lecture.routes.js")(app);
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-=======
-require("./app/routes/tutorial.routes")(app);
-
-//server.listen(8080, () => console.log('server is running on port 8080')); */
->>>>>>> Stashed changes
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}.`);
+// });
