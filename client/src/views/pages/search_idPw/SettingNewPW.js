@@ -50,6 +50,7 @@ class SettingNewPW extends Component{
         e.preventDefault();
         
         console.log("this.state.num : " + this.state.num);
+        console.log("this.state.new_re_pw : " + this.state.new_re_pw);
 
         var data = {
             user_num : this.state.num,
