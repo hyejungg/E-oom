@@ -8,6 +8,8 @@ module.exports = app => {
     router.post("/signup",user.signUp);
     //check ID valid (중복확인)
     router.get("/checkid/:user_email",user.isValidID);
+    //check Nickname valid (중복확인)
+    router.get("/checknickname/:user_nickname",user.isValidNick);
 
     //get Users
     router.get("/",user.getAll);

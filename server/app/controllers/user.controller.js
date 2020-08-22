@@ -69,7 +69,7 @@ exports.isValidNick = async(req, res) =>{
   await User.findOne({
       attributes : ['user_num'],
       where: {
-        user_email:user_nickname
+        user_nickname:user_nickname
       }
     }).then(data => {
       res.send(data);

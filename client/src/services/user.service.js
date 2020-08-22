@@ -17,6 +17,9 @@ class UserDataService{
     getCheckId(user_email){
          return http.get("/users/checkid/"+user_email);
     }
+    getCheckNick(user_nickname){
+        return http.get("/users/checknickname/"+user_nickname);
+    }
     //로그인
     //입력값 { user_email, user_pw }
     //정상 동작시 user정보 있는 json반환
