@@ -12,11 +12,12 @@ class LectureDataService{
         return http.get("/lecture");
     }
 
-    //searchLecture(data){
-    //    return http.get("/lecture/"+ data);
-    //}
     deleteAllLectures(data){
         return http.delete("/lecture");
+    }
+
+    updateLecture(data){
+        return http.patch("/lecture", data);
     }
 }
 

@@ -50,13 +50,15 @@ exports.createLecture = async(req, res) => {
 //Get the list of lectures with user_num(host_num)
 exports.readLectures = async (req, res) =>{
   //console.log(req.query);
+  //console.log(req);
+  //console.log(req.query.length);
   if(req.query.type === 'id'){
-    console.log("id");
+    //console.log("id");
     var condition = {where: {lecture_id: req.query.keyword}};
   }else if(req.query.type === 'title'){
-    console.log("title");
+    //console.log("title");
     var condition = {where: {lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
-  }else if(req.params === null){
+  }else if(req.query.length === undefined){
     console.log("Read all");
     var condition = {};
   }else{
@@ -80,4 +82,14 @@ exports.deleteAllLectures = async (req, res) => {
   })
   res.send(200);
   //console.log("Deleted succesfully");
+};
+
+exports.updateLecture = async (req, res) => {
+  const lecture = await Lecture.findOne({
+    lecture_num: req.body.lecture_num
+  })
+  lecture.update({
+    lecture_title: req.body.lecture_title
+  })
+  res.send(200);
 };
