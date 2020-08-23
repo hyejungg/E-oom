@@ -10,7 +10,8 @@
     "start:server": "node ./server/server.js"
   },
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "webrtc-adapter": "^7.7.0"
   },
   "author": "",
   "license": "ISC",

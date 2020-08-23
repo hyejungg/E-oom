@@ -1,8 +1,10 @@
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
+const PORT = process.env.PORT || 8080;
 const db = require("./app/models");
 db.sequelize.sync();
 
@@ -11,41 +13,51 @@ db.sequelize.sync();
 // });
 
 //200809 추가
-const http = require("http");
-const server = http.createServer(app);
-const socket = require("socket.io")
+//const http = require('http');
+const server = app.listen(PORT, function () {
+  console.log("server & app listening on " + PORT);
+});
+const socket = require("socket.io");
 const io = socket(server);
 
 // peerconnection
-const rooms = {};
+const users = {};
+const socketToRoom = {};
+
 io.on('connection', socket => {
+  console.log("1");
   socket.on("join room", roomID => {
-    if (rooms[roomID]) {
-      rooms[roomID].push(socket.id);
+    if (users[roomID]) {
+      users[roomID].push(socket.id);
     } else {
-      rooms[roomID] = [socket.id];
+      users[roomID] = [socket.id];
     }
-    const otherUser = rooms[roomID].find(id => id !== socket.id);
+    socketToRoom[socket.id] = roomID;
+    const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
 
-    if (otherUser) {
-      socket.emit("other user", otherUser);
-      socket.to(otherUser).emit("user joined", socket.id);
+    socket.emit("all users", usersInThisRoom);
+  });
 
+  socket.on("sending signal", payload => {
+    console.log("2");
+    io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
+
+  });
+
+  socket.on("returning signal", payload => {
+    console.log("3");
+    io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
+  });
+
+  socket.on('disconnect', () => {
+    console.log("4");
+    const roomID = socketToRoom[socket.id];
+    let room = users[roomID];
+    if (room) {
+      room = room.filter(id => id !== socket.id);
+      users[roomID] = room;
     }
   });
-
-  socket.on("offer", payload => {
-    io.to(payload.target).emit("offer", payload);
-  });
-
-  socket.on("answer", payload => {
-    io.to(payload.target).emit("answer", payload);
-  });
-
-  socket.on("ice-candidate", incoming => {
-    io.to(incoming.target).emit("ice-candidate", incoming.candidate);
-  });
-
 });
 
 //
@@ -67,11 +79,21 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to E-oom application." });
 });
 
+app.use(function(req, res, next) {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
+
+require('./app/routes/auth.routes.js')(app);
 require("./app/routes/user.routes.js")(app);
 require("./app/routes/lecture.routes.js")(app);
 //require("./app/routes/enrollment.routes.js")(app);
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+// const PORT = process.env.PORT || 8080;
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}.`);
+// });
