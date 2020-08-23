@@ -79,6 +79,15 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to E-oom application." });
 });
 
+app.use(function(req, res, next) {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
+
+require('./app/routes/auth.routes.js')(app);
 require("./app/routes/user.routes.js")(app);
 require("./app/routes/lecture.routes.js")(app);
 // set port, listen for requests
