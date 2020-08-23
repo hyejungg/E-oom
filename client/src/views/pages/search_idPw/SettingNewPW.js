@@ -6,10 +6,7 @@ import {
   CInput,
   CInputGroup,
   CRow,
-  CCard,
 } from "@coreui/react";
-
-import SearchIDPW from '../search_idPw/SearchIDPW'
 import UserDataService from '../../../services/user.service'
 
 class SettingNewPW extends Component{
@@ -43,7 +40,7 @@ class SettingNewPW extends Component{
         })
 
         //pw == re_pw check  
-        if(e.target.name == "new_re_pw") this.checkPW(e.target.value);
+        if(e.target.name === "new_re_pw") this.checkPW(e.target.value);
     }
 
     updatePW = (e) => {

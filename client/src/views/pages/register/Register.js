@@ -17,7 +17,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import UserDataService from '../../../services/user.service'
+import AuthDataService from '../../../services/auth.service'
 import { number } from "prop-types";
 
 var isCreate = false;
@@ -36,6 +36,7 @@ class Register extends Component{
       birth : '',
       phone : '',
 
+      isCheckNickBtn : false,
       isCheckIdBtn : false,
       isCheckPw : false,
       checkPwMsg : '',
@@ -65,13 +66,37 @@ class Register extends Component{
     if(e.target.name == "re_pw") this.checkPW(e.target.value);
   }
 
+  handleCheckNick = (e) => {
+    e.preventDefault();
+
+    var user_nickname = this.state.nickname;
+    var responseData = [];
+
+    AuthDataService.getCheckNick(user_nickname)
+    .then(response => {
+      responseData = response.data;
+      console.log("responseData : " + responseData)
+      if(responseData == ''){
+        alert("OK");
+        this.setState({
+          isCheckNickBtn : true
+        });
+      }else{
+        alert("이미 있는 닉네임 입니다. 다른 닉네임을 입력하세요.");
+      }
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  }
+
   handleCheckEmail = (e) => {
     e.preventDefault();
 
     var user_email = this.state.email;
     var responseData = [];
 
-    UserDataService.getCheckId(user_email)
+    AuthDataService.getCheckId(user_email)
     .then(response => {
       responseData = response.data;
       console.log("responseData : " + responseData)
@@ -92,7 +117,7 @@ class Register extends Component{
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if(this.state.isCheckIdBtn){
+    if(this.state.isCheckIdBtn && this.state.isCheckNickBtn){
       var data = {
         user_nickname : this.state.nickname,
         user_fname : this.state.fname,
@@ -105,7 +130,7 @@ class Register extends Component{
   
       var responseData = [];
   
-      UserDataService.getSignUp(data)
+      AuthDataService.getSignUp(data)
       .then(response => {
         responseData = response.data[0];
         console.log("responseData : " + responseData);
@@ -124,7 +149,9 @@ class Register extends Component{
         console.log(e);
       });
     }
-    else alert("email 중복 확인 하세요.");
+    else if(this.state.isCheckIdBtn && !this.state.isCheckNickBtn)  alert("닉네임 중복 확인 하세요.");
+    else if(!this.state.isCheckIdBtn && this.state.isCheckNickBtn)  alert("email 중복 확인 하세요.");
+    else if(!this.state.isCheckIdBtn && !this.state.isCheckNickBtn)  alert("email과 닉네임 중복 확인 하세요.");
     
   }
   render(){
@@ -182,6 +209,9 @@ class Register extends Component{
                         values={this.state.nickname}
                         onChange={this.handleChange}
                       />
+                      <CInputGroupPrepend>
+                        <CButton color="light" onClick={this.handleCheckNick}>중복</CButton>
+                      </CInputGroupPrepend>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>

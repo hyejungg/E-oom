@@ -11,14 +11,55 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const TheHeader = () => {
-  var isLogin = true;
+import AuthDataService from '../services/auth.service'
 
-  const changeLogin = (value) =>{
+var isAuthenticated = false;
+
+const TheHeader = () => {
+  // var user_nickname ='';
+  
+  var user_data = AuthDataService.getCurrentUser(); 
+
+  if(user_data !== null) {
+   isAuthenticated = true; 
+   var user_nickname = user_data.user_nickname;
+  }else {
+    isAuthenticated = false;
+  }
+
+  // const _getUserData = async () => {
+  //   const user_data = await AuthDataService.getCurrentUser();
+  //   if(user_data !== null) {
+  //     isAuthenticated = true; 
+  //     user_nickname = user_data.user_nickname;
+  //    }else {
+  //      isAuthenticated = false;
+  //    }
+  // }
+
+  const showLogout = (value) =>{
+      value = user_nickname + "님, 안녕하세요!";
+      return value;
+  }
+
+  const _getLogout = () => {
+    isAuthenticated = false;
+    AuthDataService.logout()
+    .then(
+      () => {
+        console.log("로그아웃 성공");
+      
+        alert("로그아웃 되었습니다!");
+    });
+  }
+
+  const handleLogout = async() =>{
     console.log("버튼눌림");
-    isLogin = false;
-    value = "로그아웃"
-    return value
+    if(window.confirm("로그아웃을 하시겠습니까?")){
+      await _getLogout();
+    }else{
+      isAuthenticated = true;
+    }
   }
 
   const dispatch = useDispatch()
@@ -63,17 +104,11 @@ const TheHeader = () => {
         {/* //로그인 시 -> 000님, 로그아웃
         //로그아웃 시 -> 로그인 */}
         <CHeaderNavItem className="px-3" >
-          <CButton variant="ghost" name="login" value="로그인" onClick={changeLogin}>뀨</CButton>
-          {/* {isAuthenticated
-            ? <NavItem onClick={handleLogout}>Logout</NavItem>
-            : <>
-                <LinkContainer to="/signup">
-                  <NavItem>Signup</NavItem>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                  <NavItem>Login</NavItem>
-                </LinkContainer>
-              </>} */}
+          {isAuthenticated
+            ? <CButton className="ml-3 d-md-down-none" 
+                       variant="ghost" 
+                       onClick={handleLogout}>{showLogout()}</CButton>
+            : <>{" "}</>}
           </CHeaderNavItem>
       </CHeaderNav>
     </CHeader>

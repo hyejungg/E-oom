@@ -11,14 +11,7 @@ import DImag from '../dashboard/img_dashboard.png'
 import WidgetsDropdown from "../widgets/WidgetsDropdown.js"
 
 class Dashboard extends Component{
-  constructor(props) {
-    super(props)
-    this.state = {
-    };
-  }
-
   render(){
-    console.log(this.props);
     return (
       <>
         {/* e-oom의 장점 */}
