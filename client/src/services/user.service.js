@@ -3,32 +3,6 @@ import http from "../http-common";
 
 //함수 이름은 변경 가능 return값은 변경X
 class UserDataService{
-    //signup
-    //회원가입
-    //입력값 {user_fname, user_lname, user_nickname,user_email, user_pw, user_birthdate, user_phone}
-    //정상동작시 가입된 user정보있는 json반환
-    getSignUp(data){
-        return http.post("/users/signup",data);
-    }
-    //회원가입 이전 이메일 중복 체크
-    //입력값 user_email
-    //존재하는 이메일이면 user_num정보 있는 json반환
-    //없으면 아무것도 반환 X
-    getCheckId(user_email){
-         return http.get("/users/checkid/"+user_email);
-    }
-    getCheckNick(user_nickname){
-        return http.get("/users/checknickname/"+user_nickname);
-    }
-    //로그인
-    //입력값 { user_email, user_pw }
-    //정상 동작시 user정보 있는 json반환
-    //이메일 존재하지 않으면 "user_email wrong"
-    //비밀번호 틀리면 "user_pw wrong"
-    getLogin(data){
-        return http.post("/users/signin",data);
-    }
-
     //전체 유저
     //입력값 없음
     //전체 유저정보를 각각 json형식으로 갖고있는 배열 반환
