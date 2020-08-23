@@ -12,7 +12,6 @@
 # production
 /build
 
-/app/config
 /app/models/db.js
 # misc
 .DS_Store
