@@ -1,3 +1,5 @@
+const { DataTypes, STRING } = require("sequelize");
+
 //Create the Lecture
 module.exports = (sequelize, Sequelize) => {
   const Lecture = sequelize.define("lecture", {
@@ -6,13 +8,17 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement : true,
       allowNull: false,
       primaryKey : true
-    },
+    },  
     lecture_title: {
-      type: Sequelize.STRING(30),
+      type: Sequelize.STRING,
       allowNull: false
     },
     host_num: {
       type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    host_nickname: {
+      type: Sequelize.STRING,
       allowNull: false
     },
     lecture_available: {
@@ -27,7 +33,16 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       allowNull: false
     },
-    init_private: {
+    lecture_id:{
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUID,
+      allowNull: false
+    },
+    lecture_PW: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    lecture_private: {
       type: Sequelize.BOOLEAN,
       allowNull: false
     },

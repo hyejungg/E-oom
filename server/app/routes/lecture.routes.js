@@ -4,14 +4,17 @@ module.exports = app => {
 
     var router = require("express").Router();
     //create new lecture
-    router.post("/create", lecture.createLecture);
+    router.post("/", lecture.createLecture);
     //find the all the lectures with the user_num(host)
-    router.post("/list", lecture.getAllLecture);
+    router.get("/", lecture.readLectures);
+    //router.get("/:query", lecture.searchLecture);
 
+    router.delete("/", lecture.deleteAllLectures);
+    router.patch("/", lecture.updateLecture);
     //find lecture
     //router.post("/lecture/:title", lecture.findLecture);
     //delete lecture
-    //router.get("/lecture/:title", lecture.deleteLecture);
+    //router.get("/lecture/:title", lecture.deleteLecture); 
  
     app.use('/api/lecture', router);
 }
