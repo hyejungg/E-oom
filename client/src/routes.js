@@ -27,17 +27,17 @@ const MeetParticipate = React.lazy(() =>
 const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
 //클래스 개설
 
-const CreateListClass = React.lazy(() =>
-  import("./views/base/create_list_class/CreateListClass")
-);
 const CreateListLecture = React.lazy(() =>
-  import("./views/base/create_list_lecture/ListLecture")
+  import("./views/base/create_list_lecture/CreateListLecture")
 );
-const ParticipateListClass = React.lazy(() =>
-  import("./views/base/participate_list_class/ParticipateListClass")
+const CreateListRoom = React.lazy(() =>
+  import("./views/base/create_list_room/ListRoom")
 );
 const ParticipateListLecture = React.lazy(() =>
-  import("./views/base/participate_list_lecture/ListLecture")
+  import("./views/base/participate_list_lecture/ParticipateListLecture")
+);
+const ParticipateListRoom = React.lazy(() =>
+  import("./views/base/participate_list_room/ListRoom")
 );
 
 //출석부 추가
@@ -90,24 +90,24 @@ const routes = [
   { path: "/base/meet_link", name: "MeetLink", component: MeetLink }, //***
 
   {
-    path: "/base/create_list_class",
-    name: "CreateListClass",
-    component: CreateListClass,
-  }, //***
-  {
     path: "/base/create_list_lecture",
     name: "CreateListLecture",
     component: CreateListLecture,
   }, //***
   {
+    path: "/base/create_list_room",
+    name: "CreateListRoom",
+    component: CreateListRoom,
+  }, //***
+  {
+    path: "/base/participate_list_room",
+    name: "ParticipateListRoom",
+    component: ParticipateListRoom,
+  }, //***
+  {
     path: "/base/participate_list_lecture",
     name: "ParticipateListLecture",
     component: ParticipateListLecture,
-  }, //***
-  {
-    path: "/base/participate_list_class",
-    name: "ParticipateListClass",
-    component: ParticipateListClass,
   }, //***
   { path: "/forms/Questions", name: "Questions", component: Questions }, //***
   {

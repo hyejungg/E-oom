@@ -14,7 +14,7 @@ import {
   CRow,
 } from "@coreui/react";
 
-class ClassAdd extends React.Component {
+class LectureAdd extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -147,4 +147,4 @@ class ClassAdd extends React.Component {
 //   }
 // }
 
-export default ClassAdd;
+export default LectureAdd;

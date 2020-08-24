@@ -12,19 +12,19 @@ import {
 
 import usersData from "../../users/UsersData";
 
-const CreatedLecture = usersData.map((usersData) => (
+const CreatedRoom = usersData.map((usersData) => (
   <CListGroupItem disabled key={usersData.id}>
     {usersData.name}
   </CListGroupItem>
 ));
 
 const AttendingCourse = usersData.map((usersData) => (
-  <Link to="participate_list_lecture/ListLecture">
+  <Link to="participate_list_room/ListRoom">
     <CListGroupItem key={usersData.id}>{usersData.name}</CListGroupItem>
   </Link>
 ));
 
-class ParticipateListClass extends Component {
+class ParticipateListLecture extends Component {
   constructor(props) {
     super(props);
   }
@@ -44,7 +44,7 @@ class ParticipateListClass extends Component {
                 <CListGroup align="center">
                   {/* 1. usersData 이름 동적으로 배열추가
                       2. 각 itme 클릭 시 -> ListLecture로 이동시키기 */}
-                  {CreatedLecture}
+                  {CreatedRoom}
                 </CListGroup>
               </CCardBody>
             </CCard>
@@ -74,4 +74,4 @@ class ParticipateListClass extends Component {
   }
 }
 
-export default ParticipateListClass;
+export default ParticipateListLecture;

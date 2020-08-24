@@ -44,7 +44,7 @@ export default [
       {
         _tag: "CSidebarNavItem",
         name: "수업 생성",
-        to: "/base/create_list_class",
+        to: "/base/create_list_lecture",
       },
       // {
       //   _tag: "CSidebarNavItem",
@@ -61,7 +61,7 @@ export default [
   {
     _tag: "CSidebarNavItem",
     name: "수업 참여하기",
-    to: "/base/participate_list_class",
+    to: "/base/participate_list_lecture",
     icon: "cil-puzzle",
   },
   {

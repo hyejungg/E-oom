@@ -17,7 +17,7 @@ import {
   CListGroup,
 } from "@coreui/react";
 
-const ListLecture = () => {
+const ListRoom = () => {
   const [activeTab, setActiveTab] = useState(1);
   return (
     <CRow>
@@ -159,4 +159,4 @@ const ListLecture = () => {
   );
 };
 
-export default ListLecture;
+export default ListRoom;

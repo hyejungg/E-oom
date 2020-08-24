@@ -14,7 +14,7 @@ import {
   CButton,
 } from "@coreui/react";
 
-const ListLecture = () => {
+const ListRoom = () => {
   return (
     <CRow>
       <CCol>
@@ -44,4 +44,4 @@ const ListLecture = () => {
   );
 };
 
-export default ListLecture;
+export default ListRoom;
