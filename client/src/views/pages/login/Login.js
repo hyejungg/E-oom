@@ -16,9 +16,8 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-import UserDataService from '../../../services/user.service'
+import AuthDataService from '../../../services/auth.service'
 
-import Home from "../../dashboard/Dashboard"
 
 var isLogin = false;
 
@@ -45,32 +44,25 @@ class Login extends Component {
       user_pw: this.state.pw
     };
 
-    var responseData = [];
-
-    UserDataService.getLogin(data)
-    .then(response => {
-      responseData = response.data;
-      console.log("responseData : " + responseData );
-      if(responseData === "user_email wrong"){
-        isLogin = false;
-        console.log("로그인 실패");
-        alert("email이 틀렸습니다. 다시 입력하세요.");
-      }else if( responseData === "user_pw wrong"){
-        isLogin = false;
-        console.log("로그인 실패");
-        alert("비밀번호가 틀렸습니다. 다시 입력하세요.");
-      }else {
+    AuthDataService.getLogin(data).then(
+      () => {
         isLogin = true;
         console.log("로그인 성공");
-        this.props.history.push("/");
+        
+        this.props.history.push("/dashboard");
+      },error => {
+        isLogin = false;
+
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+          
+        alert(resMessage);
       }
-      isLogin = false;
-    })
-    .catch(e => {
-      console.log(e);
-    });
-
-
+    );
   }
 
   //setting Input Values (ID, PW)

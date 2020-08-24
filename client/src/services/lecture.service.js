@@ -5,11 +5,19 @@ import http from "../http-common";
 class LectureDataService{
     //create Lecture
     createLecture(data){
-        return http.post("/lecture/create",data);
+        return http.post("/lecture",data);
     }
 
-    showLecture(data){
-        return http.post("/lecture/list", data);
+    readLectures(data){
+        return http.get("/lecture");
+    }
+
+    deleteAllLectures(data){
+        return http.delete("/lecture");
+    }
+
+    updateLecture(data){
+        return http.patch("/lecture", data);
     }
 }
 

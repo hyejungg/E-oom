@@ -25,6 +25,7 @@ db.sequelize = sequelize;
 
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.lecture = require("./lecture.model.js")(sequelize, Sequelize);
+//db.enrollment = require("./enrollment.model.js")(sequelize, Sequelize);
 db.room = require("./room.model.js")(sequelize, Sequelize);
 db.participation = require("./participation.model.js")(sequelize,Sequelize);
 db.user.belongsToMany(db.room,{through : db.participation,foreignKey : "room_num"});
