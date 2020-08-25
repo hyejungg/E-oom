@@ -5,26 +5,24 @@ module.exports = app => {
     var router = require("express").Router();
     //public
     //get Users
-    router.get("/",user.getAll);
+    router.get("",user.getAll);
     //find ID
-    router.post("/findid",user.findID);
-    //find PW (랜덤 비번 생성)
-    router.post("/findpw",user.findPW);
+    router.post("/find-email",user.findID);
     //check ID,Phone
-    router.post("/check",user.checkInfo);
+    router.post("/check-user",user.checkInfo);
     //set new PW
-    router.put("/newpw",user.newPW);
+    router.patch("/new-password",user.newPW);
     
     
     //private
     //check PW
-    router.post("/checkpw",[authJwt.verifyToken],user.checkPW);
+    router.post("/check-password",[authJwt.verifyToken],user.checkPW);
     //get User Info
-    router.get("/userinfo",[authJwt.verifyToken],user.getOne);
+    router.get("/user-info",[authJwt.verifyToken],user.getOne);
     //update User
     router.put("/update",[authJwt.verifyToken],user.updateUser);
     //update PW
-    router.put("/updatepw",[authJwt.verifyToken],user.updatePW);
+    router.patch("/update",[authJwt.verifyToken],user.updatePW);
 
     
 

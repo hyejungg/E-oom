@@ -7,7 +7,7 @@ const Op = db.Sequelize.Op;
 exports.getAll = async(req,res) =>{
   await User.findAll()
   .then(data =>{
-    res.send(data);
+    res.status(200).send(data);
   }).catch(err => {
     res.status(500).send({
       message:
@@ -27,7 +27,12 @@ exports.findID = async(req,res) =>{
       user_birthdate : user_birthdate
     }
   }).then(data =>{
-    res.send(data);
+    if(data){
+      data.dataValues.success = true;
+      res.status(200).send(data);
+    }else{
+      res.status(200).send({success:false});
+    }
   }).catch(err => {
     res.status(500).send({
       message:
@@ -35,33 +40,6 @@ exports.findID = async(req,res) =>{
     });
   });
 }
-//현재 사용하지 않는 메소드
-//Find password through user info
-exports.findPW = async(req,res)=>{
-  const {user_email, user_phone} = req.body;
-  try{
-    const user = await User.findOne({
-    attributes:["user_num"],
-    where:{user_email:user_email,
-              user_phone:user_phone}
-    });
-    if(user){ 
-      const random_pw = Math.random().toString(36).slice(2);
-      const hashedPassword = await bcrypt.hash(random_pw, 12);
-      await User.update(
-          {user_pw : hashedPassword},
-          {where :{user_num : user.user_num}}
-      ).then(res.send(random_pw));
-    }else{
-      res.send("not exist user");
-    }
-  }catch(err){
-    res.status(500).send({
-      message:
-      err.message || "Some error occurred while finding the PW."
-    });
-  }
-};
 //check informaiton 
 exports.checkInfo = async(req,res)=>{
   const {user_email, user_phone} = req.body;
@@ -71,7 +49,12 @@ exports.checkInfo = async(req,res)=>{
     where:{user_email:user_email,
               user_phone:user_phone}
     }).then(data=>{
-      res.send(data);
+      if(data){
+        data.dataValues.success = true;
+        res.status(200).send(data);
+      }else{
+        res.status(200).send({success:false});
+      }
     }).catch(err => {
       res.status(500).send({
         message:
@@ -94,7 +77,11 @@ exports.newPW = async (req, res, next) => {
             }
           }
         ).then(data=>{
-          res.send(data);
+          if(data == 0){
+            res.status(200).send({success:false})
+          }else{
+            res.status(200).send({success:true});
+          }
         });
       
   } catch (err) {
@@ -161,7 +148,11 @@ exports.updateUser = async (req, res, next) => {
             }
           }
         ).then(data=>{
-          res.send(data);
+          if(data == 0){
+            res.status(200).send({success:false})
+          }else{
+            res.status(200).send({success:true});
+          }
         });
       
   } catch (err) {
@@ -179,23 +170,28 @@ exports.updatePW = async(req,res)=>{
     const user = await User.findByPk(user_num,{
       attributes:["user_pw"]
     });
-    if(user){
-      const isMatch = await bcrypt.compare(cur_user_pw, user.user_pw);
 
-      if (isMatch) {
-        const hashedPassword = await bcrypt.hash(new_user_pw, 12);
-        await User.update(
-          {user_pw : hashedPassword},
-          {where :{user_num : user_num}}
-         ).then(data=>{
-        res.send(data);
-        });
-      }else{
-        res.send("user_pw wrong");
-      }
-    }else{
-      res.send("user_num wrong");
+    const isMatch = await bcrypt.compare(cur_user_pw, user.user_pw);
+    if(!isMatch){
+      return res.status(401).send({
+        accessToken: null,
+        message: "Invalid Password!"
+      });
     }
+
+    const hashedPassword = await bcrypt.hash(new_user_pw, 12);
+    await User.update(
+      {user_pw : hashedPassword},
+      {where :{user_num : user_num}}
+    ).then(data=>{
+      if(data == 0){
+        res.status(200).send({success:false})
+      }else{
+        res.status(200).send({success:true});
+      }
+    });
+   
+    
 
   } catch (err) {
     res.status(500).send({

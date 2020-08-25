@@ -8,9 +8,9 @@ module.exports = function(app) {
     router.post("/signin", auth.signin);
 
     //check ID valid (중복확인)
-    router.get("/checkid/:user_email",auth.isValidID);
+    router.get("/email/:user_email",auth.isValidID);
     //check Nickname valid (중복확인)
-    router.get("/checknickname/:user_nickname",auth.isValidNick);
+    router.get("/nickname/:user_nickname",auth.isValidNick);
     
     app.use('/api/auth', router);
 };
