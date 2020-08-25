@@ -20,7 +20,7 @@ exports.signup = async(req, res) => {
     user_phone : req.body.user_phone
   })
     .then(()=>{
-        res.send({message: "User was registered successfully"});
+        res.status(200).send({message: "User was registered successfully"});
       })
     .catch(err => {
       res.status(500).send({ message: err.message });
