@@ -85,8 +85,9 @@ class Register extends Component{
         alert("이미 있는 닉네임 입니다. 다른 닉네임을 입력하세요.");
       }
     })
-    .catch(e => {
-      console.log(e);
+    .catch(error => {
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      console.log(resMessage);
     });
   }
 
@@ -109,8 +110,9 @@ class Register extends Component{
         alert("이미 있는 email 입니다. 다른 email을 입력하세요.");
       }
     })
-    .catch(e => {
-      console.log(e);
+    .catch(error => {
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      console.log(resMessage);
     });
   }
 
@@ -144,9 +146,10 @@ class Register extends Component{
           console.log("회원가입 실패");
         }
       })
-      .catch( e => {
-        isCreate = false;
-        console.log(e);
+      .catch(error => {
+        const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+          
+        console.log(resMessage);
       });
     }
     else if(this.state.isCheckIdBtn && !this.state.isCheckNickBtn)  alert("닉네임 중복 확인 하세요.");

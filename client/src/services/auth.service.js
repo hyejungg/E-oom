@@ -13,13 +13,13 @@ class AuthService{
         });
     }
     getSignUp(data){
-        return http.post("/auth/signup",data);
+        return http.post("/auth/signup/",data);
     }
     getCheckId(user_email){
-        return http.get("/auth/checkid/"+user_email);
+        return http.get("/auth/email/"+user_email);
     }
     getCheckNick(user_nickname){
-       return http.get("/auth/checknickname/"+user_nickname);
+       return http.get("/auth/nickname/"+user_nickname);
     }
     logout(){
         sessionStorage.removeItem("user");

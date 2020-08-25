@@ -53,14 +53,24 @@ class SearchIDPW extends Component {
     .then(response =>{
       responseData = response.data;
       console.log("responseData : " +  responseData );
-      for(var value in responseData){
-        console.log("key : " + value + " / value" +responseData[value]);
-        this.state.isFindID = true;
-        alert("회원님의 Email 주소는 " + responseData[value]+ " 입니다.");
+      if(responseData == 'true'){
+        for(var value in responseData){
+            console.log("key : " + value + " / value" +responseData[value]);
+            this.state.isFindID = true;
+            alert("회원님의 Email 주소는 " + responseData["user_email"]+ " 입니다.");
+          }
+      }else{
+        alert("입력 정보를 다시 입력하세요!!");
       }
+      // for(var value in responseData){
+      //   console.log("key : " + value + " / value" +responseData[value]);
+      //   this.state.isFindID = true;
+      //   alert("회원님의 Email 주소는 " + responseData[value]+ " 입니다.");
+      // }
     })
-    .catch( e => {
-        console.log(e);
+    .catch(error => {
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      console.log(resMessage);
     });
 
   }
@@ -78,8 +88,7 @@ class SearchIDPW extends Component {
     UserDataService.checkInfo(data)
     .then(response =>{
       responseData = response.data;
-      if(responseData.size !== 0){ //값을 정상적으로 입력하지 않은 경우 추가
-        console.log("responseData : " +  responseData );
+      if(responseData == 'true'){
         for(var value in responseData){
           console.log("user_num : " +responseData[value]);
         }
@@ -90,12 +99,27 @@ class SearchIDPW extends Component {
           isFindPW : true
         });
       }else{
-        alert("다시 입력하세요.");
+        alert("입력 정보를 다시 입력하세요!!");
       }
+      // if(responseData.size !== 0){ //값을 정상적으로 입력하지 않은 경우 추가
+      //   console.log("responseData : " +  responseData );
+      //   for(var value in responseData){
+      //     console.log("user_num : " +responseData[value]);
+      //   }
+      //   user_num_str = responseData[value];
+      //   alert("새로운 비밀번호를 입력하세요.");
+      //   this.setState({
+      //     user_num : user_num_str,
+      //     isFindPW : true
+      //   });
+      // }else{
+      //   alert("다시 입력하세요.");
+      // }
     })
-    .catch(e => {
-        console.log(e);
-    });
+    .catch(error => {
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      console.log(resMessage);
+    })
   }
 
   showSettingPW = () => {

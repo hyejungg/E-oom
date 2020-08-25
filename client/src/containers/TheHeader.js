@@ -50,6 +50,7 @@ const TheHeader = () => {
         console.log("로그아웃 성공");
       
         alert("로그아웃 되었습니다!");
+        this.props.history.push("/dashboard");
     });
   }
 
