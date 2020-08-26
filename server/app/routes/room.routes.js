@@ -1,8 +1,9 @@
 module.exports = app => {
-    const user = require("../controllers/room.controller.js");
+    const room = require("../controllers/room.controller.js");
 
     var router = require("express").Router();
     //create room
+    router.post("",room.createRoom)
     // router.post("/create");
     //delete room
     //update room Info
