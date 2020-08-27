@@ -19,9 +19,13 @@ import {
   CListGroupItem,
   CListGroup,
 } from "@coreui/react";
+import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 
-const ListRoom = () => {
+const TestListRoom = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const [lectureExplain] = useState('');
+  const [lectureDate] = useState('');
+  const [lectureTime] = useState('');
   return (
     <CRow>
       <CCol>
@@ -69,7 +73,7 @@ const ListRoom = () => {
                             <div className="lectureInfo">
                               <CInputGroup className="mb-3">
                                 <CInput type="text" id="lectureExplain" name="lectureExplain" placeholder="강의 설명을 적어주세요." autoComplete="lectureExplain"
-                                    value={this.state.lectureExplain} onChange={this.handleChange} />
+                                    value={lectureExplain} />
                               </CInputGroup>
                             </div>
                           </CCardHeader>
@@ -78,7 +82,7 @@ const ListRoom = () => {
                             <div className="lectureInfo">
                               <CInputGroup className="mb-3">
                                 <CInput type="date" id="lectureDate" name="lectureDate" placeholder="강의 예약 날짜를 설정해주세요." autoComplete="lectureDate"
-                                    value={this.state.lectureDate} onChange={this.handleChange} />
+                                    value={lectureDate}  />
                               </CInputGroup>
                             </div>
                           </CCardHeader>
@@ -87,7 +91,7 @@ const ListRoom = () => {
                             <div className="lectureInfo">
                               <CInputGroup className="mb-3">
                                 <CInput type="time" id="lectureTime" name="lectureTime" placeholder="강의 예약 시간을 설정해주세요." autoComplete="lectureTime"
-                                    value={this.state.lectureTime} onChange={this.handleChange} />
+                                    value={lectureTime} />
                               </CInputGroup>
                             </div>
                           </CCardHeader>
@@ -118,6 +122,27 @@ const ListRoom = () => {
                           </CCol>
                         </CRow>
                       </CTabPane>
+                    </CCol>
+                  </CRow>
+                  <CRow>
+                    <CCol xs="12">
+                      <CCard accentColor="success">
+                        <CCardHeader>향후 예약된 강의들</CCardHeader>
+                          <CCardBody>
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>수업명</TableCell>
+                                  <TableCell>수업인원</TableCell>
+                                  <TableCell>학수번호</TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+
+                              </TableBody>
+                            </Table>
+                          </CCardBody>
+                      </CCard>
                     </CCol>
                   </CRow>
                 </CTabPane>
@@ -177,4 +202,4 @@ const ListRoom = () => {
   );
 };
 
-export default ListRoom;
+export default TestListRoom;
