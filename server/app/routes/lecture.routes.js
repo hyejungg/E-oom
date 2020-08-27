@@ -9,8 +9,8 @@ module.exports = app => {
     router.get("/", lecture.readLectures);
     //router.get("/:query", lecture.searchLecture);
 
-    router.delete("/", lecture.deleteAllLectures);
-    router.patch("/", lecture.updateLecture);
+    router.delete("/:lecture_num", lecture.deleteLecture);
+    router.put("/:lecture_num", lecture.updateLectureInfo);
     //find lecture
     //router.post("/lecture/:title", lecture.findLecture);
     //delete lecture
