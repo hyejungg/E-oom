@@ -33,6 +33,8 @@ import CIcon from "@coreui/icons-react"; //문의사항
 
 import usersData from "../../users/UsersData";
 
+import UuserDataService from '../../../services/user.service'
+
 // const getBadge = (status) => {
 //   switch (status) {
 //     case "Active":
@@ -51,6 +53,35 @@ import usersData from "../../users/UsersData";
 
 const Mypage = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const [user_nickname, user_email, user_lname, user_fname, user_phone, user_birth] = '';
+  const userData = [];
+
+  const showUserInfo = () => {
+    var responseData = [];
+    // var userData = [];
+
+    UuserDataService.getUserInfo()
+    .then(response => {
+      responseData = response.data;
+      for(var value in responseData){
+        userData.push(responseData[value]);
+        /*
+        // userData : newuser,aa@aa,hanhee,kang,1998-07-18,11111111111
+        userData[0] == user_nickname
+        userData[1] == user_email
+        userData[2] == user_lname
+        userData[3] == user_fname
+        userData[4] == user_birth
+        userData[5] == user_phone
+        */
+      }
+        console.log("key : " + responseData + "\nvalue : " + responseData[value] + "\nuserData : " + userData);
+    })
+    .catch(error => {
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      console.log(resMessage);
+    })
+  }
 
   return (
     <>
@@ -131,17 +162,18 @@ const Mypage = () => {
                       </CListGroupItem> */}
                     </CTabPane>
                     <CTabPane active={activeTab === 1}>
+                      {showUserInfo()}  
                       <CCardHeader>
                         <CCardBody>
-                          <h2>{'이름'}</h2>
+                          <h2>{userData[0]}</h2>
                         </CCardBody>
                       </CCardHeader>
-                      <CCardHeader>성 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>이름 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>로그인 이메일 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>성 : <span>{userData[3]}</span></CCardHeader>
+                      <CCardHeader>이름 : <span>{userData[2]}</span></CCardHeader>
+                      <CCardHeader>로그인 이메일 : <span>{userData[1]}</span></CCardHeader>
                       <CCardHeader>비밀번호 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>핸드폰 번호 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>생년월일 : <span>룰루랄라</span></CCardHeader>
+                      <CCardHeader>핸드폰 번호 : <span>{userData[5]}</span></CCardHeader>
+                      <CCardHeader>생년월일 : <span>{userData[4]}</span></CCardHeader>
                       <CRow>
                         <CCol align="right">
                           <CButton

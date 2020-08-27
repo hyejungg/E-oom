@@ -13,6 +13,9 @@ import {
   CTabs,
   CCardHeader,
   CButton,
+  CForm,
+  CInput,
+  CInputGroup,
   CListGroupItem,
   CListGroup,
 } from "@coreui/react";
@@ -54,40 +57,53 @@ const ListRoom = () => {
                     </CCol>
                     <CCol xs="8">
                       <CTabPane active={activeTab === 0}>
-                        <CCardHeader>
-                          <p></p>
-                          <h3>새 강의 시작</h3>
-                          <p></p>
-                          <p>{"강의명이 들어올 자리"}</p>
-                        </CCardHeader>
-                        <CCardHeader>
-                          <div className="lectureMenu">설명</div>
-                          <div className="lectureInfo">{"강의 설명~~~~"}</div>
-                        </CCardHeader>
-                        <CCardHeader>
-                          <div className="lectureMenu">날짜</div>
-                          <div className="lectureInfo">
-                            {"버튼 식으로 수정!!"}
-                          </div>
-                        </CCardHeader>
-                        <CCardHeader>
-                          <div className="lectureMenu">시간</div>
-                          <div className="lectureInfo">
-                            {"버튼 식으로 수정!!"}
-                          </div>
-                        </CCardHeader>
-                        <CCardHeader>
-                          <div className="lectureMenu">회의ID</div>
-                          <div className="lectureInfo">
-                            {"이것은 랜덤지정?"}
-                          </div>
-                        </CCardHeader>
-                        <CCardHeader>
-                          <div className="lectureMenu">암호</div>
-                          <div className="lectureInfo">
-                            {"이것은 랜덤지정?"}
-                          </div>
-                        </CCardHeader>
+                        <CForm>
+                          <CCardHeader>
+                            <p></p>
+                            <h3>새 강의 시작</h3>
+                            <p></p>
+                            <p>{"강의명이 들어올 자리"}</p>
+                          </CCardHeader>
+                          <CCardHeader>
+                            <div className="lectureMenu">설명</div>
+                            <div className="lectureInfo">
+                              <CInputGroup className="mb-3">
+                                <CInput type="text" id="lectureExplain" name="lectureExplain" placeholder="강의 설명을 적어주세요." autoComplete="lectureExplain"
+                                    value={this.state.lectureExplain} onChange={this.handleChange} />
+                              </CInputGroup>
+                            </div>
+                          </CCardHeader>
+                          <CCardHeader>
+                            <div className="lectureMenu">날짜</div>
+                            <div className="lectureInfo">
+                              <CInputGroup className="mb-3">
+                                <CInput type="date" id="lectureDate" name="lectureDate" placeholder="강의 예약 날짜를 설정해주세요." autoComplete="lectureDate"
+                                    value={this.state.lectureDate} onChange={this.handleChange} />
+                              </CInputGroup>
+                            </div>
+                          </CCardHeader>
+                          <CCardHeader>
+                            <div className="lectureMenu">시간</div>
+                            <div className="lectureInfo">
+                              <CInputGroup className="mb-3">
+                                <CInput type="time" id="lectureTime" name="lectureTime" placeholder="강의 예약 시간을 설정해주세요." autoComplete="lectureTime"
+                                    value={this.state.lectureTime} onChange={this.handleChange} />
+                              </CInputGroup>
+                            </div>
+                          </CCardHeader>
+                          <CCardHeader>
+                            <div className="lectureMenu">회의ID</div>
+                            <div className="lectureInfo">
+                              {"이것은 랜덤지정?"}
+                            </div>
+                          </CCardHeader>
+                          <CCardHeader>
+                            <div className="lectureMenu">암호</div>
+                            <div className="lectureInfo">
+                              {"이것은 랜덤지정?"}
+                            </div>
+                          </CCardHeader>
+                        </CForm>
                         <CRow>
                           <CCol align="right">
                             <CButton
@@ -105,7 +121,9 @@ const ListRoom = () => {
                     </CCol>
                   </CRow>
                 </CTabPane>
-                <CTabPane>{`2.`}</CTabPane>
+                <CTabPane>
+                  {`2.`}
+                </CTabPane>
                 <CTabPane>
                   <CListGroup accent className="mt-3">
                     <CCardHeader>

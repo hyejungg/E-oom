@@ -59,16 +59,14 @@ class SettingNewPW extends Component{
         .then(response =>{
             responseData = response.data;
             console.log("responseData : " +  responseData );
-            for(var value in responseData){
-              console.log("user_num : " + responseData[value]);
-            }
-            if(responseData === 0){
-                console.log("비밀번호 update 실패")
-            }else{
+            if(responseData["success"] === true ){
                 alert("정상적으로 비밀번호가 수정되었습니다. 다시 로그인을 시도하세요!!");
+            }else{
+                console.log("비밀번호 update 실패");
             }
-        }).catch(e => {
-            console.log(e);
+        }).catch(error => {
+            const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            console.log(resMessage);
         });
     }
 
