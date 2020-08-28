@@ -21,7 +21,7 @@ class UserDataService{
         return http.put("/users/update", {headers : authHeader()});
     }
     updatePW(data){
-        return http.put("/users/updatepw",data);
+        return http.patch("/users/updatepw",data);
     }
     getFindEmail(data){
       return http.post("/users/find-email",data);
@@ -30,7 +30,7 @@ class UserDataService{
         return http.post("/users/check-user",data);
     }
     setNewPW(data){
-        return http.put("/users/new-password",data);
+        return http.patch("/users/new-password",data);
     }
 
 }
