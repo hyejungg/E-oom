@@ -34,14 +34,23 @@ db.schedule = require("./schedule.model.js")(sequelize,Sequelize);
 // db.room.belongsToMany(db.user,{through : db.participation,foreignKey:"user_num"});
 
 
-db.lecture.hasMany(db.room,{foreignKey : "host_num"});
-db.room.belongsTo(db.lecture,{foreignKey : "host_num"});
+//db.lecture.hasMany(db.room,{foreignKey : "host_num"});
+//db.room.belongsTo(db.lecture,{foreignKey : "host_num"});
 
-db.lecture.hasMany(db.schedule,{foreignKey : "lecture_num"});
-db.lecture.hasMany(db.schedule,{foreignKey : "host_num"});
-db.schedule.belongsTo(db.lecture,{foreignKey : "lecture_num"});
+//db.lecture.hasMany(db.schedule,{foreignKey : "lecture_num"});
+//db.lecture.hasMany(db.schedule,{foreignKey : "host_num"});
+//db.schedule.belongsTo(db.lecture,{foreignKey : "lecture_num"});
 
-db.room.hasMany(db.schedule,{foreignKey : "room_num"});
-db.schedule.belongsTo(db.room,{foreignKey : "room_num"});
+//db.room.hasMany(db.schedule,{foreignKey : "room_num"});
+//db.schedule.belongsTo(db.room,{foreignKey : "room_num"});
+
+db.user.hasOne(db.lecture,{foreignKey : "host_num"});
+db.lecture.belongsTo(db.user, {foreignKey : "user_num"});
+
+db.lecture.hasMany(db.enrollment, {foreignKey : "lecture_num"});
+db.enrollment.belongsTo(db.lecture, {foreignKey : "lecture_num"});
+
+db.user.hasMany(db.enrollment, {foreignKey : "user_num"});
+eb.enrollment.belongsTo(db.user, {foreignKey : "user_num"});
 
 module.exports = db;

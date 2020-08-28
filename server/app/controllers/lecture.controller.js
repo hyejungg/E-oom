@@ -7,41 +7,13 @@ const { DataTypes, Sequelize, UUIDV1, UUID, UUIDV4 } = require("sequelize");
 const Lecture = db.lecture;
 const Op = db.Sequelize.Op;
 
-function verifyToken(req){
-  try{
-    if(typeof req.headers['x-access-token'] !== "undefined"){
-      const token = req.headers['x-access-token'];
-      //console.log(token);
-      console.log("Verified");
-      return jwt.verify(token, config.secret).id;
-    }else{
-      return undefined;
-    }
-  }catch(err){
-    return undefined;
-  }
-}
 
 // Create and Save a new Lecture
 exports.createLecture = async(req, res) => {
-   // Validate request 
-  if (!req.body) {
-    res.status(400).send({
-      message: "createLecture_400Error"
-    });
-  }
-
-  const host_num = verifyToken(req);
-
-  if(host_num === undefined){
-    res.status(401).send({message : "Unauthorized Token"});
-  }
-
   // Create a Lecture
   const lecture = {
     lecture_title : req.body.lecture_title,
-    host_num : host_num,
-    host_nickname : req.body.host_nickname,
+    host_num : req.user_num,
     lecture_available : false,
     lecture_capacity: req.body.lecture_capacity,
     lecture_full : false,
@@ -70,21 +42,15 @@ exports.createLecture = async(req, res) => {
 
 //Get the list of lectures with user_num(host_num)
 exports.readLectures = async (req, res) =>{
-  const user_num = verifyToken(req);
-
-  if(user_num === undefined){
-    res.status(401).send({message : "Unauthorized Token"});
-  }
-
   if(req.query.type === 'id'){
     //console.log("id");
     var condition = {where: {lecture_id: req.query.keyword}};
   }else if(req.query.type === 'title'){
     //console.log("title");
-    var condition = {where: {host_num : user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
+    var condition = {where: {host_num : req.user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
   }else if(req.query.length === undefined){
     //console.log("Read all");
-    var condition = {where : {host_num : user_num}};
+    var condition = {where : {host_num : req.user_num}};
     //var condition = {}; //For Test
   }else{
     res.status(400).send({
@@ -96,81 +62,83 @@ exports.readLectures = async (req, res) =>{
   .then(data => {
     res.status(200).json(data);
   }).catch(err => {
-    res.send("Error occurred");
-    //console.log(err);
+    res.status(500).send({
+      message : "Error occurred"
+    });
   })
 };
+
 exports.deleteAllLecture = async(req, res) => {
-  const host_num = verifyToken(req);
-
-  if(host_num === undefined){
-    res.status(401).send({"message" : "Unauthorized Token"});
-  }
-
-  try{
-    await Lecture.destroy({
-      where : {
-        host_num : host_num
-      }
-    })
-  }catch(err){
-    
-  }
+  Lecture.destroy({
+    where : {
+      host_num : req.user_num
+    },
+    truncate : false
+  })
+  .then(num => {
+    if(num == 1) {
+      res.status(204).send({
+        message : `Lecture was deleted successfully (lecture_num:${req.params.lecture_num})`
+      });
+    }else{
+      res.status(409).send({
+        message : `Wrong input of host_num/lecture_num, or There is no matched pair between (lecture_num:${req.params.lecture_num}, host_num:${req.user_num}`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message : `Could not delete the lecture (lecture_num:${req.params.lecture_num})`
+    });
+  })
 }
 
 exports.deleteLecture = async (req, res) => {
-  const host_num = verifyToken(req);
-
-  if(host_num === undefined){
-    res.status(401).send({"message" : "Unauthorized Token"});
-  }
-  try{
-      const isvalid = await Lecture.destroy({
-        where : {
-          host_num : host_num,
-          lecture_num : req.params.lecture_num  
-        }
-      })
-
-      if(isvalid === 0){
-        res.status(409).send({"message" : "Wrong input of host_num/lecture_num, or There is no matched pair between them"});
-      }
-      res.send(204);
-  }catch(err){
-
-  }
+  await Lecture.destroy({
+    where : {
+      host_num : req.user_num,
+      lecture_num : req.params.lecture_num  
+    }
+  })
+  .then(num => {
+    if(num == 1) {
+      res.status(204).send({
+        message : `Lecture was deleted successfully (lecture_num:${req.params.lecture_num})`
+      });
+    }else{
+      res.status(409).send({
+        message : `Wrong input of host_num/lecture_num, or There is no matched pair between (lecture_num:${req.params.lecture_num}, host_num:${req.user_num}`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message : `Could not delete the lecture (lecture_num:${req.params.lecture_num})`
+    });
+  }) 
 };
 
 exports.updateLectureInfo = async (req, res) => {
-  const host_num = verifyToken(req);
-
-  if(host_num === undefined){
-    res.status(401).send({message : "Unauthenticated Token"});
-  }
-
-  try{
-    //console.log(req);
-    const [numberofrows, rows]  = await Lecture.update(
-    {    
-      lecture_title : req.body.lecture_title,
-      lecture_capacity: req.body.lecture_capacity,
-      lecture_private : req.body.lecture_private,
-      init_mute_authority : req.body.init_mute_authority,
-      init_chat_authority : req.body.init_chat_authority,
-      init_save_authority : req.body.init_save_authority,
-      init_notification : req.body.init_notification
-    },{
-      where: {
-        lecture_num: req.params.lecture_num,
-        host_num: host_num
-      }
-    })
-    if(numberofrows === 0){
-      res.status(409).send({"message" : "There is no matched host_num and lecture_num"});
+  await Lecture.update(req.body, {
+    where: {
+      lecture_num: req.params.lecture_num,
+      host_num: req.user_num
     }
-    //console.log(updatedlecture);
-    res.status(200).send();
-  }catch(err){
-    res.send(err);
-  }
+  })
+  .then(num => {
+    if(num == 1){
+      res.status(200).send({
+        message : `Lecture was updated successfully. (lecture_num : ${req.params.lecture_num}`
+      });
+    }else{
+      res.status(409).send({
+        message : `Could not update Lecture with lecture_num : ${req.params.lecture_num}, user_num : ${req.user_num}. Maybe req.body is empty or lecture was not found`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message : `Could not update the lecture (lecture_num : ${req.params.lecture_num})`
+    });
+  });
 };
