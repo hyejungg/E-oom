@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -17,54 +17,53 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-import AuthDataService from '../../../services/auth.service'
+import AuthDataService from "../../../services/auth.service";
 import { number } from "prop-types";
 
 var isCreate = false;
 
-class Register extends Component{
-
-  constructor(props){
+class Register extends Component {
+  constructor(props) {
     super(props);
     this.state = {
-      fname : '',
-      lname : '',
-      nickname : '',
-      email : '',
-      pw : '',
-      re_pw : '',
-      birth : '',
-      phone : '',
+      fname: "",
+      lname: "",
+      nickname: "",
+      email: "",
+      pw: "",
+      re_pw: "",
+      birth: "",
+      phone: "",
 
-      isCheckNickBtn : false,
-      isCheckIdBtn : false,
-      isCheckPw : false,
-      checkPwMsg : '',
-    }
+      isCheckNickBtn: false,
+      isCheckIdBtn: false,
+      isCheckPw: false,
+      checkPwMsg: "",
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheckEmail = this.handleCheckEmail.bind(this);
   }
-
-  checkPW(value){
-    if(this.state.pw !== value) {
+  s;
+  checkPW(value) {
+    if (this.state.pw !== value) {
       this.setState({
-        checkPwMsg : "비밀번호가 일치하지 않습니다. 다시 입력하세요.",
+        checkPwMsg: "비밀번호가 일치하지 않습니다. 다시 입력하세요.",
       });
       return false;
     }
-    this.state.checkPwMsg = '';
+    this.state.checkPwMsg = "";
     return true;
   }
 
   handleChange = (e) => {
     this.setState({
-      [e.target.name] : e.target.value
+      [e.target.name]: e.target.value,
     });
 
-    //pw == re_pw check  
-    if(e.target.name == "re_pw") this.checkPW(e.target.value);
-  }
+    //pw == re_pw check
+    if (e.target.name == "re_pw") this.checkPW(e.target.value);
+  };
 
   handleCheckNick = (e) => {
     e.preventDefault();
@@ -73,23 +72,28 @@ class Register extends Component{
     var responseData = [];
 
     AuthDataService.getCheckNick(user_nickname)
-    .then(response => {
-      responseData = response.data;
-      console.log("responseData : " + responseData)
-      if(responseData == ''){
-        alert("OK");
-        this.setState({
-          isCheckNickBtn : true
-        });
-      }else{
-        alert("이미 있는 닉네임 입니다. 다른 닉네임을 입력하세요.");
-      }
-    })
-    .catch(error => {
-      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      console.log(resMessage);
-    });
-  }
+      .then((response) => {
+        responseData = response.data;
+        console.log("responseData : " + responseData);
+        if (responseData == "") {
+          alert("OK");
+          this.setState({
+            isCheckNickBtn: true,
+          });
+        } else {
+          alert("이미 있는 닉네임 입니다. 다른 닉네임을 입력하세요.");
+        }
+      })
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log(resMessage);
+      });
+  };
 
   handleCheckEmail = (e) => {
     e.preventDefault();
@@ -98,66 +102,77 @@ class Register extends Component{
     var responseData = [];
 
     AuthDataService.getCheckId(user_email)
-    .then(response => {
-      responseData = response.data;
-      console.log("responseData : " + responseData)
-      if(responseData == ''){
-        alert("OK");
-        this.setState({
-          isCheckIdBtn : true
-        });
-      }else{
-        alert("이미 있는 email 입니다. 다른 email을 입력하세요.");
-      }
-    })
-    .catch(error => {
-      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      console.log(resMessage);
-    });
-  }
+      .then((response) => {
+        responseData = response.data;
+        console.log("responseData : " + responseData);
+        if (responseData == "") {
+          alert("OK");
+          this.setState({
+            isCheckIdBtn: true,
+          });
+        } else {
+          alert("이미 있는 email 입니다. 다른 email을 입력하세요.");
+        }
+      })
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log(resMessage);
+      });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if(this.state.isCheckIdBtn && this.state.isCheckNickBtn){
+    if (this.state.isCheckIdBtn && this.state.isCheckNickBtn) {
       var data = {
-        user_nickname : this.state.nickname,
-        user_fname : this.state.fname,
-        user_lname : this.state.lname,
-        user_email : this.state.email,
-        user_pw : this.state.re_pw,
-        user_birthdate : this.state.birth,
-        user_phone : this.state.phone
-      };    
-  
+        user_nickname: this.state.nickname,
+        user_fname: this.state.fname,
+        user_lname: this.state.lname,
+        user_email: this.state.email,
+        user_pw: this.state.re_pw,
+        user_birthdate: this.state.birth,
+        user_phone: this.state.phone,
+      };
+
       var responseData = [];
-  
+
       AuthDataService.getSignUp(data)
-      .then(response => {
-        responseData = response.data[0];
-        console.log("responseData : " + responseData);
-  
-        //isCreate 가 true면 메인 화면으로
-        isCreate = true;
-        if(isCreate){
-          console.log("회원가입 성공");
-          this.props.history.push("/"); //이전화면으로
-        }else{
-          console.log("회원가입 실패");
-        }
-      })
-      .catch(error => {
-        const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-          
-        console.log(resMessage);
-      });
-    }
-    else if(this.state.isCheckIdBtn && !this.state.isCheckNickBtn)  alert("닉네임 중복 확인 하세요.");
-    else if(!this.state.isCheckIdBtn && this.state.isCheckNickBtn)  alert("email 중복 확인 하세요.");
-    else if(!this.state.isCheckIdBtn && !this.state.isCheckNickBtn)  alert("email과 닉네임 중복 확인 하세요.");
-    
-  }
-  render(){
+        .then((response) => {
+          responseData = response.data[0];
+          console.log("responseData : " + responseData);
+
+          //isCreate 가 true면 메인 화면으로
+          isCreate = true;
+          if (isCreate) {
+            console.log("회원가입 성공");
+            this.props.history.push("/"); //이전화면으로
+          } else {
+            console.log("회원가입 실패");
+          }
+        })
+        .catch((error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          console.log(resMessage);
+        });
+    } else if (this.state.isCheckIdBtn && !this.state.isCheckNickBtn)
+      alert("닉네임 중복 확인 하세요.");
+    else if (!this.state.isCheckIdBtn && this.state.isCheckNickBtn)
+      alert("email 중복 확인 하세요.");
+    else if (!this.state.isCheckIdBtn && !this.state.isCheckNickBtn)
+      alert("email과 닉네임 중복 확인 하세요.");
+  };
+  render() {
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
         <CContainer>
@@ -213,7 +228,9 @@ class Register extends Component{
                         onChange={this.handleChange}
                       />
                       <CInputGroupPrepend>
-                        <CButton color="light" onClick={this.handleCheckNick}>중복</CButton>
+                        <CButton color="light" onClick={this.handleCheckNick}>
+                          중복
+                        </CButton>
                       </CInputGroupPrepend>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
@@ -229,7 +246,9 @@ class Register extends Component{
                         onChange={this.handleChange}
                       />
                       <CInputGroupPrepend>
-                        <CButton color="light" onClick={this.handleCheckEmail}>중복</CButton>
+                        <CButton color="light" onClick={this.handleCheckEmail}>
+                          중복
+                        </CButton>
                       </CInputGroupPrepend>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
@@ -263,7 +282,9 @@ class Register extends Component{
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <div style={{color: "red"}}>{this.state.checkPwMsg}</div>
+                      <div style={{ color: "red" }}>
+                        {this.state.checkPwMsg}
+                      </div>
                     </CInputGroup>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
@@ -295,10 +316,7 @@ class Register extends Component{
                         />
                       </CCol>
                     </CInputGroup>
-                    <CButton 
-                      color="info" 
-                      block
-                      onClick={this.handleSubmit}>
+                    <CButton color="info" block onClick={this.handleSubmit}>
                       회원 가입
                     </CButton>
                   </CForm>
