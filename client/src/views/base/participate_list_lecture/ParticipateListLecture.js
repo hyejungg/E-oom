@@ -12,17 +12,17 @@ import {
 
 import usersData from "../../users/UsersData";
 
-const CreatedRoom = usersData.map((usersData) => (
-  <CListGroupItem disabled key={usersData.id}>
-    {usersData.name}
-  </CListGroupItem>
-));
+// const CreatedRoom = usersData.map((usersData) => (
+//   <CListGroupItem disabled key={usersData.id}>
+//     {usersData.name}
+//   </CListGroupItem>
+// ));
 
-const AttendingCourse = usersData.map((usersData) => (
-  <Link to="participate_list_room/ListRoom">
-    <CListGroupItem key={usersData.id}>{usersData.name}</CListGroupItem>
-  </Link>
-));
+// const AttendingCourse = usersData.map((usersData) => (
+//   <Link to="participate_list_room/ListRoom">
+//     {/* <CListGroupItem key={usersData.id}>{usersData.name}</CListGroupItem> */}
+//   </Link>
+// ));
 
 class ParticipateListLecture extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class ParticipateListLecture extends Component {
                 <CListGroup align="center">
                   {/* 1. usersData 이름 동적으로 배열추가
                       2. 각 itme 클릭 시 -> ListLecture로 이동시키기 */}
-                  {CreatedRoom}
+                  {/* {CreatedRoom} */}
                 </CListGroup>
               </CCardBody>
             </CCard>
@@ -61,7 +61,7 @@ class ParticipateListLecture extends Component {
                 <CListGroup align="center">
                   {/* 1. usersData의 이름만이라도 리스트업 해보기
                     2. 각 itme 클릭 시 -> ListLecture로 이동시키기 */}
-                  {AttendingCourse}
+                  {/* {AttendingCourse} */}
                   {/* 지금은 생성하기 탭이니까 수강하는 거는 안보이게? */}
                 </CListGroup>
               </CCardBody>

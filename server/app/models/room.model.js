@@ -17,27 +17,23 @@ module.exports = (sequelize, Sequelize) => {
       room_activate: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue : false
+        defaultValue : true
       },
       option_mute_authority: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue : true
+        allowNull: false
       },
       option_chat_authority: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue : true
+        allowNull: false
       },
       option_save_authority: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue : false
+        allowNull: false
       },
       option_notification: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue : true
+        allowNull: false
       },
       option_lock: {
         type: Sequelize.BOOLEAN,

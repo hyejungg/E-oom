@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey : true
     },  
     lecture_title: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(30),
       allowNull: false
     },
     host_num: {
@@ -38,7 +38,7 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.UUID,
       allowNull: false
     },
-    lecture_PW: {
+    lecture_pw: {
       type: Sequelize.STRING,
       allowNull: true
     },
