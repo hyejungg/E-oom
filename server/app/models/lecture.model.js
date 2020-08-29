@@ -17,10 +17,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false
     },
-    host_nickname: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
     lecture_available: {
       type: Sequelize.BOOLEAN,
       allowNull: false
