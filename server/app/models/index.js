@@ -25,7 +25,7 @@ db.sequelize = sequelize;
 
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.lecture = require("./lecture.model.js")(sequelize, Sequelize);
-//db.enrollment = require("./enrollment.model.js")(sequelize, Sequelize);
+db.enrollment = require("./enrollment.model.js")(sequelize, Sequelize);
 db.room = require("./room.model.js")(sequelize, Sequelize);
 //db.participation = require("./participation.model.js")(sequelize,Sequelize);
 db.schedule = require("./schedule.model.js")(sequelize,Sequelize);
@@ -51,6 +51,6 @@ db.lecture.hasMany(db.enrollment, {foreignKey : "lecture_num"});
 db.enrollment.belongsTo(db.lecture, {foreignKey : "lecture_num"});
 
 db.user.hasMany(db.enrollment, {foreignKey : "user_num"});
-eb.enrollment.belongsTo(db.user, {foreignKey : "user_num"});
+db.enrollment.belongsTo(db.user, {foreignKey : "user_num"});
 
 module.exports = db;
