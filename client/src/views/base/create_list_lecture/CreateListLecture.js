@@ -134,7 +134,6 @@ class CreateListLecture extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <LectureAdd />
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
