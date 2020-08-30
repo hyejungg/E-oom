@@ -6,9 +6,8 @@ class Lecture extends React.Component {
   render() {
     return (
       <TableRow>
-        <TableCell>{this.props.lecture_title}</TableCell>
-        <TableCell>{this.props.lecture_capacity}</TableCell>
-        <TableCell>{this.props.lecture_id}</TableCell>
+        <TableCell>{this.props.num}</TableCell>
+        <TableCell>{this.props.title}</TableCell>
       </TableRow>
     );
   }
