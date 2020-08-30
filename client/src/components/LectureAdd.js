@@ -8,8 +8,11 @@ class LectureAdd extends React.Component {
     this.state = {
       lecture_title: "",
       lecture_capacity: "",
-      lecutre_PW: "",
-      // lecture_private:''
+      lecture_private: "",
+      init_mute_authority: "",
+      init_chat_authority: "",
+      init_save_authority: "",
+      init_notification: "",
     };
   }
 
@@ -31,7 +34,11 @@ class LectureAdd extends React.Component {
     const formData = new FormData();
     formData.append("lecture_title", this.state.lecture_title);
     formData.append("lecture_capacity", this.state.lecture_capacity);
-    formData.append("lecture_PW", this.state.lecture_PW);
+    formData.append("lecture_private", this.state.lecture_private);
+    formData.append("init_mute_authority", this.state.init_mute_authority);
+    formData.append("init_chat_authority", this.state.init_chat_authority);
+    formData.append("init_save_authority", this.state.init_save_authority);
+    formData.append("init_notification", this.state.init_notification);
 
     const config = {
       headers: {
@@ -61,11 +68,43 @@ class LectureAdd extends React.Component {
           onChange={this.handleValueChange}
         />
         <br />
-        비밀번호:{" "}
+        수업공개여부:{" "}
         <input
           type="text"
-          name="lecture_PW"
-          value={this.state.lecture_PW}
+          name="lecture_private"
+          value={this.state.lecture_private}
+          onChange={this.handleValueChange}
+        />
+        <br />
+        룸(강의)초기 설정:{" "}
+        <input
+          type="text"
+          name="init_mute_authority"
+          value={this.state.init_mute_authority}
+          onChange={this.handleValueChange}
+        />
+        <br />
+        채팅:{" "}
+        <input
+          type="text"
+          name="init_chat_authority"
+          value={this.state.init_chat_authority}
+          onChange={this.handleValueChange}
+        />
+        <br />
+        저장:{" "}
+        <input
+          type="text"
+          name="init_save_authority"
+          value={this.state.init_save_authority}
+          onChange={this.handleValueChange}
+        />
+        <br />
+        알림:{" "}
+        <input
+          type="text"
+          name="init_notification"
+          value={this.state.init_notification}
           onChange={this.handleValueChange}
         />
         <br />
