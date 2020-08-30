@@ -13,7 +13,7 @@ exports.createLecture = async(req, res) => {
   // Create a Lecture
   const lecture = {
     lecture_title : req.body.lecture_title,
-    host_num : req.user_num,
+    user_num : req.user_num,
     lecture_available : false,
     lecture_capacity: req.body.lecture_capacity,
     lecture_full : false,
@@ -47,10 +47,10 @@ exports.readLectures = async (req, res) =>{
     var condition = {where: {lecture_id: req.query.keyword}};
   }else if(req.query.type === 'title'){
     //console.log("title");
-    var condition = {where: {host_num : req.user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
+    var condition = {where: {user_num : req.user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
   }else if(req.query.length === undefined){
     //console.log("Read all");
-    var condition = {where : {host_num : req.user_num}};
+    var condition = {where : {user_num : req.user_num}};
     //var condition = {}; //For Test
   }else{
     res.status(400).send({
@@ -71,7 +71,7 @@ exports.readLectures = async (req, res) =>{
 exports.deleteAllLecture = async(req, res) => {
   Lecture.destroy({
     where : {
-      host_num : req.user_num
+      user_num : req.user_num
     },
     truncate : false
   })
@@ -122,7 +122,7 @@ exports.updateLectureInfo = async (req, res) => {
   await Lecture.update(req.body, {
     where: {
       lecture_num: req.params.lecture_num,
-      host_num: req.user_num
+      user_num: req.user_num
     }
   })
   .then(num => {
