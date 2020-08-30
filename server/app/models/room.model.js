@@ -1,3 +1,4 @@
+const moment = require('moment');
 module.exports = (sequelize, Sequelize) => {
     const Room = sequelize.define("room", {
       room_num: {
@@ -21,7 +22,10 @@ module.exports = (sequelize, Sequelize) => {
       },
       room_start: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        get() {
+          return moment(this.getDataValue('room_start')).format('YYYY-MM-DD HH:mm:ss');
+        }
       },
       room_end: {
         type: Sequelize.DATE,
