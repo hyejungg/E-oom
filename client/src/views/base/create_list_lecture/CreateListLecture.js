@@ -78,99 +78,156 @@
 
 // export default CreateListLecture;
 
-import React, { Component } from "react";
-import Lecture from "../../../components/Lecture"; //Lecture 목록 불러오기
-import LectureAdd from "../../../components/LectureAdd"; //
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { withStyles } from "@material-ui/core/styles";
-import authHeader from "../../../services/auth-header";
+// import React, { Component } from "react";
+// import userData from "../../users/UsersData";
+// import LectureAdd from "./ClassAdd";
+// import Paper from "@material-ui/core/Paper";
+// import Table from "@material-ui/core/Table";
+// import TableHead from "@material-ui/core/TableHead";
+// import TableBody from "@material-ui/core/TableBody";
+// import TableRow from "@material-ui/core/TableRow";
+// import TableCell from "@material-ui/core/TableCell";
+// import CircularProgress from "@material-ui/core/CircularProgress";
+// import { withStyles } from "@material-ui/core/styles";
 
-const styles = (theme) => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto",
-  },
-  table: {
-    minWidth: 1080,
-  },
-  progress: {
-    margin: theme.spacing.unit * 2,
-  },
-});
+// const styles = (theme) => ({
+//   root: {
+//     width: "100%",
+//     marginTop: theme.spacing(3) * 3,
+//     overflowX: "auto",
+//   },
+//   table: {
+//     minWidth: 1080,
+//   },
+//   progress: {
+//     magin: theme.spacing(2) * 2,
+//   },
+// });
 
-class CreateListLecture extends Component {
-  state = {
-    lectures: "",
-    completed: 0,
-  };
+// class CreateListLecture extends Component {
+//   state = {
+//     usersDatas: "",
+//     completed: 0,
+//   };
 
-  //API에 접근해서 데이터를 받아오는 작업
-  componentDidMount() {
-    this.timer = setInterval(this.progress, 20);
-    this.callApi()
-      .then((res) => this.setState({ lectures: res }))
-      .catch((err) => console.log(err));
-  }
+//   componentDidMount() {
+//     this.timer = setInterval(this.progress, 20);
+//     this.callApi()
+//       .then((res) => this.setState({ usersDatas: res }))
+//       .catch((err) => console.log(err));
+//   }
 
-  callApi = async () => {
-    const response = await fetch("/api/lecture", { headers: authHeader() });
-    const body = await response.json();
-    return body;
-  };
+//   //동기식으로 실행
+//   callApi = async () => {
+//     const response = await fetch("/api/usersDatas"); //추가해야함
+//     const body = await response.json();
+//     return body;
+//   };
+//   //애니메이션
+//   progress = () => {
+//     const { completed } = this.state;
+//     this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+//   };
+//   render() {
+//     const { classes } = this.props;
+//     return (
+//       <div>
+//         <LectureAdd />
+//         <Paper className={classes.root}>
+//           <Table className={classes.table}>
+//             <TableHead>
+//               <TableRow>
+//                 <TableCell>번호</TableCell>
+//                 <TableCell>개설중인 수업 목록</TableCell>
+//               </TableRow>
+//             </TableHead>
+//             <TableBody>
+//               {this.state.usersDatas ? (
+//                 this.state.usersDatas.map((c) => {
+//                   return (
+//                     <usersData
+//                       key={c.id} //map을 이용해 다수의 정보 출력할 때는 key사용해야함
+//                       id={c.id}
+//                       classtitle={c.classtitle}
+//                     />
+//                   );
+//                 })
+//               ) : (
+//                 <TableRow>
+//                   <TableCell colSpan="6" align="center">
+//                     <CircularProgress
+//                       className={classes.progress}
+//                       variant="determinate"
+//                       value={this.state.completed}
+//                     />
+//                   </TableCell>
+//                 </TableRow>
+//               )}
+//             </TableBody>
+//           </Table>
+//         </Paper>
+//       </div>
+//     );
+//   }
+// }
 
-  progress = () => {
-    const { completed } = this.state;
-    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
-  };
+// export default withStyles(styles)(CreateListLecture);
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>수업명</TableCell>
-                <TableCell>수업인원</TableCell>
-                <TableCell>학수번호</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.lectures ? (
-                this.state.lectures.map((c) => {
-                  return (
-                    <Lecture
-                      key={c.lecture_num}
-                      lecture_title={c.lecture_title}
-                      lecture_capacity={c.lecture_capacity}
-                      lecture_id={c.lecture_id}
-                    />
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell colSpan="6" align="center">
-                    <CircularProgress
-                      className={classes.progress}
-                      variant="determinate"
-                      value={this.state.completed}
-                    />
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </Paper>
-      </div>
-    );
-  }
-}
-export default withStyles(styles)(CreateListLecture);
+// import React, { Component } from "react";
+// import Lecture from "../../../components/Lecture"; //Lecture 목록 불러오기
+// import Paper from "@material-ui/core/Paper";
+// import Table from "@material-ui/core/Table";
+// import TableHead from "@material-ui/core/TableHead";
+// import TableBody from "@material-ui/core/TableBody";
+// import TableRow from "@material-ui/core/TableRow";
+// import TableCell from "@material-ui/core/TableCell";
+// import { withStyles } from "@material-ui/core/styles";
+
+// const styles = (theme) => ({
+//   root: {
+//     width: "100%",
+//     marginTop: theme.spacing.unit * 3,
+//     overflowX: "auto",
+//   },
+//   table: {
+//     minWidth: 1080,
+//   },
+// });
+
+// const lectures = [
+//   {
+//     num: 1,
+//     title: "시플밍",
+//   },
+//   {
+//     num: 2,
+//     title: "컴시관",
+//   },
+//   {
+//     num: 3,
+//     title: "객지플",
+//   },
+// ];
+// class CreateListLecture extends Component {
+//   render() {
+//     const { classes } = this.props;
+//     return (
+//       <Paper className={classes.root}>
+//         <Table className={classes.table}>
+//           <TableHead>
+//             <TableRow>
+//               <TableCell>번호</TableCell>
+//               <TableCell>수업명</TableCell>
+//             </TableRow>
+//           </TableHead>
+//           <TableBody>
+//             {lectures.map((c) => {
+//               return <Lecture key={c.num} num={c.num} title={c.title} />;
+//             })}
+//           </TableBody>
+//         </Table>
+//       </Paper>
+//     );
+//   }
+// }
+// export default withStyles(styles)(CreateListLecture);
