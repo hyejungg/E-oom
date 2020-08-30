@@ -281,10 +281,10 @@ class Register extends Component{
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
-                      <CCol md="3">
-                        <CLabel htmlFor="date-input">Date Input</CLabel>
+                      <CCol md="2">
+                        <CLabel htmlFor="date-input">Birthday</CLabel>
                       </CCol>
-                      <CCol xs="12" md="9">
+                      <CCol xs="12" md="10">
                         <CInput
                           type="date"
                           id="date-input"
