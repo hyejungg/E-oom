@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(30),
       allowNull: false
     },
-    host_num: {
+    user_num: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
