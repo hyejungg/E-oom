@@ -17,7 +17,24 @@ module.exports = (sequelize, Sequelize) => {
       room_activate: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue : true
+        defaultValue : false
+      },
+      room_start: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      room_end: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        defaultValue : null
+      },
+      room_recursion: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      room_reminder: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       },
       option_mute_authority: {
         type: Sequelize.BOOLEAN,

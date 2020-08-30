@@ -27,6 +27,16 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue : false
+      },
+      room_num: {
+        type: Sequelize.INTEGER,
+        primaryKey : true,
+        // foreignKey : true
+      },
+      user_num:{
+        type: Sequelize.INTEGER,
+        primaryKey : true,
+        // foreignKey : true
       }
     });
   

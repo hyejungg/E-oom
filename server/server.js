@@ -90,7 +90,7 @@ app.use(function(req, res, next) {
 require('./app/routes/auth.routes.js')(app);
 require("./app/routes/user.routes.js")(app);
 require("./app/routes/lecture.routes.js")(app);
-//require("./app/routes/room.routes.js")(app);
+require("./app/routes/room.routes.js")(app);
 //require("./app/routes/enrollment.routes.js")(app);
 // set port, listen for requests
 // const PORT = process.env.PORT || 8080;
