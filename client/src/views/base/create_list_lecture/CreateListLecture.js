@@ -106,9 +106,22 @@ const styles = (theme) => ({
 });
 
 class CreateListLecture extends Component {
-  state = {
-    lectures: "",
-    completed: 0,
+  constructor(props) {
+    super(props);
+    this.state = {
+      lectures: "",
+      completed: 0,
+    };
+  }
+
+  stateRefresh = () => {
+    this.setState({
+      lectures: "",
+      completed: 0,
+    });
+    this.callApi()
+      .then((res) => this.setState({ lectures: res }))
+      .catch((err) => console.log(err));
   };
 
   //API에 접근해서 데이터를 받아오는 작업
@@ -134,13 +147,16 @@ class CreateListLecture extends Component {
     const { classes } = this.props;
     return (
       <div>
+        <LectureAdd stateRefresh={this.stateRefresh} />
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
+                <TableCell>번호</TableCell>
                 <TableCell>수업명</TableCell>
                 <TableCell>수업인원</TableCell>
                 <TableCell>학수번호</TableCell>
+                <TableCell>설정</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -148,7 +164,9 @@ class CreateListLecture extends Component {
                 this.state.lectures.map((c) => {
                   return (
                     <Lecture
+                      stateRefresh={this.stateRefresh}
                       key={c.lecture_num}
+                      lecture_num={c.lecture_num}
                       lecture_title={c.lecture_title}
                       lecture_capacity={c.lecture_capacity}
                       lecture_id={c.lecture_id}

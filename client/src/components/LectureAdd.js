@@ -1,6 +1,7 @@
 import React from "react";
 import { post } from "axios";
 import Lecture from "./Lecture";
+import authHeader from "../services/auth-header";
 
 class LectureAdd extends React.Component {
   constructor(props) {
@@ -20,6 +21,16 @@ class LectureAdd extends React.Component {
     e.preventDefault();
     this.addLecture().then((response) => {
       console.log(response.data);
+      this.props.stateRefresh();
+    });
+    this.setState({
+      lecture_title: "",
+      lecture_capacity: "",
+      lecture_private: "",
+      init_mute_authority: "",
+      init_chat_authority: "",
+      init_save_authority: "",
+      init_notification: "",
     });
   };
 
@@ -40,12 +51,12 @@ class LectureAdd extends React.Component {
     formData.append("init_save_authority", this.state.init_save_authority);
     formData.append("init_notification", this.state.init_notification);
 
-    const config = {
-      headers: {
-        "content-type": "multipart/from-data",
-      },
-    };
-    return post(url, formData, config);
+    // const config = {
+    //   headers: {
+    //     "content-type": "multipart/from-data",
+    //   },
+    // };
+    return post(url, formData);
   };
 
   render() {
