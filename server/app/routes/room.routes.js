@@ -4,7 +4,7 @@ module.exports = app => {
     var router = require("express").Router();
     //create room
     router.post("",room.createRoom)
-    router.get("",room.getRooms)
+    router.get("/:lecture_num",room.getRooms)
     // router.post("/create");
     //delete room
     //update room Info

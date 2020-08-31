@@ -41,7 +41,7 @@ exports.createRoom = async(req, res) => {
   }
 };
 exports.getRooms = async(req,res) =>{
-  const {lecture_num} = req.body;
+  const {lecture_num} = req.params;
   await Room.findAll({
     attributes : ['room_start','room_title','room_link'],
     where:{
@@ -50,7 +50,6 @@ exports.getRooms = async(req,res) =>{
     }
   })
   .then(data =>{
-    console.log(data);
     res.status(200).send(data);
   }).catch(err => {
     res.status(500).send({
