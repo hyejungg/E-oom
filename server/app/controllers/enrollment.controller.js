@@ -1,8 +1,9 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const jwt = require("jsonwebtoken");
-const { lecture } = require("../models");
 const Enrollment = db.enrollment;
+const Lecture = db.lectures;
+const User = db.users;
 
 exports.createEnrollment = async(req, res) => {
     if(!req.body){
@@ -27,3 +28,19 @@ exports.createEnrollment = async(req, res) => {
         });
     });
 };
+
+exports.readEnrollment = async (req, res) =>{
+    if(req.query.type == 'title'){
+        var condition = {where: {user_num : req.user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
+    }else if(req.query.length == undefined){
+        var condition = {where: {user_num : req.user_num}};
+    }else{
+        res.status(400).send({
+            message: "'type' must be id or title, input keyword"
+        });
+    }
+
+    try{
+        enrolled_list = await Enrollment.findAll(condition);
+    }
+}
