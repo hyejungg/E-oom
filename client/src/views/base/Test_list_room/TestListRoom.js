@@ -49,12 +49,12 @@ const TestListRoom = () => {
     };
   }
   const [state, dispatch] = useReducer(reducer, {
-    lectureNum : 4,
-    lectureName: 'English class ',
-    lectureDate: '2020-12-25',
-    lectureTime: '14:40:00',
-    lectureRecursion: 'week',
-    lectureReminder: 'true',
+    lectureNum : 4, //test용
+    lectureName: '',
+    lectureDate: '',
+    lectureTime: '',
+    lectureRecursion: '',
+    lectureReminder: '',
 
     completed: 0,
   });
@@ -70,26 +70,14 @@ const TestListRoom = () => {
     const { completed } = this.state;
     this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
   };
-
-  function callApi(data){
-    var responseData = [];
-
-    RoomDataService.createRoom(data)
-    .then(response =>{
-      responseData = response.data;
-      if(responseData["message"]){
-        alert(responseData["message"]);
-      }else{
-        alert("입력 정보를 다시 입력하세요!!");
-      }
-    })
-    .catch(error => {
-      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      console.log(resMessage);
-    })
+  //동기 처리
+  async function callApi(data){
+    const response = await RoomDataService.createRoom(data);
+    const body = await response;
+    return body;
   } 
   //reservation
-  const submitHandle = async(e) =>{
+  const submitHandle = (e) =>{
     e.preventDefault();
 
     var data = {
@@ -101,8 +89,21 @@ const TestListRoom = () => {
       room_reminder : state.lectureReminder
     }
 
-    console.log("data : " + data);
-    await callApi(data);
+    var responseData = [];
+    console.log(data.lecture_num);
+    callApi(data)
+      .then(response =>{
+        responseData = response.data;
+        if(responseData["message"]){
+          alert(responseData["message"]);
+        }else{
+          alert("입력 정보를 다시 입력하세요!!");
+        }
+      })
+      .catch(error => {
+        const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        console.log(resMessage);
+      })
   }
   
   

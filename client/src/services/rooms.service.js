@@ -4,10 +4,10 @@ import authHeader from "./auth-header";
 
 class RoomsDataService{
     createRoom(data){
-        return http.get("/rooms", data);
+        return http.post("/rooms", data);
     }
     getRoomsInfo(lecture_num){
-        return http.get("/rooms"+lecture_num);
+        return http.get("/rooms/"+lecture_num);
     }
 }
 
