@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer  } from "react";
 import { Link } from "react-router-dom";
 import {
   CCol,
@@ -16,21 +16,79 @@ import {
   CForm,
   CInput,
   CInputGroup,
-  CListGroupItem,
-  CListGroup,
+  CLabel,
+  CSelect,
 } from "@coreui/react";
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 
 const TestListRoom = () => {
   const [activeTab, setActiveTab] = useState(1);
-  const [lectureExplain] = useState('');
-  const [lectureDate] = useState('');
-  const [lectureTime] = useState('');
+  // const [lectureName, setLectureName] = useState('');
+  // const [lectureDate, setLecutreDate] = useState('');
+  // const [lectureTime, setLectureTime] = useState('');
+
+  // const onChangelectureName = e => {
+  //   e.preventDefault();
+  //   setLectureName(e.target.value);
+  // };
+  // const onChangelectureDate = e => {
+  //   e.preventDefault();
+  //   setLecutreDate(e.target.value);
+  // };
+  // const onChangelectureTime = e => {
+  //   e.preventDefault();
+  //   setLectureTime(e.target.value);
+  // };
+
+  // function reducer(state, action) {
+  //   // action.type 에 따라 다른 작업 수행
+  //   switch (action.type) {
+  //     case '0':
+  //       return { value: 'Never'};
+  //     case '1':
+  //       return { value: 'Every Day' };
+  //     case '2':
+  //       return { value: 'Every Week' };
+  //     case '3':
+  //       return { value: 'Every 2 Weeks' };
+  //     case '4':
+  //       return { value: 'Every Month' };
+  //     case '5':
+  //       return { value: 'Every Year' };
+  //     case '6':
+  //       return { value: 'Yes' };
+  //     case '7':
+  //       return { value: 'No' };
+  //     default:
+  //       // 아무것도 해당되지 않을 때 기존 상태 반환
+  //       return state;
+  //   }
+  // }
+  function reducer(state, action) {
+    return {
+      ...state,
+      [action.name]: action.value
+    };
+  }
+  const [state, dispatch] = useReducer(reducer, {
+    lectureName: '',
+    lectureDate: '',
+    lectureTime: '',
+    lectureRecursion: '',
+    lectureReminder: '',
+  });
+  const {lectureName, lectureDate, lectureTime, lectureRecursion, lectureReminder} = state;
+  const onChange = e => {
+    // e.preventDefault();
+    dispatch(e.target);
+    console.log(state);
+  };
+  
   return (
     <CRow>
       <CCol>
         <CCard>
-          <CCardHeader>수업명</CCardHeader>
+          <CCardHeader>수업명 / 담당자</CCardHeader>
           <CCardBody>
             <CTabs>
               <CNav variant="tabs">
@@ -46,10 +104,30 @@ const TestListRoom = () => {
               </CNav>
               <CTabContent>
                 <CTabPane>
+                  <CRow className="mt-3">
+                    <CCol xs="12">
+                      <CCard accentColor="success">
+                        <CCardHeader align="center">향후 예약된 강의 목록</CCardHeader>
+                          <CCardBody>
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>강의 예정일</TableCell>
+                                  <TableCell>강의명</TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+
+                              </TableBody>
+                            </Table>
+                          </CCardBody>
+                      </CCard>
+                    </CCol>
+                  </CRow>
                   <CRow>
                     <CCol xs="4">
                       <CButton
-                        className="mt-3"
+                        className="mt-2"
                         active={activeTab === 0}
                         tabIndex={-1}
                         color="light"
@@ -63,17 +141,14 @@ const TestListRoom = () => {
                       <CTabPane active={activeTab === 0}>
                         <CForm>
                           <CCardHeader>
-                            <p></p>
                             <h3>새 강의 시작</h3>
-                            <p></p>
-                            <p>{"강의명이 들어올 자리"}</p>
                           </CCardHeader>
                           <CCardHeader>
-                            <div className="lectureMenu">설명</div>
+                            <div className="lectureMenu">강의명</div>
                             <div className="lectureInfo">
                               <CInputGroup className="mb-3">
-                                <CInput type="text" id="lectureExplain" name="lectureExplain" placeholder="강의 설명을 적어주세요." autoComplete="lectureExplain"
-                                    value={lectureExplain} />
+                                <CInput type="text" name="lectureName" value={lectureName} onChange={onChange}
+                                        placeholder="강의명을 적어주세요." autoComplete="lectureName"/>
                               </CInputGroup>
                             </div>
                           </CCardHeader>
@@ -81,8 +156,8 @@ const TestListRoom = () => {
                             <div className="lectureMenu">날짜</div>
                             <div className="lectureInfo">
                               <CInputGroup className="mb-3">
-                                <CInput type="date" id="lectureDate" name="lectureDate" placeholder="강의 예약 날짜를 설정해주세요." autoComplete="lectureDate"
-                                    value={lectureDate}  />
+                                <CInput type="date" name="lectureDate" value={lectureDate} onChange={onChange}
+                                       placeholder="강의 예약 날짜를 설정해주세요." autoComplete="lectureDate"/>
                               </CInputGroup>
                             </div>
                           </CCardHeader>
@@ -90,21 +165,51 @@ const TestListRoom = () => {
                             <div className="lectureMenu">시간</div>
                             <div className="lectureInfo">
                               <CInputGroup className="mb-3">
-                                <CInput type="time" id="lectureTime" name="lectureTime" placeholder="강의 예약 시간을 설정해주세요." autoComplete="lectureTime"
-                                    value={lectureTime} />
+                                <CInput type="time" name="lectureTime" value={lectureTime} onChange={onChange}
+                                        placeholder="강의 예약 시간을 설정해주세요." autoComplete="lectureTime"/>
                               </CInputGroup>
                             </div>
                           </CCardHeader>
                           <CCardHeader>
-                            <div className="lectureMenu">회의ID</div>
+                            <div className="lectureMenu">
+                              <CInputGroup>
+                                <CLabel htmlFor="lectureRecursion">반복알림여부</CLabel>
+                              </CInputGroup>
+                            </div>
                             <div className="lectureInfo">
-                              {"이것은 랜덤지정?"}
+                              <CInputGroup>
+                                <CSelect custom name="lectureRecursion" value={lectureRecursion} id="lectureRecursion" 
+                                         onChange={(e) => onChange(e.target.value)}>
+                                  <option value="Never">Never</option>
+                                  <option value="Every Day">Every Day</option>
+                                  <option value="Every Week">Every Week</option>
+                                  <option value="Every 2 Weeks">Every 2 Weeks</option>
+                                  <option value="Every Month">Every Month</option>
+                                  <option value="Every Year">Every Year</option>
+                                  {/* <option value="Never">Never</option>
+                                  <option value="Every Day">Every Day</option>
+                                  <option value="Every Week">Every Week</option>
+                                  <option value="Every 2 Weeks">Every 2 Weeks</option>
+                                  <option value="Every Month">Every Month</option>
+                                  <option value="Every Year">Every Year</option> */}
+                                </CSelect>
+                              </CInputGroup>  
                             </div>
                           </CCardHeader>
                           <CCardHeader>
-                            <div className="lectureMenu">암호</div>
+                            <div className="lectureMenu">
+                              <CInputGroup>
+                                <CLabel htmlFor="lectureReminder">이메일로?알림여부</CLabel>
+                              </CInputGroup>
+                            </div>
                             <div className="lectureInfo">
-                              {"이것은 랜덤지정?"}
+                              <CInputGroup>
+                                <CSelect custom name="lectureReminder" id="lectureReminder" value={lectureReminder}
+                                         onChange={(e) => onChange(e.target.value)}>
+                                  <option value="Yes">Yes</option>
+                                  <option value="No">No</option>
+                                </CSelect>
+                              </CInputGroup>  
                             </div>
                           </CCardHeader>
                         </CForm>
@@ -124,33 +229,32 @@ const TestListRoom = () => {
                       </CTabPane>
                     </CCol>
                   </CRow>
-                  <CRow>
+                </CTabPane>
+                <CTabPane>
+                  <CRow className="mt-3">
                     <CCol xs="12">
                       <CCard accentColor="success">
-                        <CCardHeader>향후 예약된 강의들</CCardHeader>
-                          <CCardBody>
-                            <Table>
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>수업명</TableCell>
-                                  <TableCell>수업인원</TableCell>
-                                  <TableCell>학수번호</TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
+                        <CCardHeader align="center">이전 강의 목록</CCardHeader>
+                        <CCardBody>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                  <TableCell>강의날짜</TableCell>
+                                  <TableCell>강의명</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
 
-                              </TableBody>
-                            </Table>
-                          </CCardBody>
+                            </TableBody>
+                          </Table>
+                        </CCardBody>
                       </CCard>
                     </CCol>
                   </CRow>
                 </CTabPane>
                 <CTabPane>
-                  {`2.`}
-                </CTabPane>
-                <CTabPane>
-                  <CListGroup accent className="mt-3">
+                  {/* 개인회의실 삭제 */}
+                  {/* <CListGroup accent className="mt-3">
                     <CCardHeader>
                       <div className="lectureMenu">개인회의이름</div>
                       <div className="lectureInfo">{"강의 설명~~~~"}</div>
@@ -178,7 +282,7 @@ const TestListRoom = () => {
                       >
                         {" "}
                         개인 회의 정보 수정{" "}
-                      </CButton>{" "}
+                      </CButton>{" "} */}
                       <Link to="/base/meet_create/MeetCreate">
                         <CButton
                           className="mt-3"
@@ -187,11 +291,11 @@ const TestListRoom = () => {
                           color="info"
                         >
                           {" "}
-                          새 개인 회의 시작{" "}
+                          회의 화면 시작{" "}
                         </CButton>
                       </Link>
-                    </CCol>
-                  </CRow>
+                    {/* </CCol>
+                  </CRow> */}
                 </CTabPane>
               </CTabContent>
             </CTabs>
