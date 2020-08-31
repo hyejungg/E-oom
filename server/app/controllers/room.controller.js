@@ -24,7 +24,7 @@ exports.createRoom = async(req, res) => {
         option_save_authority : options.init_save_authority,
         option_notification : options.init_notification,
         lecture_num : req.body.lecture_num,
-        room_start : req.body.room_start,
+        room_start : req.body.room_startdate +" "+req.body.room_starttime,
         room_recursion : req.body.room_recursion,
         room_reminder : req.body.room_reminder,
     })
@@ -50,6 +50,7 @@ exports.getRooms = async(req,res) =>{
     }
   })
   .then(data =>{
+    console.log(data);
     res.status(200).send(data);
   }).catch(err => {
     res.status(500).send({
@@ -57,4 +58,4 @@ exports.getRooms = async(req,res) =>{
         err.message || "Some error occurred while retrieving users."
     });
   });
-}
+};
