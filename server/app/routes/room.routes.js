@@ -8,6 +8,7 @@ module.exports = app => {
     router.post("",room.createRoom);
     router.get("/:lecture_num",room.getRooms);
     router.post("/join",[authJwt.verifyToken],room.joinRoom);
+    router.post("/leave",[authJwt.verifyToken],room.leaveRoom);
     // router.post("/create");
     //delete room
     //update room Info
