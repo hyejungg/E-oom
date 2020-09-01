@@ -14,9 +14,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
    dialectOptions: {
      ssl: {
          require: true
-    },
-    timezone: "+09:00"
- }
+    }
+  },
+  timezone: "+09:00"
 });
 
 const db = {};
