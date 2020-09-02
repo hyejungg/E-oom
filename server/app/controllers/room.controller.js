@@ -115,6 +115,14 @@ exports.joinRoom = async (req, res) => {
       const count = await Enrollment.count({ where: { user_num: user_num, lecture_num: lecture_num } });
       console.log(count);
       if (count > 0) {
+        const exist = await Participation.count({where: {room_num:room_num, user_num:user_num}});
+        if(exist>0){
+          res.status(200).send({ 
+            success: false,
+            message : "you are already joining the room"}
+          );
+          return;
+        }else{
         const options = await Lecture.findByPk(lecture_num, {
           attributes: ["init_chat_authority"]
         });
@@ -124,8 +132,12 @@ exports.joinRoom = async (req, res) => {
           room_num: room_num,
           user_num: user_num
         });
+      }
       } else {
-        res.status(200).send({ success: false });
+        res.status(200).send({ 
+          success: false,
+          message : "You are not enrolled in the lecture"  }
+        );
         return;
       }
 
