@@ -16,9 +16,9 @@ exports.createRoom = async (req, res) => {
   }
   try {
     const options = await Lecture.findByPk(req.body.lecture_num, {
-      attributes: ["init_mute_authority", "init_chat_authority", "init_save_authority", "init_notification"]
+      attributes: ["user_num","init_mute_authority", "init_chat_authority", "init_save_authority", "init_notification"]
     });
-
+    if(options.user_num===req.user_num){
     await Room.create({
       room_title: req.body.room_title,
       room_link: shortid.generate(),
@@ -34,6 +34,9 @@ exports.createRoom = async (req, res) => {
       .then(() => {
         res.status(200).send({ message: "Room was registered successfully" });
       })
+    }else{
+      res.status(200).send({ message: "Host only can create a room" });
+    }
 
 
   } catch (err) {
@@ -59,7 +62,7 @@ exports.getRooms = async (req, res) => {
         message:
           err.message || "Some error occurred while retrieving users."
       });
-    });
+  });
 };
 
 exports.joinRoom = async (req, res) => {
