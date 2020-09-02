@@ -9,6 +9,12 @@ class RoomsDataService{
     getRoomsInfo(lecture_num){
         return http.get("/rooms/"+lecture_num);
     }
+    joinRoom(data){
+        return http.post("/rooms/join",{headers : authHeader()}, data);
+    }
+    leaverRoom(data){
+        return http.post("/rooms/leave",{headers : authHeader()}, data);
+    }
 }
 
 export default new RoomsDataService();
