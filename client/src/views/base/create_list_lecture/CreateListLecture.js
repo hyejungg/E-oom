@@ -128,7 +128,8 @@ class CreateListLecture extends Component {
   componentDidMount() {
     this.timer = setInterval(this.progress, 20);
     this.callApi()
-      .then((res) => this.setState({ lectures: res }))
+      .then((res) => {this.setState({ lectures: res })
+                console.log(this.state.lectures);})
       .catch((err) => console.log(err));
   }
 

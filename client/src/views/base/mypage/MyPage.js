@@ -1,6 +1,5 @@
-import React, { useState, Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  CBadge,
   CCard,
   CCardBody,
   CCardHeader,
@@ -10,10 +9,6 @@ import {
   CRow,
   CTabContent,
   CTabPane,
-  CDataTable,
-  CBreadcrumb,
-  CBreadcrumbItem,
-  CLink,
   CSwitch,
   CNavbar,
   CForm,
@@ -31,30 +26,13 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react"; //문의사항
 
-import usersData from "../../users/UsersData";
-
+import UserInfoList from "./UserInfoList"
 import UserDataService from '../../../services/user.service'
-
-// const getBadge = (status) => {
-//   switch (status) {
-//     case "Active":
-//       return "success";
-//     case "Inactive":
-//       return "secondary";
-//     case "Pending":
-//       return "warning";
-//     case "Banned":
-//       return "danger";
-//     default:
-//       return "primary";
-//   }
-// };
-// const fields = ["name", "registered", "role", "status"];
-
 
 const Mypage = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [userData, setUserData] = useState([]);
+
   const [user_nickname, getNickname] = useState('');
   const [user_email, getEmail] = useState('');
   const [user_lname, getLname] = useState('');
@@ -62,98 +40,25 @@ const Mypage = () => {
   const [user_birth, getBirth] = useState('');
   const [user_phone, getPhone] = useState('');
 
-  // const showUserData = userData.map((value, key) => {
-  //   return(<div><CCardHeader id = {key}>{value}</CCardHeader></div>);
-  //   //빈값임 ㅠ 왜?
-  // });
-  // console.log(showUserData);
-
-  const getUserInfo = () => {
-    var responseData = [];
-
-     UserDataService.getUserInfo()
-    .then(response => {
-      responseData = response.data;
-      for(var value in responseData){
-        console.log("value : " + value + "\nvaluee : " + responseData[value]);
-        setUserData(userData = responseData);
-        /*
-        // userData : newuser,aa@aa,hanhee,kang,1998-07-18,11111111111
-        userData[0] == user_nickname
-        userData[1] == user_email
-        userData[2] == user_lname
-        userData[3] == user_fname
-        userData[4] == user_birth
-        userData[5] == user_phone
-        */
-      }
-      console.log("userData : " + userData);
-      // _showUserInfo(userData);
+  useEffect(() => {
+    // this.timer = setInterval(progress, 20);
+    // progress();
+    callApi(UserDataService)
+    .then(response =>{
+      setUserData(response.data);
     })
     .catch(error => {
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       console.log(resMessage);
     })
+  }, []);
+
+  //동기 처리
+  async function callApi(url){
+    const response = await url.getUserInfo();
+    const body = await response;
+    return body;
   }
-
-  // useEffect(() => {
-  //   //API를 이용 -> 로그인한 user 정보 데려옴
-  //   var responseData = [];
-
-  //    UserDataService.getUserInfo()
-  //   .then(response => {
-  //     responseData = response.data;
-  //     for(var value in responseData){
-  //       console.log("value : " + value + "\nvaluee : " + responseData[value]);
-  //       setUserData(userData.push(responseData));
-  //       /*
-  //       // userData : newuser,aa@aa,hanhee,kang,1998-07-18,11111111111
-  //       userData[0] == user_nickname
-  //       userData[1] == user_email
-  //       userData[2] == user_lname
-  //       userData[3] == user_fname
-  //       userData[4] == user_birth
-  //       userData[5] == user_phone
-  //       */
-  //     }
-  //     console.log("userData : " + userData);
-  //     // _showUserInfo(userData);
-  //   })
-  //   .catch(error => {
-  //     const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-  //     console.log(resMessage);
-  //   })
-  // });
-
-  // function _showUserInfo(userData){
-  //   value = user_nickname + "님, 안녕하세요!";
-  //   return value;
-  // }
-
-  // const a = (userData) => {
-  //   switch (userData) {
-  //     case '0':
-  //       user_nickname = userData[0];
-  //       console.log(user_nickname);
-  //       return user_nickname;
-  //     case '1':
-  //       return user_email = userData[1];
-  //     case '2':
-  //       return user_lname = userData[2];
-  //     case '3':
-  //       return user_fname = userData[3];
-  //     case '4':
-  //       return user_birth = userData[4];
-  //     case '5':
-  //       return user_phone = userData[5]; 
-  //   }
-  //   // const user_nickname = userData[0];
-  //   // const user_email = userData[1];
-  //   // const user_lname = userData[2];
-  //   // const user_fname = userData[3];
-  //   // const user_birth = userData[4];
-  //   // const user_phone = userData[5];
-  // }
 
   return (
     <>
@@ -234,18 +139,27 @@ const Mypage = () => {
                       </CListGroupItem> */}
                     </CTabPane>
                     <CTabPane active={activeTab === 1}>
-                      {getUserInfo()}  
                       <CCardHeader>
                         <CCardBody>
-                          <h2>{userData["user_nickname"]}</h2>
+                          <h2>닉네임자리</h2>
                         </CCardBody>
                       </CCardHeader>
-                      <CCardHeader>성 : <span>{userData[3]}</span></CCardHeader>
-                      <CCardHeader>이름 : <span>{userData[2]}</span></CCardHeader>
-                      <CCardHeader>로그인 이메일 : <span>{userData[1]}</span></CCardHeader>
-                      <CCardHeader>비밀번호 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>핸드폰 번호 : <span>{userData[5]}</span></CCardHeader>
-                      <CCardHeader>생년월일 : <span>{userData[4]}</span></CCardHeader>
+                      {/* user_num받아서 실행해보기 */}
+                      {/* {userData ? (
+                        userData.map((c) => {
+                          return (
+                            <UserInfoList
+                              key={c.user_num}
+                              user_nickname={c.user_nickname}
+                              user_email={c.user_email}
+                              user_fname={c.user_fname}
+                              user_lname={c.user_lname}
+                              user_birthday={c.user_birthday}
+                              user_phone={c.user_phone}
+                              />
+                          );
+                      })) : (
+                        console.log("유저 정보 없음"))} */}
                       <CRow>
                         <CCol align="right">
                           <CButton

@@ -15,7 +15,7 @@ class UserDataService{
             //     return http.post("/users/checkpw",data);
             // }
     getUserInfo(){
-        return http.get("/users/user-info", {headers : authHeader()});
+        return http.get("/users/user-info/"+ {headers : authHeader()});
     }
     updateUser(){
         return http.put("/users/update", {headers : authHeader()});
