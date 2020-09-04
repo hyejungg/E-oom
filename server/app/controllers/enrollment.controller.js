@@ -58,17 +58,25 @@ exports.readEnrollment = async (req, res) =>{
         var lecture_list = [];
         enrolled_list = await Enrollment.findAll(condition);
         for(var i=0; i<enrolled_list.length; i++){
-            var data = await User.findAll({
+            var hostdata = await User.findAll({
                 attributes : ['user_nickname'],
                 where : {
                     user_num : enrolled_list[i].dataValues.user_num
+                }
+            })
+            var lecturedata = await Lecture.findAll({
+                attriutes : ['lecture_id', 'lecture_capacity'],
+                where : {
+                    lecture_num : enrolled_list[i].dataValues.lecture_num
                 }
             })
             //console.log(data[0].user_nickname);
             var enrolled_lecture = {
                 lecture_num : enrolled_list[i].dataValues.lecture_num,
                 lecture_title : enrolled_list[i].dataValues.lecture_title,
-                user_nickname : data[0].user_nickname
+                lecture_id : lecturedata[0].lecture_id,
+                lecture_capacity : lecturedata[0].lecture_capacity,
+                user_nickname : hostdata[0].user_nickname
             }
 
             lecture_list.push(enrolled_lecture);
