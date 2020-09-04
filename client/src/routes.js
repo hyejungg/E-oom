@@ -33,8 +33,8 @@ const CreateListLecture = React.lazy(() =>
 const CreateListRoom = React.lazy(() =>
   import("./views/base/create_list_room/ListRoom")
 );
-const ParticipateListLecture = React.lazy(() =>
-  import("./views/base/participate_list_lecture/ParticipateListLecture")
+const EnrollmentListLecture = React.lazy(() =>
+  import("./views/base/enrollment_list_lecture/EnrollmentListLecture")
 );
 const ParticipateListRoom = React.lazy(() =>
   import("./views/base/participate_list_room/ListRoom")
@@ -109,9 +109,9 @@ const routes = [
     component: ParticipateListRoom,
   }, //***
   {
-    path: "/base/participate_list_lecture",
-    name: "ParticipateListLecture",
-    component: ParticipateListLecture,
+    path: "/base/enrollment_list_lecture",
+    name: "EnrollmentListLecture",
+    component: EnrollmentListLecture,
   }, //***
   { path: "/forms/Questions", name: "Questions", component: Questions }, //***
   {
@@ -126,7 +126,6 @@ const routes = [
     name: "TestListRoom",
     component: TestListRoom,
   },
-
 
   { path: "/notifications/alerts", name: "Alerts", component: Alerts },
   { path: "/notifications/badges", name: "Badges", component: Badges },

@@ -1,26 +1,37 @@
-import 'react-app-polyfill/ie11'; // For IE 11 support
-import 'react-app-polyfill/stable';
-import './polyfill'
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import "react-app-polyfill/ie11"; // For IE 11 support
+import "react-app-polyfill/stable";
+import "./polyfill";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 
-import { icons } from './assets/icons'
+import { icons } from "./assets/icons";
 
-import { Provider } from 'react-redux'
-import store from './store'
+import { Provider } from "react-redux";
+import store from "./store";
 
-React.icons = icons
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import CreateListLecture from "./views/base/create_list_lecture/CreateListLecture";
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: '"Noto Sans KR", serif',
+  },
+});
+
+React.icons = icons;
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={store}>
-      <App/>
-    </Provider>
-  </BrowserRouter>, 
-  document.getElementById('root')
+    <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </MuiThemeProvider>
+  </BrowserRouter>,
+  document.getElementById("root")
 );
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

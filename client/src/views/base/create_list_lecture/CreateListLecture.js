@@ -94,14 +94,23 @@ import authHeader from "../../../services/auth-header";
 const styles = (theme) => ({
   root: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto",
-  },
-  table: {
     minWidth: 1080,
+  },
+  menu: {
+    marginTop: 15,
+    marginBottom: 15,
+    display: "flex",
+    justifyContent: "center",
+  },
+  paper: {
+    marginLeft: 18,
+    marginRight: 18,
   },
   progress: {
     margin: theme.spacing.unit * 2,
+  },
+  tableHead: {
+    fontSize: "1.0rem",
   },
 });
 
@@ -128,8 +137,10 @@ class CreateListLecture extends Component {
   componentDidMount() {
     this.timer = setInterval(this.progress, 20);
     this.callApi()
-      .then((res) => {this.setState({ lectures: res })
-                console.log(this.state.lectures);})
+      .then((res) => {
+        this.setState({ lectures: res });
+        console.log(this.state.lectures);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -146,18 +157,21 @@ class CreateListLecture extends Component {
 
   render() {
     const { classes } = this.props;
+    const cellList = ["번호", "수업명", "수업인원", "수업ID", "설정"];
     return (
-      <div>
-        <LectureAdd stateRefresh={this.stateRefresh} />
-        <Paper className={classes.root}>
+      <div className={classes.root}>
+        <div className={classes.menu}>
+          <LectureAdd stateRefresh={this.stateRefresh} />
+        </div>
+        <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell>번호</TableCell>
-                <TableCell>수업명</TableCell>
-                <TableCell>수업인원</TableCell>
-                <TableCell>학수번호</TableCell>
-                <TableCell>설정</TableCell>
+                {cellList.map((c) => {
+                  return (
+                    <TableCell className={classes.tableHead}>{c}</TableCell>
+                  );
+                })}
               </TableRow>
             </TableHead>
             <TableBody>
