@@ -14,9 +14,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
    dialectOptions: {
      ssl: {
          require: true
-    },
-    timezone: "+09:00"
- }
+    }
+  },
+  timezone: "+09:00"
 });
 
 const db = {};
@@ -28,10 +28,10 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.lecture = require("./lecture.model.js")(sequelize, Sequelize);
 db.enrollment = require("./enrollment.model.js")(sequelize, Sequelize);
 db.room = require("./room.model.js")(sequelize, Sequelize);
-// db.participation = require("./participation.model.js")(sequelize,Sequelize);
+db.participation = require("./participation.model.js")(sequelize,Sequelize);
 
-// db.user.belongsToMany(db.room,{through : db.participation,foreignKey : "user_num"});
-// db.room.belongsToMany(db.user,{through : db.participation,foreignKey:"room_num"});
+db.user.belongsToMany(db.room,{through : db.participation,foreignKey : "user_num"});
+db.room.belongsToMany(db.user,{through : db.participation,foreignKey:"room_num"});
 
 
 db.lecture.hasMany(db.room,{foreignKey : "lecture_num"});

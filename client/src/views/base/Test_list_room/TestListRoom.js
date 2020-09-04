@@ -1,4 +1,4 @@
-import React, { useState, useReducer  } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   CCol,
@@ -20,75 +20,71 @@ import {
   CSelect,
 } from "@coreui/react";
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import TestListRoomAdd from "./TestListRoomAdd"
+import RoomList from "./RoomList"
+import RoomDataService from "../../../services/rooms.service"
+
+//circle progress
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     width: "100%",
+//     marginTop: theme.spacing(3) * 3,
+//     overflowX: "auto",
+//   },
+//   table: {
+//     minWidth: 1080,
+//   },
+//   progress: {
+//     margin: theme.spacing(2) * 2,
+//   },
+// }));
 
 const TestListRoom = () => {
+  const {classes} = useState('');
   const [activeTab, setActiveTab] = useState(1);
-  // const [lectureName, setLectureName] = useState('');
-  // const [lectureDate, setLecutreDate] = useState('');
-  // const [lectureTime, setLectureTime] = useState('');
 
-  // const onChangelectureName = e => {
-  //   e.preventDefault();
-  //   setLectureName(e.target.value);
-  // };
-  // const onChangelectureDate = e => {
-  //   e.preventDefault();
-  //   setLecutreDate(e.target.value);
-  // };
-  // const onChangelectureTime = e => {
-  //   e.preventDefault();
-  //   setLectureTime(e.target.value);
-  // };
+  const [lecture_title, setLectureTitle] = useState('');
+  const [lecture_host, setLectureHost] = useState('')
 
-  // function reducer(state, action) {
-  //   // action.type 에 따라 다른 작업 수행
-  //   switch (action.type) {
-  //     case '0':
-  //       return { value: 'Never'};
-  //     case '1':
-  //       return { value: 'Every Day' };
-  //     case '2':
-  //       return { value: 'Every Week' };
-  //     case '3':
-  //       return { value: 'Every 2 Weeks' };
-  //     case '4':
-  //       return { value: 'Every Month' };
-  //     case '5':
-  //       return { value: 'Every Year' };
-  //     case '6':
-  //       return { value: 'Yes' };
-  //     case '7':
-  //       return { value: 'No' };
-  //     default:
-  //       // 아무것도 해당되지 않을 때 기존 상태 반환
-  //       return state;
-  //   }
-  // }
-  function reducer(state, action) {
-    return {
-      ...state,
-      [action.name]: action.value
-    };
-  }
-  const [state, dispatch] = useReducer(reducer, {
-    lectureName: '',
-    lectureDate: '',
-    lectureTime: '',
-    lectureRecursion: '',
-    lectureReminder: '',
-  });
-  const {lectureName, lectureDate, lectureTime, lectureRecursion, lectureReminder} = state;
-  const onChange = e => {
-    // e.preventDefault();
-    dispatch(e.target);
-    console.log(state);
+  const [lectureNum, setLectureNum] = useState('4');
+  const [room_info, setRoomInfo] = useState([]);
+  const [completed, setCompleted] = useState(0);
+  
+  useEffect(() => {
+    // this.timer = setInterval(progress, 20);
+    progress();
+    callApi(RoomDataService, lectureNum)
+    .then(response =>{
+      setRoomInfo(response.data);
+    })
+    .catch(error => {
+      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      console.log(resMessage);
+    })
+  }, []);
+
+  //progress
+  const progress = () => {
+    setCompleted({
+      completed: completed >= 100 ? 0 : completed + 1 
+    });
   };
+
+  //동기 처리
+  async function callApi(url, data){
+    const response = await url.getRoomsInfo(data);
+    const body = await response;
+    return body;
+  }
   
   return (
     <CRow>
       <CCol>
         <CCard>
-          <CCardHeader>수업명 / 담당자</CCardHeader>
+          <CCardHeader>{lecture_title} / {lecture_host}</CCardHeader>
+          {/* <CCardHeader>수업명 / 담당호스트</CCardHeader> */}
           <CCardBody>
             <CTabs>
               <CNav variant="tabs">
@@ -104,12 +100,14 @@ const TestListRoom = () => {
               </CNav>
               <CTabContent>
                 <CTabPane>
+                {/* <CTabPane className={classes.root}> */}
                   <CRow className="mt-3">
                     <CCol xs="12">
                       <CCard accentColor="success">
                         <CCardHeader align="center">향후 예약된 강의 목록</CCardHeader>
                           <CCardBody>
                             <Table>
+                            {/* <Table className={classes.table}> */}
                               <TableHead>
                                 <TableRow>
                                   <TableCell>강의 예정일</TableCell>
@@ -117,7 +115,30 @@ const TestListRoom = () => {
                                 </TableRow>
                               </TableHead>
                               <TableBody>
-
+                                {room_info ? (
+                                  room_info.map((c) => {
+                                    return (
+                                      <RoomList
+                                        // stateRefresh={this.stateRefresh}
+                                        key={c.room_num}
+                                        room_num={c.room_num}
+                                        room_start={c.room_start}
+                                        room_title={c.room_title}
+                                      />
+                                    );
+                                  })
+                                ) : 
+                                  // console.log("없음")
+                                  <TableRow>
+                                    <TableCell colSpan="6" align="center">
+                                      <CircularProgress
+                                        // className={classes.progress}
+                                        variant="determinate"
+                                        value={completed}
+                                      />
+                                    </TableCell>
+                                  </TableRow>
+                                }
                               </TableBody>
                             </Table>
                           </CCardBody>
@@ -139,93 +160,7 @@ const TestListRoom = () => {
                     </CCol>
                     <CCol xs="8">
                       <CTabPane active={activeTab === 0}>
-                        <CForm>
-                          <CCardHeader>
-                            <h3>새 강의 시작</h3>
-                          </CCardHeader>
-                          <CCardHeader>
-                            <div className="lectureMenu">강의명</div>
-                            <div className="lectureInfo">
-                              <CInputGroup className="mb-3">
-                                <CInput type="text" name="lectureName" value={lectureName} onChange={onChange}
-                                        placeholder="강의명을 적어주세요." autoComplete="lectureName"/>
-                              </CInputGroup>
-                            </div>
-                          </CCardHeader>
-                          <CCardHeader>
-                            <div className="lectureMenu">날짜</div>
-                            <div className="lectureInfo">
-                              <CInputGroup className="mb-3">
-                                <CInput type="date" name="lectureDate" value={lectureDate} onChange={onChange}
-                                       placeholder="강의 예약 날짜를 설정해주세요." autoComplete="lectureDate"/>
-                              </CInputGroup>
-                            </div>
-                          </CCardHeader>
-                          <CCardHeader>
-                            <div className="lectureMenu">시간</div>
-                            <div className="lectureInfo">
-                              <CInputGroup className="mb-3">
-                                <CInput type="time" name="lectureTime" value={lectureTime} onChange={onChange}
-                                        placeholder="강의 예약 시간을 설정해주세요." autoComplete="lectureTime"/>
-                              </CInputGroup>
-                            </div>
-                          </CCardHeader>
-                          <CCardHeader>
-                            <div className="lectureMenu">
-                              <CInputGroup>
-                                <CLabel htmlFor="lectureRecursion">반복알림여부</CLabel>
-                              </CInputGroup>
-                            </div>
-                            <div className="lectureInfo">
-                              <CInputGroup>
-                                <CSelect custom name="lectureRecursion" value={lectureRecursion} id="lectureRecursion" 
-                                         onChange={(e) => onChange(e.target.value)}>
-                                  <option value="Never">Never</option>
-                                  <option value="Every Day">Every Day</option>
-                                  <option value="Every Week">Every Week</option>
-                                  <option value="Every 2 Weeks">Every 2 Weeks</option>
-                                  <option value="Every Month">Every Month</option>
-                                  <option value="Every Year">Every Year</option>
-                                  {/* <option value="Never">Never</option>
-                                  <option value="Every Day">Every Day</option>
-                                  <option value="Every Week">Every Week</option>
-                                  <option value="Every 2 Weeks">Every 2 Weeks</option>
-                                  <option value="Every Month">Every Month</option>
-                                  <option value="Every Year">Every Year</option> */}
-                                </CSelect>
-                              </CInputGroup>  
-                            </div>
-                          </CCardHeader>
-                          <CCardHeader>
-                            <div className="lectureMenu">
-                              <CInputGroup>
-                                <CLabel htmlFor="lectureReminder">이메일로?알림여부</CLabel>
-                              </CInputGroup>
-                            </div>
-                            <div className="lectureInfo">
-                              <CInputGroup>
-                                <CSelect custom name="lectureReminder" id="lectureReminder" value={lectureReminder}
-                                         onChange={(e) => onChange(e.target.value)}>
-                                  <option value="Yes">Yes</option>
-                                  <option value="No">No</option>
-                                </CSelect>
-                              </CInputGroup>  
-                            </div>
-                          </CCardHeader>
-                        </CForm>
-                        <CRow>
-                          <CCol align="right">
-                            <CButton
-                              className="mt-3"
-                              active={activeTab === 0}
-                              tabIndex={-1}
-                              color="info"
-                            >
-                              {" "}
-                              예약{" "}
-                            </CButton>
-                          </CCol>
-                        </CRow>
+                        <TestListRoomAdd />
                       </CTabPane>
                     </CCol>
                   </CRow>
@@ -306,4 +241,4 @@ const TestListRoom = () => {
   );
 };
 
-export default TestListRoom;
+export default (TestListRoom);

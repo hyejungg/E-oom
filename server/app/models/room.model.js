@@ -60,6 +60,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue : false
+      },
+      lecture_num:{
+        type: Sequelize.INTEGER,
+        allowNull: false
       }
     });
   

@@ -118,7 +118,7 @@ exports.checkPW = async(req,res)=>{
 exports.getOne = async(req,res) =>{
   const user_num = req.user_num;
   await User.findByPk(user_num,{
-    attributes : ["user_nickname","user_email","user_fname","user_lname","user_birthdate","user_phone"]
+    attributes : ["user_num","user_nickname","user_email","user_fname","user_lname","user_birthdate","user_phone"]
   })
   .then(data =>{
     res.send(data);
