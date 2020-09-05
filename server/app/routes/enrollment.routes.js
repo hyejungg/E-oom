@@ -5,13 +5,13 @@ module.exports = app => {
 
     var router = require("express").Router();
     //create new lecture
-    router.post("/", [authJwt.verifyTken], enrollment.createEnrollment);
+    router.post("/", [authJwt.verifyToken], enrollment.createEnrollment);
 
     //find Lectures
-    router.get("/", [authJwt.verifyTken], enrollment.readEnrollment);
+    router.get("/", [authJwt.verifyToken], enrollment.readEnrollment);
 
     //delete Lecture with lecture_num
-    router.delete("/:lecture_num", [authJwt.verifyTken], enrollment.deleteEnrollment);
+    //router.delete("/:lecture_num", [authJwt.verifyToken], enrollment.deleteEnrollment);
     
     app.use('/api/enrollment', router);
 }     

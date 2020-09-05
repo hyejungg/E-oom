@@ -10,10 +10,11 @@ class EnrollmentDataService{
     readEnrollment(data){
         return http.get("/enrollment");
     }
-
+    
+    /*
     deleteEnrollment(data){
         return http.delete("/enrollment", data);
-    }
+    }*/
 }
 
 export default new EnrollmentDataService();

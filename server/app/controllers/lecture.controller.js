@@ -96,7 +96,7 @@ exports.deleteAllLecture = async(req, res) => {
 exports.deleteLecture = async (req, res) => {
   await Lecture.destroy({
     where : {
-      host_num : req.user_num,
+      user_num : req.user_num,
       lecture_num : req.params.lecture_num  
     }
   })
@@ -107,7 +107,7 @@ exports.deleteLecture = async (req, res) => {
       });
     }else{
       res.status(409).send({
-        message : `Wrong input of host_num/lecture_num, or There is no matched pair between (lecture_num:${req.params.lecture_num}, host_num:${req.user_num}`
+        message : `Wrong input of host_num/lecture_num, or There is no matched pair between (lecture_num:${req.params.lecture_num}, user_num:${req.user_num}`
       });
     }
   })
