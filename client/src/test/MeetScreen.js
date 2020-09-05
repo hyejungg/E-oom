@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Peer from 'simple-peer';
-import socket from '../../socket';
+import socket from '../socket';
 import {
   CButton,
   CCard,
@@ -18,7 +18,7 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from "@coreui/react";
-import "../../src/scss/_custom.scss";
+import "../scss/_custom.scss";
 import ShowWebRTC from "./ShowWebRTC";
 
 

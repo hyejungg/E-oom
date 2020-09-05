@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Peer from 'simple-peer';
 import styled from 'styled-components';
-import socket from '../../socket';
+import socket from '../socket';
 import VideoCard from './VideoCard';
 
 
