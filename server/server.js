@@ -20,43 +20,86 @@ const server = app.listen(PORT, function () {
 const socket = require("socket.io");
 const io = socket(server);
 
-// peerconnection
-const users = {};
-const socketToRoom = {};
+let socketList = {};
 
-io.on('connection', socket => {
-  console.log("1");
-  socket.on("join room", roomID => {
-    if (users[roomID]) {
-      users[roomID].push(socket.id);
-    } else {
-      users[roomID] = [socket.id];
-    }
-    socketToRoom[socket.id] = roomID;
-    const usersInThisRoom = users[roomID].filter(id => id !== socket.id);
+app.use(express.static(path.join(__dirname, 'public')));
 
-    socket.emit("all users", usersInThisRoom);
-  });
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
-  socket.on("sending signal", payload => {
-    console.log("2");
-    io.to(payload.userToSignal).emit('user joined', { signal: payload.signal, callerID: payload.callerID });
-
-  });
-
-  socket.on("returning signal", payload => {
-    console.log("3");
-    io.to(payload.callerID).emit('receiving returned signal', { signal: payload.signal, id: socket.id });
-  });
-
+io.on('connection', (socket) => {
   socket.on('disconnect', () => {
-    console.log("4");
-    const roomID = socketToRoom[socket.id];
-    let room = users[roomID];
-    if (room) {
-      room = room.filter(id => id !== socket.id);
-      users[roomID] = room;
-    }
+    console.log('User disconnected!');
+  });
+
+  socket.on('BE-check-user', ({ roomId, userName }) => {
+    let error = false;
+
+    io.sockets.in(roomId).clients((err, clients) => {
+      clients.forEach((client) => {
+        if (socketList[client] == userName) {
+          error = true;
+        }
+      });
+      socket.emit('FE-error-user-exist', { error });
+    });
+  });
+
+  /**
+   * Join Room
+   */
+  socket.on('BE-join-room', ({ roomId, userName }) => {
+    // Socket Join RoomName
+    socket.join(roomId);
+    socketList[socket.id] = userName;
+
+    // Set User List
+    io.sockets.in(roomId).clients((err, clients) => {
+      try {
+        const users = [];
+        clients.forEach((client) => {
+          // if (
+          //   client !== socket.id &&
+          //   socketList[client] &&
+          //   socketList[client] !== userName
+          // ) {
+          // Add User List
+          users.push({ userId: client, userName: socketList[client] });
+          //   } else if (client !== socket.id && socketList[client] == userName) {
+          //     // Found Same User Name..
+          //     socket.leave(roomId);
+          //     delete socketList[socket.id];
+
+          //     throw {
+          //       msg: 'User Name not available',
+          //     };
+          //   }
+        });
+        socket.broadcast.to(roomId).emit('FE-user-join', users);
+        // io.sockets.in(roomId).emit('FE-user-join', users);
+      } catch (e) {
+        io.sockets.in(roomId).emit('FE-error-user-exist', { err: true });
+      }
+    });
+  });
+
+  socket.on('BE-call-user', ({ userToCall, from, signal }) => {
+    io.to(userToCall).emit('FE-receive-call', {
+      signal,
+      from,
+    });
+  });
+
+  socket.on('BE-accept-call', ({ signal, to }) => {
+    io.to(to).emit('FE-call-accepted', {
+      signal,
+      answerId: socket.id,
+    });
+  });
+
+  socket.on('BE-send-message', ({ roomId, msg, sender }) => {
+    io.sockets.in(roomId).emit('FE-receive-message', { msg, sender });
   });
 });
 
@@ -79,7 +122,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to E-oom application." });
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
     "x-access-token, Origin, Content-Type, Accept"
