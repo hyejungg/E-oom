@@ -40,8 +40,8 @@ db.room.belongsTo(db.lecture,{foreignKey : "lecture_num"});
 db.user.hasMany(db.lecture, {foreignKey : "user_num"});
 db.lecture.belongsTo(db.user, {foreignKey : "user_num"});
 
-db.lecture.belongsToMany(db.user,{through : db.enrollment, foreignKey : "user_num"});
-db.user.belongsToMany(db.lecture,{through : db.enrollment, foreignKey:"lecture_num"});
+db.lecture.belongsToMany(db.user,{through : db.enrollment, foreignKey : "lecture_num"});
+db.user.belongsToMany(db.lecture,{through : db.enrollment, foreignKey: "user_num"});
 
 //db.lecture.hasMany(db.enrollment, {foreignKey : "lecture_num"});
 //db.enrollment.belongsTo(db.lecture, {foreignKey : "lecture_num"});

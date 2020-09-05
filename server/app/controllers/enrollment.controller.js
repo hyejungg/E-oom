@@ -22,6 +22,7 @@ exports.createEnrollment = async (req, res) => {
       res.send({ message: "Host can't join the lecture" });
       return;
     }
+<<<<<<< HEAD
     //console.log(data[0].dataValues.user_num);
     //console.log(data[0].dataValues.lecture_title);
     //console.log(req.user_num);
@@ -41,6 +42,37 @@ exports.createEnrollment = async (req, res) => {
   } catch (err) {
     res.send("Wrong lecture_num : " + req.body.lecture_num);
   }
+=======
+    try{
+        const data = await Lecture.findAll({
+            where : {
+                lecture_num : req.body.lecture_num
+            }
+        })
+        if(data[0].dataValues.user_num === req.user_num){
+            res.send({"message" : "Host can't join the lecture"});
+            return;
+        }
+        //console.log(data[0].dataValues.user_num);
+        //console.log(data[0].dataValues.lecture_title);
+        //console.log(req.user_num);
+        const enrollment = {
+            lecture_num : data[0].dataValues.lecture_num,
+            lecture_title : data[0].dataValues.lecture_title,
+            user_num : req.user_num
+        };
+
+        await Enrollment.create(enrollment)
+        .then(data => {
+            res.status(201).json(enrollment);
+        })
+        .catch(err => {
+            res.send("Already exist");
+        });
+    }catch(err){
+        res.send("Wrong lecture_num : "+ req.body.lecture_num);
+    }
+>>>>>>> fff7176cd9bcdf71ca61df72bd79a5acdc8f6ff7
 };
 
 exports.readEnrollment = async (req, res) => {
@@ -76,7 +108,43 @@ exports.readEnrollment = async (req, res) => {
         user_nickname: data[0].user_nickname,
       };
 
+<<<<<<< HEAD
       lecture_list.push(enrolled_lecture);
+=======
+    try{
+        var lecture_list = [];
+        enrolled_list = await Enrollment.findAll(condition);
+        for(var i=0; i<enrolled_list.length; i++){
+            var hostdata = await User.findAll({
+                attributes : ['user_nickname'],
+                where : {
+                    user_num : enrolled_list[i].dataValues.user_num
+                }
+            })
+            var lecturedata = await Lecture.findAll({
+                attriutes : ['lecture_id', 'lecture_capacity'],
+                where : {
+                    lecture_num : enrolled_list[i].dataValues.lecture_num
+                }
+            })
+            //console.log(data[0].user_nickname);
+            var enrolled_lecture = {
+                lecture_num : enrolled_list[i].dataValues.lecture_num,
+                lecture_title : enrolled_list[i].dataValues.lecture_title,
+                lecture_id : lecturedata[0].lecture_id,
+                lecture_capacity : lecturedata[0].lecture_capacity,
+                user_nickname : hostdata[0].user_nickname
+            }
+
+            lecture_list.push(enrolled_lecture);
+        }
+        res.status(200).send(lecture_list);
+
+    }catch(err){
+        res.status(500).send({
+            message : "500 create_Error"
+        });
+>>>>>>> fff7176cd9bcdf71ca61df72bd79a5acdc8f6ff7
     }
     res.status(200).send(lecture_list);
   } catch (err) {
