@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-class LectureDelete extends React.Component {
+class EnrollmentDelete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,8 +28,8 @@ class LectureDelete extends React.Component {
     });
   };
 
-  deleteLecture(lecture_num) {
-    const url = "/api/lecture/" + lecture_num;
+  deleteEnrollment(lecture_num) {
+    const url = "/api/enrollment/" + lecture_num;
     fetch(url, {
       method: "DELETE",
     });
@@ -56,7 +56,7 @@ class LectureDelete extends React.Component {
               variant="contained"
               color="primary"
               onClick={(e) => {
-                this.deleteLecture(this.props.lecture_num);
+                this.deleteEnrollment(this.props.lecture_num);
               }}
             >
               삭제
@@ -75,4 +75,4 @@ class LectureDelete extends React.Component {
   }
 }
 
-export default LectureDelete;
+export default EnrollmentDelete;

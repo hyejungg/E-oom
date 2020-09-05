@@ -6,7 +6,6 @@ const Enrollment = db.enrollment;
 const Lecture = db.lecture;
 const User = db.user;
 
-
 exports.createEnrollment = async(req, res) => {
     if(!req.body){
         res.status(400).send({

@@ -61,7 +61,7 @@ export default [
   {
     _tag: "CSidebarNavItem",
     name: "수업 참여하기",
-    to: "/base/participate_list_lecture",
+    to: "/base/enrollment_list_lecture",
     icon: "cil-puzzle",
   },
   {
