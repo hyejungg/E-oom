@@ -7,7 +7,9 @@ import { CButton } from "@coreui/react";
 import RoomDataService from "../../../services/rooms.service";
 import authHeader from "../../../services/auth-header";
 
-import MeetParticipate from "../../meet/MeetParticipate";
+import prepare_room from "../prepare_room/PrepareRoom"
+import PrepareRoom from "../prepare_room/PrepareRoom";
+// import MeetParticipate from "../prepare_room/PrepareRoom";
 
 let response;
 let body;
@@ -36,6 +38,7 @@ class RoomList extends React.Component {
     };
     this.enterRoom = this.enterRoom.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
+    this.moveRoom = this.moveRoom.bind(this);
   }
 
   enterRoom() {
@@ -74,12 +77,12 @@ class RoomList extends React.Component {
         console.log(resMessage);
       });
 
-    return (
-      <Link to="../meet/MeetParticipate" style={{ textdecoration: "none" }}>
-        <MeetParticipate user_info={this.state.user_info} />
-      </Link>
-    );
+      return(
+        <PrepareRoom user_info = {this.state.user_info} />
+      );
+    
   }
+
   leaveRoom() {
     var whatIs = false;
     var data = {
@@ -102,35 +105,52 @@ class RoomList extends React.Component {
       });
   }
 
+  moveRoom(){
+    console.log("읽힘")
+    return(
+      <Link to="/prepare_room/PrepareRoom">
+        <PrepareRoom user_info = {this.state.user_info} />
+      </Link>
+    );
+  }
+
   render() {
     console.log(this.state.room_num);
     return (
-      // <Link to="../meet/MeetParticipate">
-      //   <TableRow onClick={enterRoom}>
+      <div>
+        <Link to="/base/prepare_room/PrepareRoom">
+          <TableRow onClick={this.enterRoom}>
+            <TableCell>{this.props.room_start}</TableCell>
+            <TableCell>{this.props.room_title}</TableCell>
+          </TableRow>
+        </Link>
+      </div>
+      
+      // <div>
+      //   <Link to="/base/prepare_room/PrepareRoom" state={this.state.user_info} style={{ textdecoration: "none" }}>
+      //    <TableRow onClick={this.enterRoom}>
       //     <TableCell>{this.props.room_start}</TableCell>
       //     <TableCell>{this.props.room_title}</TableCell>
-      //   </TableRow>
-      // </Link>
-      <div>
-        <TableRow selected={false}>
-          <TableCell>{this.props.room_start}</TableCell>
-
-          <TableCell>{this.props.room_title}</TableCell>
-
-          <TableCell align="center">
-            {/* <Link to="../meet/MeetParticipate" > */}
-            <CButton color="light" onClick={this.enterRoom}>
-              강의 입장
-            </CButton>
-            {/* </Link> */}
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <CButton color="info" onClick={this.leaveRoom}>
-            테스트용(leave)
-          </CButton>
-        </TableRow>
-      </div>
+      //     {/* <TableCell align="center">
+      //       <Link to="/base/prepare_room/PrepareRoom" style={{ textdecoration: "none" }}>
+      //         <CButton color="light">
+      //           강의 입장
+      //         </CButton>
+      //       </Link>
+      //     </TableCell> */}
+      //     </TableRow>
+      //     <TableRow>
+      //       <CButton color="info" onClick={this.leaveRoom}>
+      //         테스트용(leave)
+      //       </CButton>
+      //     </TableRow>
+      //   </Link>
+        
+      //     {/* <CButton color="info" onClick={this.leaveRoom}>
+      //       테스트용(leave)
+      //     </CButton>
+      //   </TableRow> */}
+      // </div>
     );
   }
 }

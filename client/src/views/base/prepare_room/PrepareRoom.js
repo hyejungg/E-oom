@@ -16,11 +16,11 @@ import {
   CButtonToolbar, //****
 } from "@coreui/react";
 
-class MeetParticipate extends Component {
+class PrepareRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_info : this.props.user_info,
+      user_info : props.location.state,
       test : false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -32,7 +32,9 @@ class MeetParticipate extends Component {
     });
   };
 
-  reunder() {
+  render() {
+    console.log(this.state.user_info);
+    console.log(this.props);
     return (
       <>
         <CRow>
@@ -51,7 +53,7 @@ class MeetParticipate extends Component {
                   </CCol>
                   {/* 중간중간 공백 어케줌? ㅠㅠ */}
                   <CCol xs="12" md="4">
-                    {/* {this.state.test ? 
+                    {this.state.test ? 
                       <div>
                         <h2>교육에 참여하시겠습니까?</h2>
                         <CButtonToolbar justify="center">
@@ -68,8 +70,8 @@ class MeetParticipate extends Component {
                         </Link>
                       </CButtonToolbar>
                       </div>
-                    : <h2>호스트가 아직 시작하지 않았습니다.</h2>
-                    } */}
+                    : <h2>호스트가 교육 화면을 시작하지 않았습니다.</h2>
+                    }
                     <CButtonToolbar justify="center">
                       <CForm action="" method="post">
                         <CFormGroup>
@@ -111,4 +113,4 @@ class MeetParticipate extends Component {
   }
 }
 
-export default MeetParticipate;
+export default PrepareRoom;

@@ -23,6 +23,8 @@ const MeetExit = React.lazy(() => import("./views/meet_exit/MeetExit"));
 const MeetParticipate = React.lazy(() =>
   import("./views/meet/MeetParticipate")
 );
+
+const PrepareRoom = React.lazy(()=>import("./views/base/prepare_room/PrepareRoom"))
 //마이페이지
 const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
 //클래스 개설
@@ -33,8 +35,8 @@ const CreateListLecture = React.lazy(() =>
 const CreateListRoom = React.lazy(() =>
   import("./views/base/create_list_room/ListRoom")
 );
-const ParticipateListLecture = React.lazy(() =>
-  import("./views/base/participate_list_lecture/ParticipateListLecture")
+const EnrollmentListLecture = React.lazy(() =>
+  import("./views/base/enrollment_list_lecture/EnrollmentListLecture")
 );
 const ParticipateListRoom = React.lazy(() =>
   import("./views/base/participate_list_room/ListRoom")
@@ -109,9 +111,9 @@ const routes = [
     component: ParticipateListRoom,
   }, //***
   {
-    path: "/base/participate_list_lecture",
-    name: "ParticipateListLecture",
-    component: ParticipateListLecture,
+    path: "/base/enrollment_list_lecture",
+    name: "EnrollmentListLecture",
+    component: EnrollmentListLecture,
   }, //***
   { path: "/forms/Questions", name: "Questions", component: Questions }, //***
   {
@@ -126,7 +128,11 @@ const routes = [
     name: "TestListRoom",
     component: TestListRoom,
   },
-
+  {
+    path: "/base/prepare_room",
+    name: "PrepareRoom",
+    component: PrepareRoom,
+  },
 
   { path: "/notifications/alerts", name: "Alerts", component: Alerts },
   { path: "/notifications/badges", name: "Badges", component: Badges },
