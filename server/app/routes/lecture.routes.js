@@ -1,20 +1,18 @@
-//Create the lecture (/api/lecture/create)
+const { authJwt } = require("../middleware/index.js");
+
 module.exports = app => {
     const lecture = require("../controllers/lecture.controller.js");
-
     var router = require("express").Router();
     //create new lecture
-    router.post("/", lecture.createLecture);
-    //find the all the lectures with the user_num(host)
-    router.get("/", lecture.readLectures);
-    //router.get("/:query", lecture.searchLecture);
-
-    router.delete("/", lecture.deleteAllLectures);
-    router.patch("/", lecture.updateLecture);
-    //find lecture
-    //router.post("/lecture/:title", lecture.findLecture);
-    //delete lecture
-    //router.get("/lecture/:title", lecture.deleteLecture); 
+    router.post("/", [authJwt.verifyToken], lecture.createLecture);
+    //find Lectures
+    router.get("/", [authJwt.verifyToken], lecture.readLectures);
+    //delete Lecture with lecture_num & host_num
+    router.delete("/:lecture_num", [authJwt.verifyToken], lecture.deleteLecture);
+    //delete all the Lectures with host_num
+    //router.delete("/", [authJwt.verifyToken], lecture.deleteAllLecture);
+    //update Lecture with lecture_num
+    router.put("/:lecture_num", [authJwt.verifyToken], lecture.updateLectureInfo);
  
     app.use('/api/lecture', router);
 }

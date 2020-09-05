@@ -41,6 +41,10 @@ const ParticipateListRoom = React.lazy(() =>
   import("./views/base/participate_list_room/ListRoom")
 );
 
+const TestListRoom = React.lazy(() =>
+  import("./views/base/Test_list_room/TestListRoom")
+);
+
 //출석부 추가
 const Rollbook = React.lazy(() => import("./views/base/Rollbook/Rollbook"));
 
@@ -118,6 +122,14 @@ const routes = [
     component: Alerts,
     exact: true,
   },
+
+  {
+    path: "/base/Test_list_room",
+    name: "TestListRoom",
+    component: TestListRoom,
+  },
+
+
   { path: "/notifications/alerts", name: "Alerts", component: Alerts },
   { path: "/notifications/badges", name: "Badges", component: Badges },
   { path: "/notifications/modals", name: "Modals", component: Modals },

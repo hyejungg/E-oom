@@ -10,15 +10,11 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey : true
     },  
     lecture_title: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(30),
       allowNull: false
     },
-    host_num: {
+    user_num: {
       type: Sequelize.INTEGER,
-      allowNull: false
-    },
-    host_nickname: {
-      type: Sequelize.STRING,
       allowNull: false
     },
     lecture_available: {
@@ -38,7 +34,7 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.UUID,
       allowNull: false
     },
-    lecture_PW: {
+    lecture_pw: {
       type: Sequelize.STRING,
       allowNull: true
     },

@@ -70,4 +70,10 @@ export default [
     to: "/forms/Questions",
     icon: "cil-calculator",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Room Test",
+    to: "/base/Test_list_room",
+    icon: "cil-puzzle",
+  },
 ];

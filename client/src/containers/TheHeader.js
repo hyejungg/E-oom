@@ -42,25 +42,17 @@ const TheHeader = () => {
       return value;
   }
 
-  const _getLogout = () => {
+  function _isLogout(){
     isAuthenticated = false;
-    AuthDataService.logout()
-    .then(
-      () => {
-        console.log("로그아웃 성공");
-      
-        alert("로그아웃 되었습니다!");
-        this.props.history.push("/dashboard");
-    });
+    console.log("로그아웃 성공");
+    alert("로그아웃 되었습니다!");
+    AuthDataService.logout();
   }
 
-  const handleLogout = async() =>{
+  const handleLogout = () => {
     console.log("버튼눌림");
-    if(window.confirm("로그아웃을 하시겠습니까?")){
-      await _getLogout();
-    }else{
-      isAuthenticated = true;
-    }
+    if(window.confirm("로그아웃을 하시겠습니까?"))
+      _isLogout();
   }
 
   const dispatch = useDispatch()
@@ -97,7 +89,7 @@ const TheHeader = () => {
           <CHeaderNavLink to="/dashboard">Home</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem  className="px-3">
-          <CHeaderNavLink to="/mypage">MyPage</CHeaderNavLink>
+          <CHeaderNavLink to="/base/mypage">MyPage</CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 

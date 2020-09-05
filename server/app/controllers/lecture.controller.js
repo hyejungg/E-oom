@@ -1,30 +1,24 @@
 const bcrypt = require("bcryptjs");
+const config = require("../config/auth.config");
 const db = require("../models");
+const uuid = require('uuid');
+const jwt = require("jsonwebtoken");
 const { DataTypes, Sequelize, UUIDV1, UUID, UUIDV4 } = require("sequelize");
 const Lecture = db.lecture;
 const Op = db.Sequelize.Op;
-const uuid = require('uuid');
+
 
 // Create and Save a new Lecture
 exports.createLecture = async(req, res) => {
-   // Validate request 
-  if (!req.body) {
-    res.status(400).send({
-      message: "createLecture_400Error"
-    });
-    return;
-  }
-
   // Create a Lecture
   const lecture = {
     lecture_title : req.body.lecture_title,
-    host_num : req.body.host_num,
-    host_nickname : req.body.host_nickname,
+    user_num : req.user_num,
     lecture_available : false,
     lecture_capacity: req.body.lecture_capacity,
     lecture_full : false,
     lecture_id : uuid.v4(),
-    lecture_pw : req.body.lecture_pw,
+    lecture_pw : bcrypt.hashSync(req.body.lecture_pw, 12),
     lecture_private : req.body.lecture_private,
     init_mute_authority : req.body.init_mute_authority,
     init_chat_authority : req.body.init_chat_authority,
@@ -39,7 +33,6 @@ exports.createLecture = async(req, res) => {
       res.status(201).json(lecture);
     })
     .catch(err => {      
-      //console.log("500 Error while create the lecture");
       res.status(500).send({
         message:
         err.message || "createLecture_500Error"
@@ -49,47 +42,103 @@ exports.createLecture = async(req, res) => {
 
 //Get the list of lectures with user_num(host_num)
 exports.readLectures = async (req, res) =>{
-  //console.log(req.query);
-  //console.log(req);
-  //console.log(req.query.length);
   if(req.query.type === 'id'){
     //console.log("id");
     var condition = {where: {lecture_id: req.query.keyword}};
   }else if(req.query.type === 'title'){
     //console.log("title");
-    var condition = {where: {lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
+    var condition = {where: {user_num : req.user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
   }else if(req.query.length === undefined){
-    console.log("Read all");
-    var condition = {};
+    //console.log("Read all");
+    var condition = {where : {user_num : req.user_num}};
+    //var condition = {}; //For Test
   }else{
     res.status(400).send({
       message: "'type' must be id or title, input keyword"
     });
   }
-
+  
   await Lecture.findAll(condition)
   .then(data => {
     res.status(200).json(data);
   }).catch(err => {
-    res.send("Error occurred");
-    //console.log(err);
+    res.status(500).send({
+      message : "Error occurred"
+    });
   })
 };
 
-exports.deleteAllLectures = async (req, res) => {
+exports.deleteAllLecture = async(req, res) => {
+  Lecture.destroy({
+    where : {
+      user_num : req.user_num
+    },
+    truncate : false
+  })
+  .then(num => {
+    if(num == 1) {
+      res.status(204).send({
+        message : `Lecture was deleted successfully (lecture_num:${req.params.lecture_num})`
+      });
+    }else{
+      res.status(409).send({
+        message : `Wrong input of host_num/lecture_num, or There is no matched pair between (lecture_num:${req.params.lecture_num}, host_num:${req.user_num}`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message : `Could not delete the lecture (lecture_num:${req.params.lecture_num})`
+    });
+  })
+}
+
+exports.deleteLecture = async (req, res) => {
   await Lecture.destroy({
-    truncate:true
+    where : {
+      host_num : req.user_num,
+      lecture_num : req.params.lecture_num  
+    }
   })
-  res.send(200);
-  //console.log("Deleted succesfully");
+  .then(num => {
+    if(num == 1) {
+      res.status(204).send({
+        message : `Lecture was deleted successfully (lecture_num:${req.params.lecture_num})`
+      });
+    }else{
+      res.status(409).send({
+        message : `Wrong input of host_num/lecture_num, or There is no matched pair between (lecture_num:${req.params.lecture_num}, host_num:${req.user_num}`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message : `Could not delete the lecture (lecture_num:${req.params.lecture_num})`
+    });
+  }) 
 };
 
-exports.updateLecture = async (req, res) => {
-  const lecture = await Lecture.findOne({
-    lecture_num: req.body.lecture_num
+exports.updateLectureInfo = async (req, res) => {
+  await Lecture.update(req.body, {
+    where: {
+      lecture_num: req.params.lecture_num,
+      user_num: req.user_num
+    }
   })
-  lecture.update({
-    lecture_title: req.body.lecture_title
+  .then(num => {
+    if(num == 1){
+      res.status(200).send({
+        message : `Lecture was updated successfully. (lecture_num : ${req.params.lecture_num}`
+      });
+    }else{
+      res.status(409).send({
+        message : `Could not update Lecture with lecture_num : ${req.params.lecture_num}, user_num : ${req.user_num}. Maybe req.body is empty or lecture was not found`
+      });
+    }
   })
-  res.send(200);
+  .catch(err => {
+    res.status(500).send({
+      message : `Could not update the lecture (lecture_num : ${req.params.lecture_num})`
+    });
+  });
 };
