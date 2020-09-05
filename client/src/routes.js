@@ -78,7 +78,7 @@ const routes = [
     component: Roomname,
   },
   { path: "/room/:roomID", name: "Room", component: Room },
-  { path: "/test1", name: "test1", component: test1 },
+  { path: "/test", name: "test1", component: test },
   //
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },

@@ -18,7 +18,7 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from "@coreui/react";
-import "../../../src/scss/_custom.scss";
+import "../../src/scss/_custom.scss";
 import ShowWebRTC from "./ShowWebRTC";
 
 
