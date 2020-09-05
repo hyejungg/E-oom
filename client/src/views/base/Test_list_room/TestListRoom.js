@@ -55,6 +55,7 @@ const TestListRoom = () => {
   useEffect(() => {
     // this.timer = setInterval(progress, 20);
     progress();
+
     callApi(RoomDataService, lectureNum)
     .then(response =>{
       setRoomInfo(response.data);
@@ -112,6 +113,7 @@ const TestListRoom = () => {
                                 <TableRow>
                                   <TableCell>강의 예정일</TableCell>
                                   <TableCell>강의명</TableCell>
+                                  <TableCell>{" "}</TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>

@@ -6,14 +6,14 @@ class RoomsDataService{
     createRoom(data){
         return http.post("/rooms", data);
     }
-    getRoomsInfo(lecture_num){
-        return http.get("/rooms/"+lecture_num);
+    getRoomsInfo(data){
+        return http.get("/rooms/"+data,{headers : authHeader()});
     }
     joinRoom(data){
-        return http.post("/rooms/join",{headers : authHeader()}, data);
+        return http.post("/rooms/join", data, {headers : authHeader()});
     }
     leaverRoom(data){
-        return http.post("/rooms/leave",{headers : authHeader()}, data);
+        return http.post("/rooms/leave", data, {headers : authHeader()});
     }
 }
 
