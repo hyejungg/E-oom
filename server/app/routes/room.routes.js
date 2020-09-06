@@ -1,4 +1,4 @@
-const { authJwt } = require("../middleware/index.js");
+const { authJwt, checkStatus } = require("../middleware/index.js");
 
 module.exports = app => {
     const room = require("../controllers/room.controller.js");
@@ -7,7 +7,7 @@ module.exports = app => {
     //create room
     router.post("",[authJwt.verifyToken],room.createRoom);
     router.get("/:lecture_num",[authJwt.verifyToken],room.getRooms);
-    router.post("/join",[authJwt.verifyToken],room.joinRoom);
+    router.post("/join",[authJwt.verifyToken,checkStatus.isJoining],room.joinRoom);
     router.post("/leave",[authJwt.verifyToken],room.leaveRoom);
     // router.post("/create");
     //delete room
