@@ -20,10 +20,22 @@ class PrepareRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_info : props.location.state,
-      test : false,
+      room_num: "",
+      room_info: "",
+      test: false,
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    var recievedMessage = this.props.location.state;
+    // console.log(recievedMessage)
+    // this.setState({});
+    this.setState({
+      // room_info : recievedMessage
+      room_info: recievedMessage.room_info,
+      room_num: recievedMessage.room_num,
+    });
   }
 
   handleChange = (e) => {
@@ -33,8 +45,6 @@ class PrepareRoom extends Component {
   };
 
   render() {
-    console.log(this.state.user_info);
-    console.log(this.props);
     return (
       <>
         <CRow>
@@ -53,25 +63,34 @@ class PrepareRoom extends Component {
                   </CCol>
                   {/* 중간중간 공백 어케줌? ㅠㅠ */}
                   <CCol xs="12" md="4">
-                    {this.state.test ? 
+                    {this.state.test ? (
                       <div>
                         <h2>교육에 참여하시겠습니까?</h2>
                         <CButtonToolbar justify="center">
-                        <Link to="../../meet/MeetScreen">
-                          <CButton
-                            active
-                            tabIndex={-1}
-                            className="px-4"
-                            color="info"
+                          <Link
+                            to={{
+                              pathname: "../../meet/MeetScreen",
+                              state: {
+                                room_info: this.state.room_info,
+                                room_num: this.state.room_num,
+                              },
+                            }}
                           >
-                            {" "}
-                            참여{" "}
-                          </CButton>
-                        </Link>
-                      </CButtonToolbar>
+                            <CButton
+                              active
+                              tabIndex={-1}
+                              className="px-4"
+                              color="info"
+                            >
+                              {" "}
+                              참여{" "}
+                            </CButton>
+                          </Link>
+                        </CButtonToolbar>
                       </div>
-                    : <h2>호스트가 교육 화면을 시작하지 않았습니다.</h2>
-                    }
+                    ) : (
+                      <h2>호스트가 교육 화면을 시작하지 않았습니다.</h2>
+                    )}
                     <CButtonToolbar justify="center">
                       <CForm action="" method="post">
                         <CFormGroup>

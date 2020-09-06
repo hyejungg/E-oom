@@ -4,7 +4,7 @@ import authHeader from "./auth-header";
 
 class RoomsDataService{
     createRoom(data){
-        return http.post("/rooms", data);
+        return http.post("/rooms", data,{headers : authHeader()});
     }
     getRoomsInfo(data){
         return http.get("/rooms/"+data,{headers : authHeader()});
@@ -12,7 +12,7 @@ class RoomsDataService{
     joinRoom(data){
         return http.post("/rooms/join", data, {headers : authHeader()});
     }
-    leaverRoom(data){
+    leaveRoom(data){
         return http.post("/rooms/leave", data, {headers : authHeader()});
     }
 }

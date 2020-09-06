@@ -76,4 +76,10 @@ export default [
     to: "/base/Test_list_room",
     icon: "cil-puzzle",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Test Meet",
+    to: "/meet/MeetScreen",
+    icon: "cil-puzzle",
+  },
 ];

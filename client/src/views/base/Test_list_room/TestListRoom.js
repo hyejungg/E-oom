@@ -113,7 +113,8 @@ const TestListRoom = () => {
                                 <TableRow>
                                   <TableCell>강의 예정일</TableCell>
                                   <TableCell>강의명</TableCell>
-                                  <TableCell>{" "}</TableCell>
+                                  <TableCell>강의 입장</TableCell>
+                                  <TableCell>강의 설정</TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>

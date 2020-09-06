@@ -124,7 +124,7 @@ const TestListRoomAdd= () => {
         <CCardHeader>
           <div className="lectureMenu">
             <CInputGroup>
-              <CLabel htmlFor="lectureRecursion">반복알림여부</CLabel>
+              <CLabel htmlFor="lectureRecursion">주기별로 룸 생성</CLabel>
             </CInputGroup>
           </div>
           <div className="lectureInfo">

@@ -29,10 +29,22 @@ class MeetScreen extends Component {
       hour: 0,
       min: 0,
       sec: 0,
+      room_info : '',
     };
     this.openQuestion = this.openQuestion.bind(this);
     this.openPopup = this.openPopup.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() { 
+    var recievedMessage = this.props.location.state;
+    // console.log(recievedMessage)
+    // this.setState({});
+    this.setState({
+      // room_info : recievedMessage
+      room_info: recievedMessage.room_info,
+      room_num: recievedMessage.room_num,
+    });
   }
 
   /*질문하기*/
@@ -175,7 +187,6 @@ class MeetScreen extends Component {
                         <CDropdownItem>레이아웃 변경</CDropdownItem>
                         <CDropdownItem>전체화면</CDropdownItem>
                         <CDropdownItem>설정</CDropdownItem>
-
                         <CDropdownItem href="/meet_exit/MeetExit">
                           종료
                         </CDropdownItem>
