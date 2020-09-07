@@ -38,8 +38,6 @@ class MeetScreen extends Component {
 
   componentDidMount() { 
     var recievedMessage = this.props.location.state;
-    // console.log(recievedMessage)
-    // this.setState({});
     this.setState({
       // room_info : recievedMessage
       room_info: recievedMessage.room_info,

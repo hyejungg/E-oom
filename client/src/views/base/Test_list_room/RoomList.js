@@ -100,6 +100,9 @@ class RoomList extends React.Component {
         <TableCell>
           <CButton color="light">Setting Room</CButton>
         </TableCell>
+        <TableCell>
+          <CButton color="light">Delete Room</CButton>
+        </TableCell>
       </TableRow>
     );
   }

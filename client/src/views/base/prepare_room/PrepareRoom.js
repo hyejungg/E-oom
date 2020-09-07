@@ -29,13 +29,15 @@ class PrepareRoom extends Component {
 
   componentDidMount() {
     var recievedMessage = this.props.location.state;
-    // console.log(recievedMessage)
+    console.log(recievedMessage)
+    console.log(recievedMessage['room_info'], recievedMessage['room_num']) //ok
     // this.setState({});
-    this.setState({
+    this.setState({ //not ok? y?
       // room_info : recievedMessage
-      room_info: recievedMessage.room_info,
-      room_num: recievedMessage.room_num,
+      room_info: recievedMessage['room_info'],
+      room_num: recievedMessage['room_num'],
     });
+    console.log(this.state.room_info, this.state.room_num)
   }
 
   handleChange = (e) => {

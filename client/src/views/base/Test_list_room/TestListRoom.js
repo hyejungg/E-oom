@@ -115,6 +115,7 @@ const TestListRoom = () => {
                                   <TableCell>강의명</TableCell>
                                   <TableCell>강의 입장</TableCell>
                                   <TableCell>강의 설정</TableCell>
+                                  <TableCell>강의 삭제</TableCell>
                                 </TableRow>
                               </TableHead>
                               <TableBody>
