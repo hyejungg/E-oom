@@ -82,4 +82,10 @@ export default [
     to: "/meet/MeetScreen",
     icon: "cil-puzzle",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Test MeetExit",
+    to: "/meet_exit/MeetExit",
+    icon: "cil-puzzle",
+  },
 ];

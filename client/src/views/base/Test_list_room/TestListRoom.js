@@ -26,23 +26,23 @@ import TestListRoomAdd from "./TestListRoomAdd"
 import RoomList from "./RoomList"
 import RoomDataService from "../../../services/rooms.service"
 
-//circle progress
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     width: "100%",
-//     marginTop: theme.spacing(3) * 3,
-//     overflowX: "auto",
-//   },
-//   table: {
-//     minWidth: 1080,
-//   },
-//   progress: {
-//     margin: theme.spacing(2) * 2,
-//   },
-// }));
+// circle progress
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing(3) * 3,
+    overflowX: "auto",
+  },
+  table: {
+    minWidth: 1080,
+  },
+  progress: {
+    margin: theme.spacing(2) * 2,
+  },
+}));
 
 const TestListRoom = () => {
-  const {classes} = useState('');
+  const classes = useStyles();
   const [activeTab, setActiveTab] = useState(1);
 
   const [lecture_title, setLectureTitle] = useState('');
@@ -53,7 +53,6 @@ const TestListRoom = () => {
   const [completed, setCompleted] = useState(0);
   
   useEffect(() => {
-    // this.timer = setInterval(progress, 20);
     progress();
 
     callApi(RoomDataService, lectureNum)
@@ -67,7 +66,7 @@ const TestListRoom = () => {
   }, []);
 
   //progress
-  const progress = () => {
+  function progress(){
     setCompleted({
       completed: completed >= 100 ? 0 : completed + 1 
     });
@@ -100,15 +99,15 @@ const TestListRoom = () => {
                 </CNavItem>
               </CNav>
               <CTabContent>
-                <CTabPane>
-                {/* <CTabPane className={classes.root}> */}
+                {/* <CTabPane> */}
+                <CTabPane className={classes.root}>
                   <CRow className="mt-3">
                     <CCol xs="12">
                       <CCard accentColor="success">
                         <CCardHeader align="center">향후 예약된 강의 목록</CCardHeader>
                           <CCardBody>
-                            <Table>
-                            {/* <Table className={classes.table}> */}
+                            {/* <Table> */}
+                            <Table className={classes.table}>
                               <TableHead>
                                 <TableRow>
                                   <TableCell>강의 예정일</TableCell>
@@ -136,7 +135,7 @@ const TestListRoom = () => {
                                   <TableRow>
                                     <TableCell colSpan="6" align="center">
                                       <CircularProgress
-                                        // className={classes.progress}
+                                        className={classes.progress}
                                         variant="determinate"
                                         value={completed}
                                       />

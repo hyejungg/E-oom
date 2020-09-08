@@ -23,22 +23,22 @@ class MeetExit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      room_num : 1,
-    };
+      room_num : 15,
+      room_msg : '',
+    }
     // this.enterRoom = this.enterRoom.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
   }
 
   leaveRoom() {
-    var whatIs = false;
     var data = {
       room_num: this.state.room_num,
     };
 
-    callApi(RoomDataService, data, whatIs)
+    callApi(RoomDataService, data)
       .then((response) => {
-        this.state.user_info = response.data;
-        console.log(this.state.user_info);
+        this.state.room_msg = response.data;
+        console.log(this.state.room_msg);
       })
       .catch((error) => {
         const resMessage =

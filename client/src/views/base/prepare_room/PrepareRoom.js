@@ -21,32 +21,33 @@ class PrepareRoom extends Component {
     super(props);
     this.state = {
       room_num: "",
-      room_info: "",
-      test: false,
+      room_info : "",
+      // test: true,
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.recieveData = this.recieveData.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount(){
+    //this.setState를 통해서 state 값을 변경해 줍니다.
     var recievedMessage = this.props.location.state;
-    console.log(recievedMessage)
-    console.log(recievedMessage['room_info'], recievedMessage['room_num']) //ok
-    // this.setState({});
-    this.setState({ //not ok? y?
-      // room_info : recievedMessage
-      room_info: recievedMessage['room_info'],
-      room_num: recievedMessage['room_num'],
-    });
-    console.log(this.state.room_info, this.state.room_num)
+    this.state.room_info = recievedMessage['room_info'];
+    this.state.room_num = recievedMessage['room_num'];
+    console.log(this.state);
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
+  // componentDidMount() {
+  //   var recievedMessage = this.props.location.state;
+  //   this.setState({
+  //     room_info : recievedMessage['room_info'],
+  //     room_num : recievedMessage['room_num']
+  //   });
+  //   // this.state.room_info = recievedMessage['room_info'];
+  //   // this.state.room_num = recievedMessage['room_num'];
+  //   console.log(this.state);
+  // }
 
   render() {
+    console.log(this.state);
     return (
       <>
         <CRow>
@@ -65,7 +66,7 @@ class PrepareRoom extends Component {
                   </CCol>
                   {/* 중간중간 공백 어케줌? ㅠㅠ */}
                   <CCol xs="12" md="4">
-                    {this.state.test ? (
+                    {this.state.room_info && this.state.room_num ? (
                       <div>
                         <h2>교육에 참여하시겠습니까?</h2>
                         <CButtonToolbar justify="center">
