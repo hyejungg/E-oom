@@ -22,6 +22,7 @@ class PrepareRoom extends Component {
     this.state = {
       room_num: "",
       room_info : "",
+      room_link : "",
       // test: true,
     };
     // this.recieveData = this.recieveData.bind(this);
@@ -32,6 +33,7 @@ class PrepareRoom extends Component {
     var recievedMessage = this.props.location.state;
     this.state.room_info = recievedMessage['room_info'];
     this.state.room_num = recievedMessage['room_num'];
+    this.state.room_link = this.state.room_info['room_link'];
     console.log(this.state);
   }
 
@@ -72,7 +74,7 @@ class PrepareRoom extends Component {
                         <CButtonToolbar justify="center">
                           <Link
                             to={{
-                              pathname: "../../meet/MeetScreen",
+                              pathname: `../../meet/MeetScreen/${this.state.room_link}`,
                               state: {
                                 room_info: this.state.room_info,
                                 room_num: this.state.room_num,
