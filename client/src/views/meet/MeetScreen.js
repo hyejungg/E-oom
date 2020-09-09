@@ -15,9 +15,10 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
+  CHeaderBrand,
 } from "@coreui/react";
+import CIcon from '@coreui/icons-react'
 import "../../../src/scss/_custom.scss";
-import ShowWebRTC from "./ShowWebRTC";
 
 class MeetScreen extends Component {
   constructor(props) {
@@ -39,8 +40,13 @@ class MeetScreen extends Component {
   }
 
   componentDidMount() { 
+    // componentWillMount(){
     var recievedMessage = this.props.location.state;
     console.log(recievedMessage)
+    // this.setState({
+    //   room_info : recievedMessage['room_info'],
+    //   room_num : recievedMessage['room_num']
+    // });
     this.state.room_info = recievedMessage['room_info'];
     this.state.room_num = recievedMessage['room_num'];
     console.log(this.state);

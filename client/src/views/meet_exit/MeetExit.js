@@ -23,7 +23,7 @@ class MeetExit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      room_num : 16,
+      room_num : 29,
       room_msg : '',
     }
     // this.enterRoom = this.enterRoom.bind(this);

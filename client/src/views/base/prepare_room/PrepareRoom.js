@@ -31,6 +31,10 @@ class PrepareRoom extends Component {
   componentWillMount(){
     //this.setState를 통해서 state 값을 변경해 줍니다.
     var recievedMessage = this.props.location.state;
+    // this.setState({
+    //   room_info : recievedMessage['room_info'],
+    //   room_num : recievedMessage['room_num']
+    // });
     this.state.room_info = recievedMessage['room_info'];
     this.state.room_num = recievedMessage['room_num'];
     this.state.room_link = this.state.room_info['room_link'];

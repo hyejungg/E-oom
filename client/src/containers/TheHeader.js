@@ -16,8 +16,6 @@ import AuthDataService from '../services/auth.service'
 var isAuthenticated = false;
 
 const TheHeader = () => {
-  // var user_nickname ='';
-  
   var user_data = AuthDataService.getCurrentUser(); 
 
   if(user_data !== null) {
@@ -26,16 +24,6 @@ const TheHeader = () => {
   }else {
     isAuthenticated = false;
   }
-
-  // const _getUserData = async () => {
-  //   const user_data = await AuthDataService.getCurrentUser();
-  //   if(user_data !== null) {
-  //     isAuthenticated = true; 
-  //     user_nickname = user_data.user_nickname;
-  //    }else {
-  //      isAuthenticated = false;
-  //    }
-  // }
 
   const showLogout = (value) =>{
       value = user_nickname + "님, 안녕하세요!";
@@ -80,7 +68,9 @@ const TheHeader = () => {
         className="ml-3 d-md-down-none"
         onClick={toggleSidebar}
       />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
+
+      {/* 로고 */}
+      <CHeaderBrand className="mx-auto d-lg-none" to="/"> 
         <CIcon name="logo" height="48" alt="Logo"/>
       </CHeaderBrand>
 

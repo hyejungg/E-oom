@@ -21,10 +21,9 @@ class RoomList extends React.Component {
       room_num: this.props.room_num,
       room_info: "",
 
-      isEnter : false,
+      isEnter : false
     };
     this.enterRoom = this.enterRoom.bind(this);
-    this.moveRoom = this.moveRoom.bind(this);
   }
 
   enterRoom() {
@@ -37,8 +36,11 @@ class RoomList extends React.Component {
         if (response.data["success"] == false) {
           alert(response.data["message"]);
         } else {
-          this.setState({ room_info : response.data });
+          this.setState({ 
+            room_info: response.data, 
+            isEnter: true});
           console.log(this.state.room_info);
+        
         }
       })
       .catch((error) => {
@@ -49,18 +51,14 @@ class RoomList extends React.Component {
           error.message ||
           error.toString();
         console.log(resMessage);
+        alert(resMessage);
       });
 
-      // return(
-      //   <Route
-      //     path='/base/prepare_room/PrepareRoom'
-      //     component={() => <PrepareRoom user_info={this.state.user_info} user_num={this.state.user_num} />} />
-      // );
-  }
-
-  moveRoom() {
-    this.enterRoom();
-    this.setState({ isEnter : true });
+    // return(
+    //   <Route
+    //     path='/base/prepare_room/PrepareRoom'
+    //     component={() => <PrepareRoom Room_info={this.state.Room_info} Room_num={this.state.Room_num} />} />
+    // );
   }
 
   render() {
@@ -70,38 +68,40 @@ class RoomList extends React.Component {
         <TableCell>{this.props.room_start}</TableCell>
         <TableCell>{this.props.room_title}</TableCell>
         <TableCell>
-          {this.state.isEnter ? 
-          <Link
-          to={{
-            pathname: "/base/prepare_room/PrepareRoom",
-            state: {
-              room_info: this.state.room_info,
-              room_num: this.state.room_num,
-            },
-          }}
-        >
-          <CButton color="light" onClick={this.moveRoom}>
-            Enter Room
-          </CButton>
-        </Link>
-        : 
-        <CButton color="light" onClick={this.moveRoom}>
-            Enter Room
-        </CButton>
-        }
-          {/* <Link
-            to={{
-              pathname: "/base/prepare_room/PrepareRoom",
-              state: {
-                room_info: this.state.room_info,
-                room_num: this.state.room_num,
-              },
-            }}
-          >
-            <CButton color="light" onClick={this.moveRoom}>
+          {/* {this.enterRoom} */}
+          {this.state.isEnter ? (
+            <Link
+              to={{
+                pathname: "/base/prepare_room/PrepareRoom",
+                state: {
+                  room_info: this.state.room_info,
+                  room_num: this.state.room_num,
+                },
+              }}
+            >
+              <CButton color="light">
+                Enter Room
+              </CButton>
+            </Link>
+          ) : (
+            <CButton color="light" onClick={this.enterRoom}>
               Enter Room
             </CButton>
-          </Link> */}
+          )}
+            {/* <Link
+              to={{
+                pathname: "/base/prepare_room/PrepareRoom",
+                state: {
+                  room_info: this.state.room_info,
+                  room_num: this.state.room_num,
+                },
+              }}
+            > */}
+              {/* <CButton color="light" onClick={this.enterRoom}>
+                Enter Room
+              </CButton> */}
+            {/* </Link> */}
+          
         </TableCell>
         <TableCell>
           <CButton color="light">Setting Room</CButton>
