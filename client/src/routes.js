@@ -24,6 +24,8 @@ const MeetExit = React.lazy(() => import("./views/meet_exit/MeetExit"));
 const MeetParticipate = React.lazy(() =>
   import("./views/meet/MeetParticipate")
 );
+
+const PrepareRoom = React.lazy(()=>import("./views/base/prepare_room/PrepareRoom"))
 //마이페이지
 const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
 //클래스 개설
@@ -127,6 +129,11 @@ const routes = [
     path: "/base/Test_list_room",
     name: "TestListRoom",
     component: TestListRoom,
+  },
+  {
+    path: "/base/prepare_room",
+    name: "PrepareRoom",
+    component: PrepareRoom,
   },
 
   { path: "/notifications/alerts", name: "Alerts", component: Alerts },

@@ -16,23 +16,40 @@ import {
   CButtonToolbar, //****
 } from "@coreui/react";
 
-class MeetParticipate extends Component {
+class PrepareRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_info : this.props.user_info,
-      test : false,
+      room_num: "",
+      room_info : "",
+      room_link : "",
+      // test: true,
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.recieveData = this.recieveData.bind(this);
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
+  componentWillMount(){
+    //this.setState를 통해서 state 값을 변경해 줍니다.
+    var recievedMessage = this.props.location.state;
+    this.state.room_info = recievedMessage['room_info'];
+    this.state.room_num = recievedMessage['room_num'];
+    this.state.room_link = this.state.room_info['room_link'];
+    console.log(this.state);
+  }
 
-  reunder() {
+  // componentDidMount() {
+  //   var recievedMessage = this.props.location.state;
+  //   this.setState({
+  //     room_info : recievedMessage['room_info'],
+  //     room_num : recievedMessage['room_num']
+  //   });
+  //   // this.state.room_info = recievedMessage['room_info'];
+  //   // this.state.room_num = recievedMessage['room_num'];
+  //   console.log(this.state);
+  // }
+
+  render() {
+    console.log(this.state);
     return (
       <>
         <CRow>
@@ -51,25 +68,34 @@ class MeetParticipate extends Component {
                   </CCol>
                   {/* 중간중간 공백 어케줌? ㅠㅠ */}
                   <CCol xs="12" md="4">
-                    {/* {this.state.test ? 
+                    {this.state.room_info && this.state.room_num ? (
                       <div>
                         <h2>교육에 참여하시겠습니까?</h2>
                         <CButtonToolbar justify="center">
-                        <Link to="../../meet/MeetScreen">
-                          <CButton
-                            active
-                            tabIndex={-1}
-                            className="px-4"
-                            color="info"
+                          <Link
+                            to={{
+                              pathname: `../../meet/MeetScreen/${this.state.room_link}`,
+                              state: {
+                                room_info: this.state.room_info,
+                                room_num: this.state.room_num,
+                              },
+                            }}
                           >
-                            {" "}
-                            참여{" "}
-                          </CButton>
-                        </Link>
-                      </CButtonToolbar>
+                            <CButton
+                              active
+                              tabIndex={-1}
+                              className="px-4"
+                              color="info"
+                            >
+                              {" "}
+                              참여{" "}
+                            </CButton>
+                          </Link>
+                        </CButtonToolbar>
                       </div>
-                    : <h2>호스트가 아직 시작하지 않았습니다.</h2>
-                    } */}
+                    ) : (
+                      <h2>호스트가 교육 화면을 시작하지 않았습니다.</h2>
+                    )}
                     <CButtonToolbar justify="center">
                       <CForm action="" method="post">
                         <CFormGroup>
@@ -111,4 +137,4 @@ class MeetParticipate extends Component {
   }
 }
 
-export default MeetParticipate;
+export default PrepareRoom;

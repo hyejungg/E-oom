@@ -44,7 +44,6 @@ class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheckEmail = this.handleCheckEmail.bind(this);
   }
-  s;
   checkPW(value) {
     if (this.state.pw !== value) {
       this.setState({

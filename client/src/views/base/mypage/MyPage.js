@@ -46,6 +46,7 @@ const Mypage = () => {
     callApi(UserDataService)
     .then(response =>{
       setUserData(response.data);
+      console.log(userData);
     })
     .catch(error => {
       const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -144,7 +145,6 @@ const Mypage = () => {
                           <h2>닉네임자리</h2>
                         </CCardBody>
                       </CCardHeader>
-                      {/* user_num받아서 실행해보기 */}
                       {/* {userData ? (
                         userData.map((c) => {
                           return (

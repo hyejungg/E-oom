@@ -1,11 +1,11 @@
 import React, { Component, useEffect } from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import { Link, Route } from "react-router-dom";
+import { CButton } from "@coreui/react";
 
-import RoomDataService from "../../../services/rooms.service"
-import authHeader from "../../../services/auth-header";
-
-let room_num;
+import RoomDataService from "../../../services/rooms.service";
+import PrepareRoom from "../prepare_room/PrepareRoom";
 
 //동기 처리
 async function callApi(url, data) {
@@ -14,15 +14,32 @@ async function callApi(url, data) {
   return body;
 }
 
-const enterRoom = () => {
-    let responseData = [];
+class RoomList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      room_num: this.props.room_num,
+      room_info: "",
 
-    // var data = {room_num};
+      isEnter : false,
+    };
+    this.enterRoom = this.enterRoom.bind(this);
+    this.moveRoom = this.moveRoom.bind(this);
+  }
 
-    callApi(RoomDataService, room_num)
+  enterRoom() {
+    var data = {
+      room_num: this.state.room_num,
+    };
+
+    callApi(RoomDataService, data)
       .then((response) => {
-        responseData = response.data;
-        console.log(responseData);
+        if (response.data["success"] == false) {
+          alert(response.data["message"]);
+        } else {
+          this.setState({ room_info : response.data });
+          console.log(this.state.room_info);
+        }
       })
       .catch((error) => {
         const resMessage =
@@ -33,16 +50,65 @@ const enterRoom = () => {
           error.toString();
         console.log(resMessage);
       });
-};
 
-class RoomList extends React.Component {
+      // return(
+      //   <Route
+      //     path='/base/prepare_room/PrepareRoom'
+      //     component={() => <PrepareRoom user_info={this.state.user_info} user_num={this.state.user_num} />} />
+      // );
+  }
+
+  moveRoom() {
+    this.enterRoom();
+    this.setState({ isEnter : true });
+  }
+
   render() {
-      room_num = this.props.room_num;
-      console.log(room_num)
+    console.log(this.state.room_num);
     return (
-      <TableRow onClick={enterRoom}>
+      <TableRow>
         <TableCell>{this.props.room_start}</TableCell>
         <TableCell>{this.props.room_title}</TableCell>
+        <TableCell>
+          {this.state.isEnter ? 
+          <Link
+          to={{
+            pathname: "/base/prepare_room/PrepareRoom",
+            state: {
+              room_info: this.state.room_info,
+              room_num: this.state.room_num,
+            },
+          }}
+        >
+          <CButton color="light" onClick={this.moveRoom}>
+            Enter Room
+          </CButton>
+        </Link>
+        : 
+        <CButton color="light" onClick={this.moveRoom}>
+            Enter Room
+        </CButton>
+        }
+          {/* <Link
+            to={{
+              pathname: "/base/prepare_room/PrepareRoom",
+              state: {
+                room_info: this.state.room_info,
+                room_num: this.state.room_num,
+              },
+            }}
+          >
+            <CButton color="light" onClick={this.moveRoom}>
+              Enter Room
+            </CButton>
+          </Link> */}
+        </TableCell>
+        <TableCell>
+          <CButton color="light">Setting Room</CButton>
+        </TableCell>
+        <TableCell>
+          <CButton color="light">Delete Room</CButton>
+        </TableCell>
       </TableRow>
     );
   }

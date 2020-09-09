@@ -4,16 +4,16 @@ import authHeader from "./auth-header";
 
 class RoomsDataService{
     createRoom(data){
-        return http.post("/rooms", data);
+        return http.post("/rooms", data,{headers : authHeader()});
     }
-    getRoomsInfo(lecture_num){
-        return http.get("/rooms/"+lecture_num);
+    getRoomsInfo(data){
+        return http.get("/rooms/"+data,{headers : authHeader()});
     }
     joinRoom(data){
-        return http.post("/rooms/join",{headers : authHeader()}, data);
+        return http.post("/rooms/join", data, {headers : authHeader()});
     }
-    leaverRoom(data){
-        return http.post("/rooms/leave",{headers : authHeader()}, data);
+    leaveRoom(data){
+        return http.post("/rooms/leave", data, {headers : authHeader()});
     }
 }
 
