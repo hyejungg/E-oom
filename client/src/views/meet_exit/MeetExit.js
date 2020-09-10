@@ -23,11 +23,18 @@ class MeetExit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      room_num : 29,
+      room_num : '',
       room_msg : '',
     }
     // this.enterRoom = this.enterRoom.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
+  }
+
+  componentWillMount(){
+    //this.setState를 통해서 state 값을 변경해 줍니다.
+    var recievedMessage = this.props.location.state;
+    this.state.room_num = recievedMessage['room_num'];
+    console.log(this.state);
   }
 
   leaveRoom() {
@@ -38,6 +45,8 @@ class MeetExit extends Component {
     callApi(RoomDataService, data)
       .then((response) => {
         this.state.room_msg = response.data;
+        alert("회의화면을 종료하였습니다! 감사합니다.");
+        this.props.history.push("/dashboard");
         console.log(this.state.room_msg);
       })
       .catch((error) => {

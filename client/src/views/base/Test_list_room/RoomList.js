@@ -1,7 +1,7 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import { Link, Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { CButton } from "@coreui/react";
 
 import RoomDataService from "../../../services/rooms.service";
@@ -14,14 +14,14 @@ async function callApi(url, data) {
   return body;
 }
 
-class RoomList extends React.Component {
+class RoomList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       room_num: this.props.room_num,
       room_info: "",
 
-      isEnter : false
+      // isEnter : false
     };
     this.enterRoom = this.enterRoom.bind(this);
   }
@@ -37,10 +37,9 @@ class RoomList extends React.Component {
           alert(response.data["message"]);
         } else {
           this.setState({ 
-            room_info: response.data, 
-            isEnter: true});
+            room_info: response.data});
           console.log(this.state.room_info);
-        
+          this.props.history.push("/base/prepare_room/PrepareRoom", this.state);
         }
       })
       .catch((error) => {
@@ -53,12 +52,6 @@ class RoomList extends React.Component {
         console.log(resMessage);
         alert(resMessage);
       });
-
-    // return(
-    //   <Route
-    //     path='/base/prepare_room/PrepareRoom'
-    //     component={() => <PrepareRoom Room_info={this.state.Room_info} Room_num={this.state.Room_num} />} />
-    // );
   }
 
   render() {
@@ -69,39 +62,9 @@ class RoomList extends React.Component {
         <TableCell>{this.props.room_title}</TableCell>
         <TableCell>
           {/* {this.enterRoom} */}
-          {this.state.isEnter ? (
-            <Link
-              to={{
-                pathname: "/base/prepare_room/PrepareRoom",
-                state: {
-                  room_info: this.state.room_info,
-                  room_num: this.state.room_num,
-                },
-              }}
-            >
-              <CButton color="light">
-                Enter Room
-              </CButton>
-            </Link>
-          ) : (
-            <CButton color="light" onClick={this.enterRoom}>
+          <CButton color="light" onClick={this.enterRoom}>
               Enter Room
-            </CButton>
-          )}
-            {/* <Link
-              to={{
-                pathname: "/base/prepare_room/PrepareRoom",
-                state: {
-                  room_info: this.state.room_info,
-                  room_num: this.state.room_num,
-                },
-              }}
-            > */}
-              {/* <CButton color="light" onClick={this.enterRoom}>
-                Enter Room
-              </CButton> */}
-            {/* </Link> */}
-          
+          </CButton>
         </TableCell>
         <TableCell>
           <CButton color="light">Setting Room</CButton>
@@ -113,4 +76,4 @@ class RoomList extends React.Component {
     );
   }
 }
-export default RoomList;
+export default withRouter(RoomList);

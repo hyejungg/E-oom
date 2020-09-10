@@ -39,14 +39,10 @@ class MeetScreen extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() { 
+  componentWillMount() { 
     // componentWillMount(){
     var recievedMessage = this.props.location.state;
     console.log(recievedMessage)
-    // this.setState({
-    //   room_info : recievedMessage['room_info'],
-    //   room_num : recievedMessage['room_num']
-    // });
     this.state.room_info = recievedMessage['room_info'];
     this.state.room_num = recievedMessage['room_num'];
     console.log(this.state);
@@ -181,6 +177,25 @@ class MeetScreen extends Component {
                       채팅
                     </CButton>
                   </CCol>
+                  <CCol align="right" col="3" sm="2" md="1">
+                    <Link to={{
+                                pathname: "/meet_exit/MeetExit",
+                                state: {
+                                  room_num: this.state.room_num
+                                },
+                              }}>
+                      <CButton
+                        tabIndex={-1}
+                        block
+                        variant="outline"
+                        name={"btn_audio"}
+                        id={"btn_audio"}
+                        color="info"
+                      >
+                        종료
+                      </CButton>
+                    </Link>
+                  </CCol>
                   <CCol align="right">
                     <CDropdown>
                       <CDropdownToggle color="secondary">
@@ -192,14 +207,6 @@ class MeetScreen extends Component {
                         <CDropdownItem>레이아웃 변경</CDropdownItem>
                         <CDropdownItem>전체화면</CDropdownItem>
                         <CDropdownItem>설정</CDropdownItem>
-                        <Link to={{
-                              pathname: "/meet_exit/MeetExit",
-                              state: {
-                                room_num: this.state.room_num,
-                              },
-                            }}>
-                          <CDropdownItem>종료</CDropdownItem>
-                        </Link>
                         {/* <CDropdownItem href="/meet_exit/MeetExit">
                           종료
                         </CDropdownItem> */}

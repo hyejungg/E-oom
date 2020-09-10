@@ -75,17 +75,5 @@ export default [
     name: "Room Test",
     to: "/base/Test_list_room",
     icon: "cil-puzzle",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Test Meet",
-    to: "/meet/MeetScreen",
-    icon: "cil-puzzle",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "Test MeetExit",
-    to: "/meet_exit/MeetExit",
-    icon: "cil-puzzle",
-  },
+  }
 ];
