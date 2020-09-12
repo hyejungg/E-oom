@@ -31,7 +31,6 @@ class MeetExit extends Component {
   }
 
   componentWillMount(){
-    //this.setState를 통해서 state 값을 변경해 줍니다.
     var recievedMessage = this.props.location.state;
     this.state.room_num = recievedMessage['room_num'];
     console.log(this.state);

@@ -1,20 +1,41 @@
 import React, { Component } from "react";
-import { CCardHeader } from "@coreui/react";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
+import {
+  CListGroup,
+  CListGroupItem,
+  CCardBody,
+  CCardHeader,
+} from "@coreui/react";
 
-class UserInfoList extends React.Component{
-    render(){
-        return(
-            <TableRow>
-                <TableCell>성 : <span>{this.props.user_lname}</span></TableCell>
-                <TableCell>이름 : <span>{this.props.user_fname}</span></TableCell>
-                <TableCell>로그인 이메일 : <span>{this.props.user_email}</span></TableCell>
-                <TableCell>핸드폰 번호 : <span>{this.props.user_phone}</span></TableCell>
-                <TableCell>생년월일 : <span>{this.props.user_birthday}</span></TableCell>   
-            </TableRow>
-            
-        );
-    }
+class UserInfoList extends React.Component {
+  render() {
+    return (
+      <div>
+        <CCardHeader>
+          <CCardBody>
+            <h2 color="blue">{this.props.user_nickname} 님! 반갑습니다.</h2>
+          </CCardBody>
+        </CCardHeader>
+        <CCardBody>
+          <CListGroup>
+            <CListGroupItem disabled>
+              성 : {this.props.user_lname}
+            </CListGroupItem>
+            <CListGroupItem disabled>
+              이름 : {this.props.user_fname}
+            </CListGroupItem>
+            <CListGroupItem disabled>
+              로그인 이메일 : {this.props.user_email}
+            </CListGroupItem>
+            <CListGroupItem disabled>
+              핸드폰 번호 : {this.props.user_phone}
+            </CListGroupItem>
+            <CListGroupItem disabled>
+              생년월일 : {this.props.user_birthdate}
+            </CListGroupItem>
+          </CListGroup>
+        </CCardBody>
+      </div>
+    );
+  }
 }
 export default UserInfoList;

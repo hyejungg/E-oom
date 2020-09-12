@@ -75,5 +75,5 @@ export default [
     name: "Room Test",
     to: "/base/Test_list_room",
     icon: "cil-puzzle",
-  }
+  },
 ];

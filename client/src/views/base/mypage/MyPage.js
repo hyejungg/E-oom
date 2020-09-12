@@ -26,39 +26,83 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react"; //문의사항
 
-import UserInfoList from "./UserInfoList"
-import UserDataService from '../../../services/user.service'
+import UserInfoList from "./UserInfoList";
+import UserDataService from "../../../services/user.service";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+
+// circle progress
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing(3) * 3,
+    overflowX: "auto",
+  },
+  table: {
+    minWidth: 1080,
+  },
+  progress: {
+    margin: theme.spacing(2) * 2,
+  },
+}));
 
 const Mypage = () => {
+  const classes = useStyles();
   const [activeTab, setActiveTab] = useState(1);
-  const [userData, setUserData] = useState([]);
+  const [user_info, setUserInfo] = useState([]);
+  const [completed, setCompleted] = useState(0);
 
-  const [user_nickname, getNickname] = useState('');
-  const [user_email, getEmail] = useState('');
-  const [user_lname, getLname] = useState('');
-  const [user_fname, getFname] = useState('');
-  const [user_birth, getBirth] = useState('');
-  const [user_phone, getPhone] = useState('');
+  const [user_nickname, getNickname] = useState("");
+  const [user_email, getEmail] = useState("");
+  const [user_lname, getLname] = useState("");
+  const [user_fname, getFname] = useState("");
+  const [user_birthdate, getBirth] = useState("");
+  const [user_phone, getPhone] = useState("");
 
   useEffect(() => {
     // this.timer = setInterval(progress, 20);
-    // progress();
+    progress();
+
     callApi(UserDataService)
-    .then(response =>{
-      setUserData(response.data);
-      console.log(userData);
-    })
-    .catch(error => {
-      const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-      console.log(resMessage);
-    })
+      .then((response) => {
+        const responseData = response.data;
+        console.log(responseData);
+        // setUserInfo(response.data);
+        setUserInfo([
+          ...user_info,
+          {
+            user_nickname: responseData["user_nickname"],
+            user_email: responseData["user_email"],
+            user_lname: responseData["user_lname"],
+            user_fname: responseData["user_fname"],
+            user_birthdate: responseData["user_birthdate"],
+            user_phone: responseData["user_phone"],
+          },
+        ]);
+      })
+      .catch((error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log(resMessage);
+      });
   }, []);
 
   //동기 처리
-  async function callApi(url){
+  async function callApi(url) {
     const response = await url.getUserInfo();
     const body = await response;
     return body;
+  }
+
+  //progress
+  function progress() {
+    setCompleted({
+      completed: completed >= 100 ? 0 : completed + 1,
+    });
   }
 
   return (
@@ -112,56 +156,67 @@ const Mypage = () => {
                           <h4>이름</h4>
                         </CCardBody>
                       </CCardHeader>
-                      <CCardHeader>개인 회의 ID : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>로그인 이메일 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>사용자 유형 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>용량 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>언어 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>Date and Time : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>Calendar and Contact : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>호스트 키 : <span>룰루랄라</span></CCardHeader>
-                      <CCardHeader>로그인된 장치 : <span>룰루랄라</span></CCardHeader>
-
-                      {/* </CCol> */}
-                     {/* <CListGroupItem accent="primary">
-                        <CDataTable
-                          items={usersData}
-                          fields={fields}
-                          scopedSlots={{
-                            status: (item) => (
-                              <td>
-                                <CBadge color={getBadge(item.status)}>
-                                  {item.status}
-                                </CBadge>
-                              </td>
-                            ),
-                          }}
-                        /> 
-                      </CListGroupItem> */}
+                      <CCardHeader>
+                        개인 회의 ID : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        로그인 이메일 : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        사용자 유형 : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        용량 : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        언어 : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        Date and Time : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        Calendar and Contact : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        호스트 키 : <span>룰루랄라</span>
+                      </CCardHeader>
+                      <CCardHeader>
+                        로그인된 장치 : <span>룰루랄라</span>
+                      </CCardHeader>
                     </CTabPane>
                     <CTabPane active={activeTab === 1}>
-                      <CCardHeader>
+                      {/* <CCardHeader>
                         <CCardBody>
-                          <h2>닉네임자리</h2>
+                          <h2>{}</h2>
                         </CCardBody>
-                      </CCardHeader>
-                      {/* {userData ? (
-                        userData.map((c) => {
-                          return (
-                            <UserInfoList
-                              key={c.user_num}
-                              user_nickname={c.user_nickname}
-                              user_email={c.user_email}
-                              user_fname={c.user_fname}
-                              user_lname={c.user_lname}
-                              user_birthday={c.user_birthday}
-                              user_phone={c.user_phone}
+                      </CCardHeader> */}
+                      <div>
+                        {user_info ? (
+                          user_info.map((c) => {
+                            return (
+                              <UserInfoList
+                                key={c.user_num}
+                                user_nickname={c.user_nickname}
+                                user_email={c.user_email}
+                                user_fname={c.user_fname}
+                                user_lname={c.user_lname}
+                                user_birthdate={c.user_birthdate}
+                                user_phone={c.user_phone}
                               />
-                          );
-                      })) : (
-                        console.log("유저 정보 없음"))} */}
+                            );
+                          })
+                        ) : (
+                          <CCardBody>
+                            <CircularProgress
+                              // className={classes.progress}
+                              variant="determinate"
+                              value={this.state.completed}
+                            />
+                          </CCardBody>
+                        )}
+                      </div>
                       <CRow>
-                        <CCol align="right">
+                        <CCol align="center">
                           <CButton
                             className="mt-3"
                             active
