@@ -127,14 +127,14 @@ class LectureAdd extends React.Component {
             />
             <br />
 
-            <TextField
+            {/* <TextField
               label="공개여부"
               type="text"
               name="lecture_private"
               value={this.state.lecture_private}
               onChange={this.handleValueChange}
             />
-            <br />
+            <br /> */}
 
             <TextField
               label="초기설정"
@@ -145,7 +145,7 @@ class LectureAdd extends React.Component {
             />
             <br />
 
-            <TextField
+            {/* <TextField
               label="채팅"
               type="text"
               name="init_chat_authority"
@@ -170,7 +170,7 @@ class LectureAdd extends React.Component {
               value={this.state.init_notification}
               onChange={this.handleValueChange}
             />
-            <br />
+            <br /> */}
           </DialogContent>
           <DialogActions>
             <Button

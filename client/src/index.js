@@ -25,11 +25,11 @@ React.icons = icons;
 
 ReactDOM.render(
   <BrowserRouter>
-    <MuiThemeProvider theme={theme}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </MuiThemeProvider>
+    {/* <MuiThemeProvider theme={theme}> */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+    {/* </MuiThemeProvider> */}
   </BrowserRouter>,
   document.getElementById("root")
 );

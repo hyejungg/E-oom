@@ -43,8 +43,12 @@ exports.createLecture = async(req, res) => {
 //Get the list of lectures with user_num(host_num)
 exports.readLectures = async (req, res) =>{
   if(req.query.type === 'id'){
+    if(req.query.range === 'total'){
+      var condition = {where : {lecture_id: req.query.keyword}};
+    }else{
     //console.log("id");
-    var condition = {where: {lecture_id: req.query.keyword}};
+      var condition = {where: {user_num : req.user_num, lecture_id: req.query.keyword}};
+    }
   }else if(req.query.type === 'title'){
     //console.log("title");
     var condition = {where: {user_num : req.user_num, lecture_title: {[Op.like] : "%" + req.query.keyword + "%"}}};
