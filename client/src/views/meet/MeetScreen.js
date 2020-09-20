@@ -22,7 +22,7 @@ import "../../../src/scss/_custom.scss";
 
 class MeetScreen extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       exitValue: true,
       //수업 진행 시간

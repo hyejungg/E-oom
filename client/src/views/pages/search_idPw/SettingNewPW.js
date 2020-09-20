@@ -11,7 +11,7 @@ import UserDataService from '../../../services/user.service'
 
 class SettingNewPW extends Component{
     constructor(props){
-        super(props);
+        super();
         this.state= {
             num : this.props.user_num,
 

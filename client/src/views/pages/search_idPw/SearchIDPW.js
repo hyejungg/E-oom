@@ -17,7 +17,7 @@ import SettingNewPW from '../search_idPw/SettingNewPW'
 
 class SearchIDPW extends Component {
     constructor(props) {
-      super(props)
+      super()
       this.state = {
         fname : '',
         lname : '',

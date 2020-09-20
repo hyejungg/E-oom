@@ -22,9 +22,8 @@ import AuthDataService from '../../../services/auth.service'
 var isLogin = false;
 
 class Login extends Component {
-  // 추가
   constructor(props) {
-    super(props)
+    super()
     this.state = {
       email : '',
       pw : '',
