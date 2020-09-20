@@ -1,27 +1,34 @@
 # E-oom
 
 ### 서버 실행 방법
-- server/app 디렉토리에 config 폴더 추가
-- server/app/config 디렉토리에 db.config.js 파일 추가
-
+- server 디렉토리에 `.env` 파일 생성 후 아래 내용 작성
 ```
-module.exports = {
-    HOST: "eoomdb.mysql.database.azure.com",
-    USER: "eoomadmin@eoomdb",
-    PASSWORD: "qwe123!@#",
-    DB: "eoomdb"
-  };
+PORT=8080
+
+DB_HOST=eoomdb.mysql.database.azure.com
+DB_USER=eoomadmin@eoomdb
+DB_PASSWORD=qwe123!@#
+DATABASE=eoomdb
+
+TOKEN_SECRET=eoom-secret-key
+
+ORIGIN_URL=http://localhost:8081
 ```
+- `npm install` 
+- 일반 실행 `node server.js`
+- 개발모드 실행 `npm run dev`
 
-- db.config.js 파일에 위의 코드 추가
-
-------
-- server 디렉토리에서 
-- `npm install`
-- `node server.js` 
+---------------------------------------------
 
 ### 클라이언트 실행 방법
 - client 디렉토리에서
+- `.env` 파일 생성 후 아래 내용 작성
+```
+PORT=8081
+
+REACT_APP_API_URL=http://localhost:8080/api
+REACT_APP_SERVER_URL=http://localhost:8080
+```
 - `npm install`
 - `npm install @material-ui/core`
 - `npm install --save axios`
