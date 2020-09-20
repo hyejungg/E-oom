@@ -1,8 +1,6 @@
 const bcrypt = require("bcryptjs");
-const config = require("../config/auth.config");
 const db = require("../models");
 const uuid = require('uuid');
-const jwt = require("jsonwebtoken");
 const { DataTypes, Sequelize, UUIDV1, UUID, UUIDV4 } = require("sequelize");
 const Lecture = db.lecture;
 const Op = db.Sequelize.Op;

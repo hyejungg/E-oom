@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const db = require("../models");
 const User = db.user;
-const Op = db.Sequelize.Op;
 
 //Get all user Informaitons
 exports.getAll = async(req,res) =>{
