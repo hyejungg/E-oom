@@ -1,7 +1,6 @@
 const db = require("../models");
 const Participation = db.participation;
 
-
 isJoining = async (req, res, next) => {
     const user_num = req.user_num;
     const exist = await Participation.count({

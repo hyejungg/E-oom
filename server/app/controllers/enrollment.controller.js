@@ -1,6 +1,4 @@
 const db = require("../models");
-const config = require("../config/auth.config");
-const jwt = require("jsonwebtoken");
 const Op = db.Sequelize.Op;
 const Enrollment = db.enrollment;
 const Lecture = db.lecture;

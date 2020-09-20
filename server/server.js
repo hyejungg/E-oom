@@ -1,8 +1,7 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 const db = require("./app/models");
@@ -104,25 +103,14 @@ io.on('connection', (socket) => {
   });
 });
 
-//
 
-var corsOptions = {
-  origin: "http://localhost:8081"
+const corsOptions = {
+  origin: process.env.ORIGIN_URL
 };
 
 app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to E-oom application." });
-});
-
 app.use(function (req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
@@ -136,9 +124,3 @@ require("./app/routes/user.routes.js")(app);
 require("./app/routes/lecture.routes.js")(app);
 require("./app/routes/room.routes.js")(app);
 require("./app/routes/enrollment.routes.js")(app);
-// set port, listen for requests
-// const PORT = process.env.PORT || 8080;
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}.`);
-// });
