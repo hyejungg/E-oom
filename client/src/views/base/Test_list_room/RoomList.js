@@ -19,9 +19,7 @@ class RoomList extends Component {
     super(props);
     this.state = {
       room_num: this.props.room_num,
-      room_info: "",
-
-      // isEnter : false
+      room_info: ""
     };
     this.enterRoom = this.enterRoom.bind(this);
   }

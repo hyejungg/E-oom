@@ -23,6 +23,7 @@ const TheHeader = () => {
    var user_nickname = user_data.user_nickname;
   }else {
     isAuthenticated = false;
+    console.log("로그인 안한 상태")
   }
 
   const showLogout = (value) =>{
@@ -91,7 +92,7 @@ const TheHeader = () => {
             ? <CButton className="ml-3 d-md-down-none" 
                        variant="ghost" 
                        onClick={handleLogout}>{showLogout()}</CButton>
-            : <>{" "}</>}
+            : <><CButton variant="ghost" disabled="false" >{" "}</CButton></>}
           </CHeaderNavItem>
       </CHeaderNav>
     </CHeader>
