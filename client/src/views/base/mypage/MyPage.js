@@ -56,12 +56,13 @@ const Mypage = (props) => {
   const [user_info, setUserInfo] = useState([]);
   const [completed, setCompleted] = useState(0);
 
-  // let user_data;
+  let user_data;
 
-  // user_data = AuthDataService.getCurrentUser();
-  // if(user_data == null) {
-  //   // props.history.push("/pages/login/Login");
-  // } 
+  user_data = AuthDataService.getCurrentUser();
+  if(user_data == null) {
+    alert("로그인 후 이용 부탁드립니다.")
+    props.history.push("../pages/login/Login");
+  }
 
   useEffect(() => {
     // this.timer = setInterval(progress, 20);
@@ -221,9 +222,7 @@ const Mypage = (props) => {
                       </div>
                       <CRow>
                         <CCol align="center">
-                          {/* <Link to="../pages/search_idPw/SearchIDPW"> */}
-                          <Route to="../pages/login/Login">
-                            <CButton
+                          <CButton
                             className="mt-3"
                             active
                             tabIndex={-1}
@@ -231,9 +230,7 @@ const Mypage = (props) => {
                           >
                             {" "}
                             개인 정보 수정{" "}
-                            </CButton>
-                          </Route>
-                          
+                          </CButton>
                         </CCol>
                       </CRow>
                     </CTabPane>

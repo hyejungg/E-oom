@@ -189,6 +189,7 @@ import TableCell from "@material-ui/core/TableCell";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { withStyles } from "@material-ui/core/styles";
 import authHeader from "../../../services/auth-header";
+import AuthDataService from "../../../services/auth.service";
 import LectureSearch from "../../../components/LectureSearch";
 
 const styles = (theme) => ({
@@ -232,6 +233,15 @@ class EnrollmentListLecture extends Component {
 
   //API에 접근해서 데이터를 받아오는 작업
   componentDidMount() {
+
+    let user_data;
+
+    user_data = AuthDataService.getCurrentUser();
+    if(user_data == null) {
+      alert("로그인 후 이용 부탁드립니다.")
+      this.props.history.push("../pages/login/Login");
+    }
+
     this.timer = setInterval(this.progress, 20);
     this.callApi()
       .then((res) => {

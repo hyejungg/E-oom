@@ -49,7 +49,7 @@ class Login extends Component {
         isLogin = true;
         console.log("로그인 성공");
         
-        this.props.history.push("/dashboard");
+        this.props.history.push("/");
       },error => {
         isLogin = false;
 
@@ -107,7 +107,7 @@ class Login extends Component {
                         <CButton color="primary" className="px-4" type="submit" onClick={this.handleSubmit}>로그인</CButton>
                       </CCol>
                       <CCol xs="7" className="text-right">
-                        <Link to="pages/search_idPw/SearchIDPW">
+                        <Link to="../search_idPw/SearchIDPW">
                           <CButton color="link" className="px-0">아이디/비밀번호 찾기</CButton>
                         </Link>
                       </CCol>
