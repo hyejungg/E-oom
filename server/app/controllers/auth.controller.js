@@ -1,10 +1,7 @@
 const db = require("../models");
-const config = require("../config/auth.config");
 const User = db.user;
-const Op = db.Sequelize.Op;
-
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 //register the user
 exports.signup = async(req, res) => {
@@ -75,15 +72,13 @@ exports.signin = async(req, res) => {
       }
 
       const isMatch = bcrypt.compareSync(user_pw, user.user_pw);
-      console.log("match");
       if (!isMatch) {
         return res.status(401).send({
           accessToken: null,
           message: "Invalid Password!"
         });
       }
-      console.log("token");
-      var token = jwt.sign({ id: user.user_num }, config.secret, {
+      var token = jwt.sign({ id: user.user_num }, process.env.TOKEN_SECRET, {
         expiresIn: 86400 // 24 hours
       });
 
