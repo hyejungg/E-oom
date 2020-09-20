@@ -22,7 +22,7 @@ export default [
   {
     _tag: "CSidebarNavItem",
     name: "로그인",
-    to: "/login",
+    to: "/pages/login/Login",
     icon: "cil-cursor",
   },
   {

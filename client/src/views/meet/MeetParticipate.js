@@ -18,7 +18,7 @@ import {
 
 class MeetParticipate extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       user_info : this.props.user_info,
       test : false,

@@ -25,11 +25,15 @@ import {
   CButton,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react"; //문의사항
+import { Link, Route } from "react-router-dom";
 
 import UserInfoList from "./UserInfoList";
 import UserDataService from "../../../services/user.service";
+import AuthDataService from "../../../services/auth.service";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+
+import Header from "../../../containers/TheHeader";
 
 // circle progress
 const useStyles = makeStyles((theme) => ({
@@ -46,18 +50,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Mypage = () => {
+const Mypage = (props) => {
   const classes = useStyles();
   const [activeTab, setActiveTab] = useState(1);
   const [user_info, setUserInfo] = useState([]);
   const [completed, setCompleted] = useState(0);
 
-  const [user_nickname, getNickname] = useState("");
-  const [user_email, getEmail] = useState("");
-  const [user_lname, getLname] = useState("");
-  const [user_fname, getFname] = useState("");
-  const [user_birthdate, getBirth] = useState("");
-  const [user_phone, getPhone] = useState("");
+  let user_data;
+
+  user_data = AuthDataService.getCurrentUser();
+  if(user_data == null) {
+    alert("로그인 후 이용 부탁드립니다.")
+    props.history.push("../pages/login/Login");
+  }
 
   useEffect(() => {
     // this.timer = setInterval(progress, 20);

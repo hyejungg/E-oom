@@ -6,15 +6,14 @@ import test from "./test/ShowWebRTC"
 import Roomname from "./test/Roomname"
 import Room from "./test/MeetScreen"
 
-const Toaster = React.lazy(() =>
-  import("./views/notifications/toaster/Toaster")
-);
-const Breadcrumbs = React.lazy(() =>
-  import("./views/base/breadcrumbs/Breadcrumbs")
-);
-const Cards = React.lazy(() => import("./views/base/cards/Cards"));
+// const Toaster = React.lazy(() =>
+//   import("./views/notifications/toaster/Toaster")
+// );
+// const Breadcrumbs = React.lazy(() =>
+//   import("./views/base/breadcrumbs/Breadcrumbs")
+// );
+// const Cards = React.lazy(() => import("./views/base/cards/Cards"));
 
-//meet(회의화면) 추가
 const MeetCreate = React.lazy(() =>
   import("./views/base/meet_create/MeetCreate")
 );
@@ -26,10 +25,7 @@ const MeetParticipate = React.lazy(() =>
 );
 
 const PrepareRoom = React.lazy(()=>import("./views/base/prepare_room/PrepareRoom"))
-//마이페이지
 const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
-//클래스 개설
-
 const CreateListLecture = React.lazy(() =>
   import("./views/base/create_list_lecture/CreateListLecture")
 );
@@ -46,23 +42,20 @@ const ParticipateListRoom = React.lazy(() =>
 const TestListRoom = React.lazy(() =>
   import("./views/base/Test_list_room/TestListRoom")
 );
-
-//출석부 추가
 const Rollbook = React.lazy(() => import("./views/base/Rollbook/Rollbook"));
-
-//froms(문의사항) 추가
 const Questions = React.lazy(() => import("./views/forms/Questions"));
-
-// //아이디/비밀번호 찾기 추가
 const SearchIDPW = React.lazy(() =>
   import("./views/pages/search_idPw/SearchIDPW")
+);
+const Login = React.lazy(() =>
+  import("./views/pages/login/Login")
 );
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 
-const Alerts = React.lazy(() => import("./views/notifications/alerts/Alerts"));
-const Badges = React.lazy(() => import("./views/notifications/badges/Badges"));
-const Modals = React.lazy(() => import("./views/notifications/modals/Modals"));
+// const Alerts = React.lazy(() => import("./views/notifications/alerts/Alerts"));
+// const Badges = React.lazy(() => import("./views/notifications/badges/Badges"));
+// const Modals = React.lazy(() => import("./views/notifications/modals/Modals"));
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
 const Typography = React.lazy(() =>
   import("./views/theme/typography/Typography")
@@ -86,10 +79,10 @@ const routes = [
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/theme", name: "Theme", component: Colors, exact: true },
   { path: "/theme/colors", name: "Colors", component: Colors },
-  { path: "/theme/typography", name: "Typography", component: Typography },
-  { path: "/base", name: "Base", component: Cards, exact: true },
-  { path: "/base/breadcrumbs", name: "Breadcrumbs", component: Breadcrumbs },
-  { path: "/base/cards", name: "Cards", component: Cards },
+  // { path: "/theme/typography", name: "Typography", component: Typography },
+  // { path: "/base", name: "Base", component: Cards, exact: true },
+  // { path: "/base/breadcrumbs", name: "Breadcrumbs", component: Breadcrumbs },
+  // { path: "/base/cards", name: "Cards", component: Cards },
   { path: "/base/mypage", name: "Mypage", component: Mypage }, //***
   { path: "/base/Rollbook", name: "Rollbook", component: Rollbook }, //***
   // { path: '/base/forms', name: 'Forms', component: BasicForms },
@@ -118,12 +111,12 @@ const routes = [
     component: EnrollmentListLecture,
   }, //***
   { path: "/forms/Questions", name: "Questions", component: Questions }, //***
-  {
-    path: "/notifications",
-    name: "Notifications",
-    component: Alerts,
-    exact: true,
-  },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   component: Alerts,
+  //   exact: true,
+  // },
 
   {
     path: "/base/Test_list_room",
@@ -136,10 +129,10 @@ const routes = [
     component: PrepareRoom,
   },
 
-  { path: "/notifications/alerts", name: "Alerts", component: Alerts },
-  { path: "/notifications/badges", name: "Badges", component: Badges },
-  { path: "/notifications/modals", name: "Modals", component: Modals },
-  { path: "/notifications/toaster", name: "Toaster", component: Toaster },
+  // { path: "/notifications/alerts", name: "Alerts", component: Alerts },
+  // { path: "/notifications/badges", name: "Badges", component: Badges },
+  // { path: "/notifications/modals", name: "Modals", component: Modals },
+  // { path: "/notifications/toaster", name: "Toaster", component: Toaster },
   { path: "/widgets", name: "Widgets", component: Widgets },
   { path: "/users", exact: true, name: "Users", component: Users },
   { path: "/users/:id", exact: true, name: "User Details", component: User },
@@ -151,6 +144,7 @@ const routes = [
     component: MeetParticipate,
   }, //***
   { path: "/pages/search_idPW", name: "searchIDPW", component: SearchIDPW }, //***
+  { path: "/pages/login/Login", name: "Login", component: Login }, //***
 ];
 
 export default routes;

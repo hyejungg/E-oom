@@ -24,7 +24,7 @@ var isCreate = false;
 
 class Register extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       fname: "",
       lname: "",
