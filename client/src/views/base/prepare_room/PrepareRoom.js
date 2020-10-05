@@ -15,20 +15,21 @@ import {
   CForm,
   CButtonToolbar, //****
 } from "@coreui/react";
+import SWR from '../../meet/ShowWebRTC'
 
 class PrepareRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
       room_num: "",
-      room_info : "",
-      room_link : "",
+      room_info: "",
+      room_link: "",
       // test: true,
     };
     // this.recieveData = this.recieveData.bind(this);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     //this.setState를 통해서 state 값을 변경해 줍니다.
     var recievedMessage = this.props.location.state;
     // this.setState({
@@ -68,7 +69,7 @@ class PrepareRoom extends Component {
                 <CRow>
                   <CCol xs="12" md="2"></CCol> {/* 여백 */}
                   <CCol xs="12" md="4">
-                    <CEmbed>{/* 비디오 화면 */}</CEmbed>
+                    <CEmbed> <SWR param={this.state.room_link}>내 화면</SWR></CEmbed>
                   </CCol>
                   {/* 중간중간 공백 어케줌? ㅠㅠ */}
                   <CCol xs="12" md="4">
@@ -85,6 +86,7 @@ class PrepareRoom extends Component {
                               },
                             }}
                           >
+
                             <CButton
                               active
                               tabIndex={-1}
@@ -95,11 +97,12 @@ class PrepareRoom extends Component {
                               참여{" "}
                             </CButton>
                           </Link>
+
                         </CButtonToolbar>
                       </div>
                     ) : (
-                      <h2>호스트가 교육 화면을 시작하지 않았습니다.</h2>
-                    )}
+                        <h2>호스트가 교육 화면을 시작하지 않았습니다.</h2>
+                      )}
                     <CButtonToolbar justify="center">
                       <CForm action="" method="post">
                         <CFormGroup>

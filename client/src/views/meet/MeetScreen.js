@@ -19,6 +19,7 @@ import {
 } from "@coreui/react";
 import CIcon from '@coreui/icons-react'
 import "../../../src/scss/_custom.scss";
+import ShowWebRTC from "./ShowWebRTC"
 
 class MeetScreen extends Component {
   constructor(props) {
@@ -31,15 +32,15 @@ class MeetScreen extends Component {
       min: 0,
       sec: 0,
 
-      room_info : '',
-      room_num : '',
+      room_info: '',
+      room_num: '',
     };
     this.openQuestion = this.openQuestion.bind(this);
     this.openPopup = this.openPopup.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillMount() { 
+  componentWillMount() {
     // componentWillMount(){
     var recievedMessage = this.props.location.state;
     console.log(recievedMessage)
@@ -124,7 +125,7 @@ class MeetScreen extends Component {
               <CCardBody>
                 {/* 유저가 보이는 화면 */}
                 <CCol>
-                  {/* <ShowWebRTC></ShowWebRTC> */}
+                  <ShowWebRTC></ShowWebRTC>
                 </CCol>
               </CCardBody>
               <CCardFooter>
@@ -179,11 +180,11 @@ class MeetScreen extends Component {
                   </CCol>
                   <CCol align="right" col="3" sm="2" md="1">
                     <Link to={{
-                                pathname: "/meet_exit/MeetExit",
-                                state: {
-                                  room_num: this.state.room_num
-                                },
-                              }}>
+                      pathname: "/meet_exit/MeetExit",
+                      state: {
+                        room_num: this.state.room_num
+                      },
+                    }}>
                       <CButton
                         tabIndex={-1}
                         block

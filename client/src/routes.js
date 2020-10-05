@@ -1,10 +1,6 @@
 import React from "react";
 import Mypage from "./views/base/mypage/MyPage";
 
-//test용
-import test from "./test/ShowWebRTC"
-import Roomname from "./test/Roomname"
-import Room from "./test/MeetScreen"
 
 // const Toaster = React.lazy(() =>
 //   import("./views/notifications/toaster/Toaster")
@@ -24,7 +20,7 @@ const MeetParticipate = React.lazy(() =>
   import("./views/meet/MeetParticipate")
 );
 
-const PrepareRoom = React.lazy(()=>import("./views/base/prepare_room/PrepareRoom"))
+const PrepareRoom = React.lazy(() => import("./views/base/prepare_room/PrepareRoom"))
 const MyPage = React.lazy(() => import("./views/base/mypage/MyPage"));
 const CreateListLecture = React.lazy(() =>
   import("./views/base/create_list_lecture/CreateListLecture")
@@ -65,15 +61,6 @@ const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
 
 const routes = [
-  //test용
-  {
-    path: "/room",
-    name: "createRoom",
-    exact: true,
-    component: Roomname,
-  },
-  { path: "/room/:roomID", name: "Room", component: Room },
-  { path: "/test", name: "test1", component: test },
   //
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
