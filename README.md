@@ -8,9 +8,9 @@
 >
 > 👩🏻‍💻 [hyejungg](https://github.com/hyejungg)
 >
-> 👩🏻‍💻 [bong8230](https://github.com/bong8230)
+> 👨🏻‍💻 [bong8230](https://github.com/bong8230)
 > 
-> 👨🏻‍💻 [ahrimy](https://github.com/ahrimy)
+> 👩🏻‍💻 [ahrimy](https://github.com/ahrimy)
 
 ## Installation
 
