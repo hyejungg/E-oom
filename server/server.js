@@ -1,13 +1,12 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
-const http = require('http').createServer(app);
+const http = require("http").createServer(app);
 const PORT = process.env.PORT || 8080;
 const db = require("./app/models");
-const path = require('path');
+const path = require("path");
 const io = require("socket.io")(http);
 
 db.sequelize.sync();
@@ -18,18 +17,18 @@ db.sequelize.sync();
 
 let socketList = {};
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-io.on('connection', (socket) => {
-  socket.on('disconnect', () => {
-    console.log('User disconnected!');
+io.on("connection", (socket) => {
+  socket.on("disconnect", () => {
+    console.log("User disconnected!");
   });
 
-  socket.on('chk-user', ({ roomId, userName }) => {
+  socket.on("chk-user", ({ roomId, userName }) => {
     let error = false;
 
     io.sockets.in(roomId).clients((err, clients) => {
@@ -38,14 +37,14 @@ io.on('connection', (socket) => {
           error = true;
         }
       });
-      socket.emit('error-user', { error });
+      socket.emit("error-user", { error });
     });
   });
 
   /**
    * Join Room
    */
-  socket.on('join-room', ({ roomId, userName }) => {
+  socket.on("join-room", ({ roomId, userName }) => {
     // Socket Join RoomName
     socket.join(roomId);
     socketList[socket.id] = userName;
@@ -72,42 +71,41 @@ io.on('connection', (socket) => {
           //     };
           //   }
         });
-        socket.broadcast.to(roomId).emit('user-join', users);
+        socket.broadcast.to(roomId).emit("user-join", users);
         // io.sockets.in(roomId).emit('FE-user-join', users);
       } catch (e) {
-        io.sockets.in(roomId).emit('error-user', { err: true });
+        io.sockets.in(roomId).emit("error-user", { err: true });
       }
     });
   });
 
-  socket.on('call-user', ({ userToCall, from, signal }) => {
-    io.to(userToCall).emit('receive-call', {
+  socket.on("call-user", ({ userToCall, from, signal }) => {
+    io.to(userToCall).emit("receive-call", {
       signal,
       from,
     });
   });
 
-  socket.on('accept-call', ({ signal, to }) => {
-    io.to(to).emit('call-accepted', {
+  socket.on("accept-call", ({ signal, to }) => {
+    io.to(to).emit("call-accepted", {
       signal,
       answerId: socket.id,
     });
   });
 
-  socket.on('send-message', ({ roomId, msg, sender }) => {
-    io.sockets.in(roomId).emit('receive-message', { msg, sender });
+  socket.on("send-message", ({ roomId, msg, sender }) => {
+    io.sockets.in(roomId).emit("receive-message", { msg, sender });
   });
 });
 
 //
 
 var corsOptions = {
-  origin: "http://localhost:8081",
+  origin: process.env.ORIGIN_URL,
   credentials: true,
 };
 
 app.use(cors(corsOptions));
-
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -119,8 +117,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to E-oom application." });
 });
-
-
 
 app.use(function (req, res, next) {
   res.header(
@@ -134,8 +130,7 @@ http.listen(PORT, () => {
   console.log("server & app listening on " + PORT);
 });
 
-
-require('./app/routes/auth.routes.js')(app);
+require("./app/routes/auth.routes.js")(app);
 require("./app/routes/user.routes.js")(app);
 require("./app/routes/lecture.routes.js")(app);
 require("./app/routes/room.routes.js")(app);
