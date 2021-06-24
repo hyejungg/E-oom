@@ -69,7 +69,3 @@ REACT_APP_SERVER_URL=서버 URL
 
 - `npm install`
 - `npm start`
-
----
-
----
